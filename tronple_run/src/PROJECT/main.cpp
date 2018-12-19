@@ -45,6 +45,8 @@ int main(int argc, char** argv) {
 
     Level level("0.ppm");
 
+    std::cout << level.getSourceFile() << std::endl;
+
   /*********************************
    * INITIALIZATION OF CAMERAS
    *********************************/

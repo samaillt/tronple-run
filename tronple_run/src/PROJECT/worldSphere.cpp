@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
   worldProgram worldProgram(applicationPath);
   
   /* Load world texture */
-  std::unique_ptr<Image> imgWorld = loadImage(applicationPath.dirPath() + "../../src/assets/textures/mapGrid.jpg");
+  std::unique_ptr<Image> imgWorld = loadImage("../src/assets/textures/mapGrid.jpg");
   if ( imgWorld == NULL ) std::cout << "World Image Not Loaded" << std::endl;
   
 

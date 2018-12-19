@@ -32,5 +32,5 @@ public:
     void setSizeZ(int n);
     void setSourceFile(std::string &sourceFile);
 
-    void init();
+    void loadLevel();
 };
