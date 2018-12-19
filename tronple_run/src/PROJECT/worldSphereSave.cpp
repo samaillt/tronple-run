@@ -200,9 +200,9 @@ int main(int argc, char** argv) {
     glUniform1i(worldProgram.uTextureWorld, 0);
         
    glUniform1i(worldProgram.uTextureWorld, 0);
-      glm::mat4 MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
-    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/32, glm::vec3(0, 1, 0)); // Translation * Rotation
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(50, 50, 50)); // Translation * Rotation * Translation * Scale
+     	glm::mat4 MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
+		MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/32, glm::vec3(0, 1, 0)); // Translation * Rotation
+		MVMatrix = glm::scale(MVMatrix, glm::vec3(50, 50, 50)); // Translation * Rotation * Translation * Scale
 
         glUniformMatrix4fv(worldProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
         glUniformMatrix4fv(worldProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
@@ -211,7 +211,7 @@ int main(int argc, char** argv) {
     /* 10_ Dessin du World */
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureWorld);
-      glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
+   	  glDrawArrays(GL_TRIANGLES, 0, sphere.getVertexCount());
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
