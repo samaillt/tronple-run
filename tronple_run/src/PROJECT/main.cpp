@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstddef>
 #include <math.h>
+#include <algorithm>
+#include <vector>
 #include <glimac/Program.hpp> 
 #include <glimac/FilePath.hpp> 
 #include <glimac/glm.hpp>
@@ -10,13 +12,14 @@
 #include "project_classes/FreeflyCamera.hpp"
 #include "project_classes/Level.hpp"
 #include "project_classes/GameController.hpp"
+#include "project_classes/Cell.hpp"
 
 using namespace glimac;
 
 int main(int argc, char** argv) {
 
     /*********************************
-   * INITIALIZATION OF WINDOW AND 
+   * INITIALIZATION OF WINDOW 
    *********************************/
 
   // Initialize SDL and open a window
@@ -29,7 +32,7 @@ int main(int argc, char** argv) {
   if(GLEW_OK != glewInitError) {
       std::cerr << glewGetErrorString(glewInitError) << std::endl;
       return EXIT_FAILURE;
-  }  
+  }0
     
   /*********************************
    * INITIALIZATION OF PROGRAMS
@@ -44,9 +47,16 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF LEVEL & GAME
    *********************************/
 
-    Level level("0.ppm");
+    Level level("test.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
+    auto printInfos = [](const Cell *cell){
+      std::cout << "Type : " << cell->getType() << std::endl;
+    };
+    std::cout << level.getCells().size() << std::endl;
+
+    /* Erreur de seg à regler : mauvaise gestion du vector */
+    // std::for_each(level.getCells().begin(), level.getCells().end(), printInfos);
 
   /*********************************
    * INITIALIZATION OF CAMERAS

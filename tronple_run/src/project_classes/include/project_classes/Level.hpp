@@ -15,7 +15,7 @@ private:
     int _sizeZ; // Normalement toujours 3
 
     Player _mainCharacter;
-    std::vector<std::vector<Cell*>> _cells;
+    std::vector<Cell*> _cells;
     std::string _sourceFile;
 
 public:
@@ -27,10 +27,14 @@ public:
     int getSizeX() const;
     int getSizeY() const;
     int getSizeZ() const;
+    Player getPlayer() const;
+    std::vector<Cell*> getCells() const;
     std::string getSourceFile() const;
 
     void setSizeX(int n);
     void setSizeY(int n);
     void setSizeZ(int n);
+    void setPlayer(Player &player);
+    void setCells(std::vector<Cell*> &cells);
     void setSourceFile(std::string &sourceFile);
 };

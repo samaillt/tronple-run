@@ -25,6 +25,12 @@ int Level::getSizeY() const {
 int Level::getSizeZ() const {
 	return _sizeZ;
 }
+Player Level::getPlayer() const {
+	return _mainCharacter;
+}
+std::vector<Cell*> Level::getCells() const {
+	return _cells;
+}
 std::string Level::getSourceFile() const {
 	return _sourceFile;
 }
@@ -38,6 +44,12 @@ void Level::setSizeY(const int n) {
 void Level::setSizeZ(const int n) {
 	_sizeZ = n;
 }
-void Level::setSourceFile(std::string &sourceFile){
+void Level::setPlayer(Player &player) {
+	_mainCharacter = player;
+}
+void Level::setCells(std::vector<Cell*> &cells) {
+	_cells = cells;
+}
+void Level::setSourceFile(std::string &sourceFile) {
 	_sourceFile = "../src/assets/levels/"+sourceFile;
 }
