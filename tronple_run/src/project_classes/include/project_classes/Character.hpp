@@ -46,20 +46,20 @@ public:
     void setSpeed(float &speed);
 
     /// \brief set initialisation of the X position
-    /// \param initX : take the initialisation of the X position
+    /// \param initX : takes the initialisation of the X position
     void setInitX(float &initX);
 
     /// \brief set initialisation of the Y position
-    /// \param initX : take the initialisation of the X position
+    /// \param initX : takes the initialisation of the X position
     void setInitY(float &initY);
 
-    /// \brief move character on the right
+    /// \brief moves character on the right
     void moveRight();
-    /// \brief move character on the left
+    /// \brief moves character on the left
     void moveLeft();
-    /// \brief move character up
+    /// \brief moves character up
     void moveUp();
-    /// \brief move character down
+    /// \brief moves character down
     void moveDown();
 
     /// \brief Destructor

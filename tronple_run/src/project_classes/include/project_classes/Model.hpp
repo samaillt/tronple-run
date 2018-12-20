@@ -8,11 +8,17 @@
 
 using namespace glimac;
 
+/// \class Model
+/// \brief Class that defines a model 3D
 class Model{
 
 public:
-    // constructor
+    /// \brief Constructor
+    /// \param obj : string of an obj file
+    /// \param applicationPath
     Model(const std::string obj, const FilePath &applicationPath);
+
+    ///\brief Default constructor
     Model();
 
     //getter
