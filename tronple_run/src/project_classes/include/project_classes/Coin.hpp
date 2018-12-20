@@ -28,9 +28,9 @@ public:
     int getValue() const;
 
     /// \brief set the value of the coin
-    /// \param
+    /// \param value : value of the coin
     void setValue(int value);
 
-    //destructor
+    /// \brief Destructor
     ~Coin();
 };
