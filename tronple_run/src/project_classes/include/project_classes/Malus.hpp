@@ -1,12 +1,12 @@
 #pragma once
-#include "StaticObject.hpp"
+#include "Cell.hpp"
 
-class Malus : public StaticObject {
+class Malus : public Cell {
 
 public:
 
     // constructor
-    Malus(char type, float width, float height, float posX, float posY);
+    Malus(char type, float width, float height, float posX, float posY, float posZ);
     Malus();
 
     //destructor
