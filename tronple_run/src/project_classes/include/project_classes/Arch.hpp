@@ -31,12 +31,12 @@ class Arch : public Cell {
 public:
 
     /// \brief Constructor
-	/// \param type : the type to define the arch
-	/// \param width : the width of the requested arch
-	/// \param height : the height of the requested arch
-	/// \param posX : the position X of the arch
-	/// \param posZ : the position Z of the arch
-	/// \param posZ : the position Z of the arch
+	/// \param type : type to define the arch -> 'a'
+	/// \param width : width of the requested arch
+	/// \param height : height of the requested arch
+	/// \param posX : X position of the arch
+	/// \param posY : Y position of the arch
+	/// \param posZ : Z position of the arch
     Arch(char type, float width, float height, float posX, float posY, float posZ);
 
     /// \brief Default constructor

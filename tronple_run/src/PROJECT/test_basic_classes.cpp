@@ -232,7 +232,6 @@ int main(int argc, char const *argv[]){
 	std::cout << arrival.getHeight() << std::endl; 
 	std::cout << arrival.getPosX() << std::endl; 
 	std::cout << arrival.getPosY() << std::endl; 
-	std::cout << arrival.getVictory() << std::endl; 
 
 
 	//Set
@@ -241,7 +240,6 @@ int main(int argc, char const *argv[]){
 	arrival.setHeight(f1); 
 	arrival.setPosX(f1);
 	arrival.setPosY(f1);
-	arrival.setVictory(false);
 
 
 	//Get
@@ -250,7 +248,6 @@ int main(int argc, char const *argv[]){
 	std::cout << arrival.getHeight() << std::endl; 
 	std::cout << arrival.getPosX() << std::endl; 
 	std::cout << arrival.getPosY() << std::endl; 
-	std::cout << arrival.getVictory() << std::endl; 
 	return 0;
 }
 
