@@ -2,8 +2,10 @@
 
 #include <string>
 #include <fstream>
-/* #include "Coin.hpp"
-#include "Cell.hpp" */
+#include <vector>
+#include "project_classes/Coin.hpp"
+#include "project_classes/Cell.hpp"
+#include "project_classes/Player.hpp"
 
 class Level {
 
@@ -12,8 +14,8 @@ private:
     int _sizeY;
     int _sizeZ; // Normalement toujours 3
 
-    /*std::vector<Coins> _coins;
-    std::vector<std::vector<Cell*>> _cells;*/
+    Player _mainCharacter;
+    std::vector<std::vector<Cell*>> _cells;
     std::string _sourceFile;
 
 public:
@@ -31,6 +33,4 @@ public:
     void setSizeY(int n);
     void setSizeZ(int n);
     void setSourceFile(std::string &sourceFile);
-
-    void loadLevel();
 };

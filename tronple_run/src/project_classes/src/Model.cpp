@@ -13,25 +13,25 @@ Model::Model(const std::string obj, const FilePath &applicationPath)
 			exit(1); 
 
 		_geometry = geometry;
-		setVbo(geometry);
-		setIbo(geometry);
+		setVbo();
+		setIbo();
 		setVao();
 }
 
-void Model::setVbo(Geometry &geometry){
+void Model::setVbo(){
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, geometry.getVertexCount() * sizeof(Geometry::Vertex), geometry.getVertexBuffer(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _geometry.getVertexCount() * sizeof(Geometry::Vertex), _geometry.getVertexBuffer(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	_ibo = vbo;
 }
 
-void Model::setIbo(Geometry &geometry){
+void Model::setIbo(){
 	GLuint ibo;
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, geometry.getIndexCount() * sizeof(uint32_t), geometry.getIndexBuffer(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _geometry.getIndexCount() * sizeof(uint32_t), _geometry.getIndexBuffer(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	_ibo = ibo;
 }
@@ -61,14 +61,20 @@ void Model::setVao(){
 }
 
 Geometry Model::getGeometry(){
-        return _geometry;
-    }
+    return _geometry;
+}
 
 GLuint Model::getVao(){
-        return _vao;
-    }
+    return _vao;
+}
 
+GLuint Model::getIbo(){
+    return _ibo;
+}
 
+GLuint Model::getVbo(){
+    return _vbo;
+}
 
 Model::Model(){}
 

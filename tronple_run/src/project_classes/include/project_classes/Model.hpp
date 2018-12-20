@@ -18,11 +18,13 @@ public:
     //getter
     Geometry getGeometry();
     GLuint getVao();
+    GLuint getIbo();
+    GLuint getVbo();
 
 
     //setter
-    void setVbo(Geometry &geometry);
-    void setIbo(Geometry &geometry);
+    void setVbo();
+    void setIbo();
     void setVao();
 
     //destructor

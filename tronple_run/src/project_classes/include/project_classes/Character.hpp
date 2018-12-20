@@ -13,7 +13,7 @@ private:
 public:
 
     // constructor 
-    Character(char type, float width, float height, float posX, float posY, char initX, float initY, float speed);
+    Character(char type, float width, float height, float posX, float posY, float posZ, char initX, float initY, float speed);
     Character();
 
     // getter

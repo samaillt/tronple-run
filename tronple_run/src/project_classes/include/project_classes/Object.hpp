@@ -9,11 +9,12 @@ private:
     float _height;
     float _posX;
     float _posY;
+    float _posZ;
 
 public:
 
     // constructor
-    Object(char type, float width, float height, float posX, float posY);
+    Object(char type, float width, float height, float posX, float posY, float posZ);
     Object();
 
     // getter
@@ -22,6 +23,7 @@ public:
     float getHeight() const;
     float getPosX() const;
     float getPosY() const;
+    float getPosZ() const;
 
     // setter
     void setType(char type);
@@ -29,6 +31,7 @@ public:
     void setHeight(float &height);
     void setPosX(float &posX);
     void setPosY(float &posY);
+    void setPosZ(float &posZ);
 
     // collision
     bool collision(Object*);

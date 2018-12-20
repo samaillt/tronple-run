@@ -6,7 +6,7 @@ class Arche : public Cell {
 public:
 
     // constructor
-    Arche(char type, float width, float height, float posX, float posY);
+    Arche(char type, float width, float height, float posX, float posY, float posZ);
     Arche();
 
     //destructor

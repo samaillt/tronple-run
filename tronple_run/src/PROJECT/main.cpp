@@ -9,6 +9,7 @@
 #include "project_classes/TrackballCamera.hpp"
 #include "project_classes/FreeflyCamera.hpp"
 #include "project_classes/Level.hpp"
+#include "project_classes/GameController.hpp"
 
 using namespace glimac;
 
@@ -44,8 +45,8 @@ int main(int argc, char** argv) {
    *********************************/
 
     Level level("0.ppm");
-
-    std::cout << level.getSourceFile() << std::endl;
+    GameController game_controller(&level);
+    game_controller.loadLevel();
 
   /*********************************
    * INITIALIZATION OF CAMERAS

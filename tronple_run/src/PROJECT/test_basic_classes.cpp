@@ -18,7 +18,7 @@
 
 void testObject(){
 	// Constructeur
-	Object mur('m',1.f, 1.f, 2.f, 3.f);
+	Object mur('m',1.f, 1.f, 2.f, 3.f, 4.f);
 	float f1 = 100.f;
 
 	// Get
@@ -47,7 +47,7 @@ void testObject(){
 
 void testCharacter(){
 	// Constructeur
-	Character character('p',1.f, 1.f, 2.f, 3.f, 0.f, 0.f, 3.f);
+	Character character('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f);
 	float f1 = 100.f;
 
 	// Get
@@ -81,7 +81,7 @@ void testCharacter(){
 
 void testPlayer(){
 	// Constructeur
-	Player player('p',1.f, 1.f, 2.f, 3.f, 0.f, 0.f, 3.f, "Noelie", 3020, true);
+	Player player('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f, "Noelie", 3020, true);
 	float f1 = 100.f;
 
 	// Get
@@ -130,7 +130,7 @@ void testPlayer(){
 
 void testEnemy(){
 	// Constructeur
-	Enemy player('p',1.f, 1.f, 2.f, 3.f, 0.f, 0.f, 3.f);
+	Enemy player('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f);
 	float f1 = 100.f;
 
 	// Get
@@ -164,7 +164,7 @@ void testEnemy(){
 
 void testCell(){
 	// Constructeur
-	Cell cell('c',1.f, 1.f, 2.f, 3.f);
+	Cell cell('c',1.f, 1.f, 2.f, 3.f, 4.f);
 	float f1 = 100.f;
 
 	// Get
@@ -191,7 +191,7 @@ void testCell(){
 
 void testCoin(){
 	// Constructeur
-	Coin coin('c',1.f, 1.f, 2.f, 3.f, 10);
+	Coin coin('c',1.f, 1.f, 2.f, 3.f, 4.f, 10);
 	float f1 = 100.f;
 
 	// Get
@@ -200,7 +200,7 @@ void testCoin(){
 	std::cout << coin.getHeight() << std::endl; 
 	std::cout << coin.getPosX() << std::endl; 
 	std::cout << coin.getPosY() << std::endl; 
-	std::cout << coin.getPoint() << std::endl; 
+	std::cout << coin.getValue() << std::endl; 
 
 
 	//Set
@@ -209,7 +209,7 @@ void testCoin(){
 	coin.setHeight(f1); 
 	coin.setPosX(f1);
 	coin.setPosY(f1);
-	coin.setPoint(20);
+	coin.setValue(20);
 
 
 	//Get
@@ -218,12 +218,12 @@ void testCoin(){
 	std::cout << coin.getHeight() << std::endl; 
 	std::cout << coin.getPosX() << std::endl; 
 	std::cout << coin.getPosY() << std::endl; 
-	std::cout << coin.getPoint() << std::endl; 
+	std::cout << coin.getValue() << std::endl; 
 }
 
 int main(int argc, char const *argv[]){
 	// Constructeur
-	Arrival arrival('c',1.f, 1.f, 2.f, 3.f, true);
+	Arrival arrival('c',1.f, 1.f, 2.f, 3.f, 4.f);
 	float f1 = 100.f;
 
 	// Get

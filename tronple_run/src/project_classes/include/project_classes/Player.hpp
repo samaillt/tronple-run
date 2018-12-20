@@ -12,7 +12,7 @@ private:
 public:
 
 	//constructor
-    Player(char type, float width, float height, float posX, float posY, char initX, float initY, float speed, 
+    Player(char type, float width, float height, float posX, float posY, float posZ, char initX, float initY, float speed, 
         std::string pseudo, uint score, bool isAlive);
     Player();
 

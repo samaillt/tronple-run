@@ -9,7 +9,7 @@ private:
 public:
 
     // constructor
-    Arrival(char type, float width, float height, float posX, float posY, bool vitory);
+    Arrival(char type, float width, float height, float posX, float posY, float posZ);
     Arrival();
 
     //getter

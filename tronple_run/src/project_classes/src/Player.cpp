@@ -2,9 +2,9 @@
 
 
 //constructor
-Player::Player(char type, float width, float height, float posX, float posY, char initX, float initY, float speed, 
+Player::Player(char type, float width, float height, float posX, float posY, float posZ, char initX, float initY, float speed, 
 	std::string pseudo, uint score, bool isAlive)
-: Character(type, width, height, posX, posY, initX, initY, speed), _pseudo(pseudo), _score(score), _isAlive(isAlive){}
+: Character(type, width, height, posX, posY, posZ, initX, initY, speed), _pseudo(pseudo), _score(score), _isAlive(isAlive){}
 
 Player::Player(){};
 
@@ -12,11 +12,9 @@ Player::Player(){};
 uint Player::getScore() const {
 	return _score;
 }
-
 bool Player::getIsAlive() const{
 	return _isAlive; // If true = Player alive
 }
-
 std::string Player::getPseudo() const{
 	return _pseudo;
 }
@@ -25,11 +23,9 @@ std::string Player::getPseudo() const{
 void Player::setScore(const uint score){
 	_score = score;
 }
-
 void Player::setIsAlive(const bool isAlive){
 	_isAlive = isAlive;
 }
-
 void Player::setPseudo(const std::string &pseudo){
 	_pseudo = pseudo;
 }

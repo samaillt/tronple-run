@@ -4,19 +4,19 @@
 class Coin : public Cell {
 
 private:
-	int _point;
+	int _value;
 
 public:
 
     // constructor
-    Coin(char type, float width, float height, float posX, float posY, int point);
+    Coin(char type, float width, float height, float posX, float posY, float posZ, int value);
     Coin();
 
     //getter
-    int getPoint() const;
+    int getValue() const;
 
     //setter
-    void setPoint(int point);
+    void setValue(int value);
 
     //destructor
     ~Coin();

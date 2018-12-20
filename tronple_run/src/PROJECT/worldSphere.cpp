@@ -198,15 +198,14 @@ int main(int argc, char** argv) {
     worldProgram.m_Program.use();
     
     glUniform1i(worldProgram.uTextureWorld, 0);
-        
-   glUniform1i(worldProgram.uTextureWorld, 0);
-      glm::mat4 MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
+
+    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
     MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/32, glm::vec3(0, 1, 0)); // Translation * Rotation
     MVMatrix = glm::scale(MVMatrix, glm::vec3(50, 50, 50)); // Translation * Rotation * Translation * Scale
 
-        glUniformMatrix4fv(worldProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
-        glUniformMatrix4fv(worldProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-        glUniformMatrix4fv(worldProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+    glUniformMatrix4fv(worldProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
+    glUniformMatrix4fv(worldProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+    glUniformMatrix4fv(worldProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
     /* 10_ Dessin du World */
     glActiveTexture(GL_TEXTURE0);
