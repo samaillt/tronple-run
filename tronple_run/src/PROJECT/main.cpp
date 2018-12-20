@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
   if(GLEW_OK != glewInitError) {
       std::cerr << glewGetErrorString(glewInitError) << std::endl;
       return EXIT_FAILURE;
-  }0
+  };
     
   /*********************************
    * INITIALIZATION OF PROGRAMS
@@ -50,9 +50,9 @@ int main(int argc, char** argv) {
     Level level("test.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
-    auto printInfos = [](const Cell *cell){
-      std::cout << "Type : " << cell->getType() << std::endl;
-    };
+    // auto printInfos = [](const Cell *cell){
+    //   std::cout << "Type : " << cell->getType() << std::endl;
+    // };
     std::cout << level.getCells().size() << std::endl;
 
     /* Erreur de seg à regler : mauvaise gestion du vector */

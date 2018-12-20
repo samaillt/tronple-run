@@ -1,57 +1,70 @@
 #pragma once
 
 #include <vector>
-
-#include "glimac/common.hpp"
+#include <GL/glew.h>
+#include "common.hpp"
+#include "glm.hpp"
 
 namespace glimac {
 
-class Cube
-{
-    // Allocates and constructs the data (implementation in the .cpp)
+class Cube {
+
+    struct ShapeVertex {
+        glm::vec3 position;
+        glm::vec3 normal;
+        glm::vec2 texCoords;
+    };
+
+    struct Vertex3D {
+        glm::vec3 position;
+        glm::vec3 normal;
+        glm::vec2 texCoords;
+    };
+
     void build(GLfloat width, GLfloat height, GLfloat thickness);
 
 public:
-    // Constructor: allocates the data array and builds the vertex attributes
     Cube() { build (1,1,1); }
     Cube(GLfloat width, GLfloat height, GLfloat thickness)
     {
-        build(width, height, thickness); // Construction (see the .cpp)
+        build(width, height, thickness);
     }
 
-    // Returns the pointer to the data
+    void setVbo();
+    void setIbo();
+    void setVao();
+
     const Vertex3D* getVertexBuffer() const {
-        return &m_VertexBuffer[0];
+        return &_vertexBuffer[0];
     }
 
-    // Returns the number of vertices
     size_t getVertexCount() const {
         return 24;
     }
 
-    // Returns the address of the IBO
     const unsigned int* getIndexBuffer() const {
-        return &m_IndexBuffer[0];
+        return &_indexBuffer[0];
     }
 
-    // Returns the number of Index (of Triangles)
     size_t getIndexCount() const {
         return 36;
     }
 
-    // Draw the Cube
     void drawCube() const
     {
         glDrawElements(GL_TRIANGLES, this->getIndexCount()-6, GL_UNSIGNED_INT, 0);
     }
 
-    GLuint getVBO();
-    GLuint getIBO();
-    GLuint getVAO(GLuint* ibo, GLuint* vbo);
+    GLuint getVbo();
+    GLuint getIbo();
+    GLuint getVao();
 
 private:
-    Vertex3D m_VertexBuffer[24];
-    uint32_t m_IndexBuffer[36];
+    GLuint _vao;
+    GLuint _vbo;
+    GLuint _ibo;
+    Vertex3D _vertexBuffer[24];
+    uint32_t _indexBuffer[36];
 };
 
 }

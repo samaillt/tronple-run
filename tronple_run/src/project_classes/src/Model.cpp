@@ -24,7 +24,7 @@ void Model::setVbo(){
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, _geometry.getVertexCount() * sizeof(Geometry::Vertex), _geometry.getVertexBuffer(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	_ibo = vbo;
+	_vbo = vbo;
 }
 
 void Model::setIbo(){

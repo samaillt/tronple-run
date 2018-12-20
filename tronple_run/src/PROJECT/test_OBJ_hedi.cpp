@@ -4,10 +4,12 @@
 #include <cstddef>
 #include <vector>
 #include <math.h>
+
 #include <glimac/Program.hpp> 
 #include <glimac/FilePath.hpp> 
 #include <glimac/glm.hpp> 
 #include <glimac/Image.hpp>
+
 #include <project_classes/TrackballCamera.hpp> 
 #include <project_classes/Model.hpp>
 
@@ -38,7 +40,6 @@ struct coinProgram{
     GLint uMVPMatrix;
     GLint uMVMatrix;
     GLint uNormalMatrix;
-    GLint uTextureWorld;
 
     coinProgram(const FilePath& applicationPath):
         m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
@@ -49,7 +50,7 @@ struct coinProgram{
     }
 };
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) {  
   // Initialize SDL and open a window
   const int WINDOW_WIDTH = 800;
   const int WINDOW_HEIGTH = 800;
@@ -78,15 +79,13 @@ int main(int argc, char** argv) {
    *********************************/
   /* 1_ Construction de la sphère et de la caméra*/
   TrackballCamera camera;
-  camera.moveFront(-100.f);
+  camera.moveFront(-10.f);
   Model coin("coin", "coin");
   
   coin.setVbo();
-
   coin.setIbo();
-  
   coin.setVao();
-  
+
   /* 4_ Activation de la detection de la profondeur */
   glEnable(GL_DEPTH_TEST);
   
@@ -166,11 +165,9 @@ int main(int argc, char** argv) {
     /* DESSIN DU WORLD */
     coinProgram.m_Program.use();
     
-    glUniform1i(coinProgram.uTextureWorld, 0);
-
-    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(10, 10, 10)); // Translation * Rotation * Translation * Scale
-
+    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); // Translation
+    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/4, glm::vec3(0, 1, 0)); // Translation * Rotation
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(1, 1, 1)); // Translation * Rotation * Translation * Scale
     glUniformMatrix4fv(coinProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
     glUniformMatrix4fv(coinProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(coinProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
@@ -178,7 +175,6 @@ int main(int argc, char** argv) {
     /* 10_ Dessin du World */
     // Erreur de seg au drawArray
     glDrawElements(GL_TRIANGLES, coin.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0);
-
     glBindVertexArray(0);
     // Update the display
     windowManager.swapBuffers();

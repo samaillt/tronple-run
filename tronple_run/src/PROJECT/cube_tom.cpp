@@ -9,7 +9,7 @@
 #include <glimac/glm.hpp> 
 #include <glimac/Image.hpp>
 #include <project_classes/TrackballCamera.hpp> 
-#include <project_classes/Model.hpp>
+#include <glimac/Cube.hpp>
 
 
 using namespace glimac;
@@ -32,7 +32,7 @@ struct worldProgram{
     }
 };
 
-struct coinProgram{
+struct cubeProgram{
     Program m_Program;
 
     GLint uMVPMatrix;
@@ -40,7 +40,7 @@ struct coinProgram{
     GLint uNormalMatrix;
     GLint uTextureWorld;
 
-    coinProgram(const FilePath& applicationPath):
+    cubeProgram(const FilePath& applicationPath):
         m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                               applicationPath.dirPath() + "shaders/normals.fs.glsl")) {
         uMVPMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVPMatrix");
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
   }  
   
   FilePath applicationPath(argv[0]);
-  coinProgram coinProgram(applicationPath);
+  cubeProgram cubeProgram(applicationPath);
   
   /* Load world texture */
   std::unique_ptr<Image> imgWorld = loadImage(applicationPath.dirPath() + "../../src/assets/textures/mapGrid.jpg");
@@ -79,13 +79,13 @@ int main(int argc, char** argv) {
   /* 1_ Construction de la sphère et de la caméra*/
   TrackballCamera camera;
   camera.moveFront(-100.f);
-  Model coin("coin", "coin");
+  Cube cube(1,1,1);
   
-  coin.setVbo();
+  cube.setVbo();
 
-  coin.setIbo();
+  cube.setIbo();
   
-  coin.setVao();
+  cube.setVao();
   
   /* 4_ Activation de la detection de la profondeur */
   glEnable(GL_DEPTH_TEST);
@@ -144,9 +144,9 @@ int main(int argc, char** argv) {
             break;
           case SDL_MOUSEMOTION:
             if (e.motion.xrel != 0)
-              camera.rotateLeft( float(e.motion.xrel) * -0.1f);
+              camera.rotateLeft( float(e.motion.xrel) * -0.2f);
             if (e.motion.yrel != 0)
-              camera.rotateUp( float(e.motion.yrel) * -0.1f);
+              camera.rotateUp( float(e.motion.yrel) * -0.2f);
             break;
           default:
             break;
@@ -157,27 +157,27 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE RENDERING CODE
      *********************************/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glBindVertexArray(coin.getVao());
+    glBindVertexArray(cube.getVao());
 
     /* Calcul de la caméra */
     globalMVMatrix = camera.getViewMatrix();
 
     /* 9_ Envoi des matrices au GPU */
     /* DESSIN DU WORLD */
-    coinProgram.m_Program.use();
+    cubeProgram.m_Program.use();
     
-    glUniform1i(coinProgram.uTextureWorld, 0);
+    glUniform1i(cubeProgram.uTextureWorld, 0);
 
     MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
     MVMatrix = glm::scale(MVMatrix, glm::vec3(10, 10, 10)); // Translation * Rotation * Translation * Scale
 
-    glUniformMatrix4fv(coinProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
-    glUniformMatrix4fv(coinProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-    glUniformMatrix4fv(coinProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+    glUniformMatrix4fv(cubeProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
+    glUniformMatrix4fv(cubeProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
+    glUniformMatrix4fv(cubeProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
     /* 10_ Dessin du World */
     // Erreur de seg au drawArray
-    glDrawElements(GL_TRIANGLES, coin.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, cube.getIndexCount(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
     // Update the display
