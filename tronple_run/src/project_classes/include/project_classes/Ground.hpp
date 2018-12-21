@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Ground
-/// \brief Class that defines the ground
+/// \brief Class that defines the Ground
 class Ground : public Cell {
 
 public:

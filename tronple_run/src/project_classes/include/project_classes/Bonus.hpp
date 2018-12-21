@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Bonus
-/// \brief Class that defines a bonus
+/// \brief Class that defines a Bonus
 class Bonus : public Cell {
 
 public:

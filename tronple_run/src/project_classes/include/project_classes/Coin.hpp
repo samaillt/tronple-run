@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Coin
-/// \brief Class that defines a coin
+/// \brief Class that defines a Coin
 class Coin : public Cell {
 
 private:

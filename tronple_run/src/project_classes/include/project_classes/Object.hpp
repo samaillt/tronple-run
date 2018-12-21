@@ -2,7 +2,7 @@
 #include <iostream>
 
 /// \class Object
-/// \brief Class that defines an object
+/// \brief Class that defines an Object
 class Object {
 
 private:
@@ -47,25 +47,63 @@ public:
     /// \brief Default constructor
     Object();
 
-    // getter
+    /// \brief Get object type :
+    /// \li 'p' : player
+    /// \li 'e' : enemy
+    /// \li 'b' : block
+    /// \li 'a' : arche
+    /// \li 'c' : coin
+    /// \li 't' : bonus
+    /// \li 'm' : malus
+    /// \li 'g' : ground
+    /// \li 'h' : hole
+    /// \li 'f' : arrival
     char getType() const;
+
+    /// \brief Get object width
+    /// \return Float
     float getWidth() const;
+
+    /// \brief Get object height
+    /// \return Float
     float getHeight() const;
+
+    /// \brief Get object X position
+    /// \return Float
     float getPosX() const;
+
+    /// \brief Get object Y position
+    /// \return Float
     float getPosY() const;
+
+    /// \brief Get object Z position
+    /// \return Float
     float getPosZ() const;
 
-    // setter
+    /// \brief Set object type
+    /// \param Type
     void setType(char type);
+    
+    /// \brief Set object width
+    /// \param Width
     void setWidth(float &width);
+
+    /// \brief Set object height
+    /// \param Height
     void setHeight(float &height);
+
+    /// \brief Set object X position
+    /// \param X position
     void setPosX(float &posX);
+    
+    /// \brief Set object Y position
+    /// \param X position
     void setPosY(float &posY);
+
+    /// \brief Set object Z position
+    /// \param X position
     void setPosZ(float &posZ);
 
-    // collision
-    bool collision(Object*);
-
-    //destructor
+    /// \brief Destructor
     ~Object();
 };

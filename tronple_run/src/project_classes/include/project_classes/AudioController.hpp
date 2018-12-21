@@ -4,7 +4,7 @@
 #include <iostream>
 
 /// \class AudioController
-/// \brief Class to set music
+/// \brief Class that set music (AudioController)
 class AudioController {
 
 private:

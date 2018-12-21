@@ -25,7 +25,7 @@
 
 
 /// \class Arch
-/// \brief Class that defines an arch
+/// \brief Class that defines an Arch
 class Arch : public Cell {
 
 public:

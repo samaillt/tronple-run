@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Malus
-/// \brief Class that defines a malus
+/// \brief Class that defines a Malus
 class Malus : public Cell {
 
 public:

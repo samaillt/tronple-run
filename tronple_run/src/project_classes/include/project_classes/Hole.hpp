@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Hole
-/// \brief Class that defines a hole
+/// \brief Class that defines a Hole
 class Hole : public Cell {
 
 public:

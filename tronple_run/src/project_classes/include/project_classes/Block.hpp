@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Block
-/// \brief Class that defines a block
+/// \brief Class that defines a Block
 class Block : public Cell {
 
 public:

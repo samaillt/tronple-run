@@ -3,7 +3,7 @@
 #include "project_classes/Object.hpp"
 
 /// \class Character
-/// \brief Class that defines a character
+/// \brief Class that defines a Character
 class Character : public Object {
 
 private:

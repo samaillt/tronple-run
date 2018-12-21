@@ -9,8 +9,16 @@
 using namespace glimac;
 
 /// \class Model
-/// \brief Class that defines a model 3D
+/// \brief Class that defines a Model 3D
 class Model{
+
+private:
+    GLuint _vao; /*!<  */ 
+    GLuint _vbo; /*!<  */ 
+    GLuint _ibo; /*!<  */ 
+
+    Geometry _geometry; /*!<  */ 
+    std::string _obj; /*!<  */ 
 
 public:
     /// \brief Constructor
@@ -21,7 +29,6 @@ public:
     ///\brief Default constructor
     Model();
 
-    //getter
     Geometry getGeometry();
     GLuint getVao();
     GLuint getIbo();
@@ -37,12 +44,4 @@ public:
 
     //destructor
     ~Model();
-
-private:
-	GLuint _vao;
-	GLuint _vbo;
-	GLuint _ibo;
-
-	Geometry _geometry;
-	std::string _obj;
 };

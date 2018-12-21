@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 
 /// \class Arrival
-/// \brief Class that defines the arrival
+/// \brief Class that defines the Arrival
 class Arrival : public Cell {
 
 public:

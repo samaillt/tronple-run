@@ -2,7 +2,7 @@
 #include "project_classes/Object.hpp"
 
 /// \class Cell
-/// \brief Class that defines a cell
+/// \brief Class that defines a Cell
 class Cell : public Object {
 
 public:

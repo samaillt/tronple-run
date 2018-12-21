@@ -12,29 +12,29 @@
 #include "project_classes/Program.hpp"
 #include <project_classes/TrackballCamera.hpp> 
 
-
+/// \class RenderController
+/// \brief Class that defines the RenderController
 class RenderController{
 
 private:
-    // Model
-    Model _model[2];
+    Model _model[2]; /*!<  */ 
 
-    //Matrix
-    glm::mat4 _ProjMatrix;
-    glm::mat4 _MVMatrix;
-    glm::mat4 _NormalMatrix;
-    glm::mat4 _GlobalMVMatrix;
-
-    //Program    
-    ProgramList* _programList;
+    glm::mat4 _ProjMatrix; /*!<  */ 
+    glm::mat4 _MVMatrix; /*!<  */ 
+    glm::mat4 _NormalMatrix; /*!<  */ 
+    glm::mat4 _GlobalMVMatrix; /*!<  */ 
+ 
+    ProgramList* _programList;  /*!< All programs list */ 
 
 public:
 
-    // constructor
+    //// \brief Constructor
+    /// \param programList : all programs
     RenderController(ProgramList* programList);
 
     // **** MATRIX ****
-    //Getter
+    /// \brief Get projection matrix
+    /// \return Matrix 4D
     glm::mat4 getProjMatrix() const;
     glm::mat4 getMVMatrix() const;
     glm::mat4 getNormalMatrix() const;

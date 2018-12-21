@@ -8,7 +8,7 @@
 #include "project_classes/Player.hpp"
 
 /// \class Level
-/// \brief Class that defines a level
+/// \brief Class that defines a Level
 class Level {
 
 private:

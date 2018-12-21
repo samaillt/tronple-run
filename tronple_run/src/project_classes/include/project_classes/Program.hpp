@@ -10,7 +10,7 @@
 #include <glimac/Geometry.hpp>
 #include "project_classes/Model.hpp"
 
-
+/// \brief Enumeration of fragments chaders
 enum FS {COIN};
 
 struct CoinProgram{

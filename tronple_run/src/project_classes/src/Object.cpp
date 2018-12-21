@@ -46,10 +46,5 @@ void Object::setPosZ(float &posZ){
     _posZ = posZ;
 }
 
-// collision (à faire)
-bool Object::collision(Object*) {
-    return true;
-}
-
 //destructor
 Object::~Object(){}
