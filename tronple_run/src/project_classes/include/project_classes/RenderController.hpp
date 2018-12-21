@@ -23,6 +23,7 @@ private:
     glm::mat4 _ProjMatrix;
     glm::mat4 _MVMatrix;
     glm::mat4 _NormalMatrix;
+    glm::mat4 _GlobalMVMatrix;
 
     //Program    
     ProgramList* _programList;
@@ -37,11 +38,13 @@ public:
     glm::mat4 getProjMatrix() const;
     glm::mat4 getMVMatrix() const;
     glm::mat4 getNormalMatrix() const;
-
+    glm::mat4 getGlobalMVMatrix() const;
+    
     //Setter
     void setProjMatrix(glm::mat4 ProjMatrix);
     void setMVMatrix(glm::mat4 MVMatrix);
     void setNormalMatrix(glm::mat4 NormalMatrix);
+    void setGlobalMVMatrix(glm::mat4 GlobalMVMatrix);
 
     // **** PROGRAM **** //
     void useProgram(FS shader);
@@ -58,6 +61,12 @@ public:
     void applyTransformations(FS shader, glm::mat4 MVMatrix);
     void drawModel(int i);
     void debindVAO();
+
+    glm::mat4 useMatrixCoin();
+    glm::mat4 useMatrixBike();
+
+    glm::mat4 useMatrixUp();
+    glm::mat4 useMatrixDown();
 
     //destructor
     ~RenderController();

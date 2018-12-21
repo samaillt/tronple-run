@@ -104,31 +104,37 @@ int main(int argc, char** argv) {
      *********************************/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /* Calcul de la caméra */
-    globalMVMatrix = renderController.getMVMatrix();
+    //GlobalMVMatrix dans constructeur
 
     /* COIN */
     renderController.bindModelVAO(0);
     renderController.useProgram(COIN);
-    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); 
-    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/4, glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(5, 1, 1)); 
+    MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin();
     renderController.applyTransformations(COIN,MVMatrix);
     renderController.drawModel(0);
 
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 2, -5));
-    renderController.applyTransformations(COIN,MVMatrix);
+    for (int i = 0; i < 4; i++){
+      MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -7));
+      renderController.applyTransformations(COIN,MVMatrix);
+      renderController.drawModel(0);
+    }
+
+    MVMatrix = MVMatrix * renderController.useMatrixUp();
+
     renderController.drawModel(0);
+
+    for (int i = 0; i < 4; i++){
+      MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5));
+      renderController.applyTransformations(COIN,MVMatrix);
+      renderController.drawModel(0);
+    }
     renderController.debindVAO();
 
     /* MOTO */
     renderController.bindModelVAO(1);
     renderController.useProgram(COIN);
-    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); 
-    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/4, glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(1, 1, 1)); 
-    glUniformMatrix4fv(coinProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
-    glUniformMatrix4fv(coinProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
-    glUniformMatrix4fv(coinProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+    MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike();
+    renderController.applyTransformations(COIN,MVMatrix);
     renderController.drawModel(1);
     renderController.debindVAO();
 
