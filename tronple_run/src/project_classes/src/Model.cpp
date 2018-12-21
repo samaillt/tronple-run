@@ -18,6 +18,8 @@ Model::Model(const std::string obj, const FilePath &applicationPath)
 		setVao();
 }
 
+Model::Model(){}
+
 void Model::setVbo(){
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
@@ -76,7 +78,12 @@ GLuint Model::getVbo(){
     return _vbo;
 }
 
-Model::Model(){}
+std::string Model::getObj(){
+    return _obj;
+}
 
 //destructor
-Model::~Model(){}
+Model::~Model(){
+	glDeleteBuffers(1, &_vbo);
+    glDeleteVertexArrays(1, &_vao);
+}

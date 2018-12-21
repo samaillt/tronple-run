@@ -27,6 +27,8 @@ public:
     GLuint getIbo();
     GLuint getVbo();
 
+    std::string getObj();
+
 
     //setter
     void setVbo();

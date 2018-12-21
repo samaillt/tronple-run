@@ -4,52 +4,20 @@
 #include <cstddef>
 #include <vector>
 #include <math.h>
+
 #include <glimac/Program.hpp> 
 #include <glimac/FilePath.hpp> 
 #include <glimac/glm.hpp> 
 #include <glimac/Image.hpp>
-#include <project_classes/TrackballCamera.hpp> 
+
 #include <project_classes/Model.hpp>
+#include <project_classes/RenderController.hpp>
+#include <project_classes/Program.hpp>
 
 
 using namespace glimac;
 
-struct worldProgram{
-    Program m_Program;
-
-    GLint uMVPMatrix;
-    GLint uMVMatrix;
-    GLint uNormalMatrix;
-    GLint uTextureWorld;
-
-    worldProgram(const FilePath& applicationPath):
-        m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-                              applicationPath.dirPath() + "shaders/world.fs.glsl")) {
-        uMVPMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(m_Program.getGLId(), "uNormalMatrix");
-        uTextureWorld = glGetUniformLocation(m_Program.getGLId(), "uTextureWorld");
-    }
-};
-
-struct coinProgram{
-    Program m_Program;
-
-    GLint uMVPMatrix;
-    GLint uMVMatrix;
-    GLint uNormalMatrix;
-    GLint uTextureWorld;
-
-    coinProgram(const FilePath& applicationPath):
-        m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-                              applicationPath.dirPath() + "shaders/normals.fs.glsl")) {
-        uMVPMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(m_Program.getGLId(), "uNormalMatrix");
-    }
-};
-
-int main(int argc, char** argv) {
+int main(int argc, char** argv) {  
   // Initialize SDL and open a window
   const int WINDOW_WIDTH = 800;
   const int WINDOW_HEIGTH = 800;
@@ -61,15 +29,17 @@ int main(int argc, char** argv) {
       std::cerr << glewGetErrorString(glewInitError) << std::endl;
       return EXIT_FAILURE;
   }  
-  
+
+  /* Init program */
   FilePath applicationPath(argv[0]);
-  coinProgram coinProgram(applicationPath);
+  CoinProgram coinProgram(applicationPath);
+  WorldProgram worldProgram(applicationPath);
+
+  ProgramList programList;
+  programList.coinProgram = &coinProgram;
+  programList.worldProgram = &worldProgram;
   
   /* Load world texture */
-  std::unique_ptr<Image> imgWorld = loadImage(applicationPath.dirPath() + "../../src/assets/textures/mapGrid.jpg");
-  if ( imgWorld == NULL ) std::cout << "World Image Not Loaded" << std::endl;
-  
-
   std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
   std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
     
@@ -77,45 +47,20 @@ int main(int argc, char** argv) {
    * HERE SHOULD COME THE INITIALIZATION CODE
    *********************************/
   /* 1_ Construction de la sphère et de la caméra*/
-  TrackballCamera camera;
-  camera.moveFront(-100.f);
-  Model coin("coin", "coin");
-  
-  coin.setVbo();
+  RenderController renderController = RenderController(&programList);
+  renderController.VModel(0);
+  renderController.VModel(1);
 
-  coin.setIbo();
-  
-  coin.setVao();
-  
   /* 4_ Activation de la detection de la profondeur */
   glEnable(GL_DEPTH_TEST);
   
   /* 5-8_ Création des matrices de Projection, MV et Normales */
   glm::mat4 ProjMatrix, MVMatrix, NormalMatrix, globalMVMatrix;
-  ProjMatrix = glm::perspective(glm::radians(70.0f), // Angle vertical de vue
-                   (float) (WINDOW_WIDTH / WINDOW_HEIGTH), // Ratio de la fenetre
-                   0.1f, // Near
-                   100.f); // Far
+  ProjMatrix = glm::perspective(glm::radians(70.0f), (float) (WINDOW_WIDTH / WINDOW_HEIGTH), 0.1f, 100.f); 
+  renderController.setProjMatrix(ProjMatrix);
   
   // Chargement des textures
-  GLuint textureWorld;
-  glGenTextures(1, &textureWorld); 
-  
-  glBindTexture(GL_TEXTURE_2D, textureWorld);
-  glTexImage2D(GL_TEXTURE_2D, // Target
-               0, // Mipmap level
-               GL_RGBA, // Internal Format
-               imgWorld->getWidth(), // Width
-               imgWorld->getHeight(), // Height
-               0, // Border
-               GL_RGBA, // Format
-               GL_FLOAT, // Type
-               imgWorld->getPixels() // Value
-              );
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glBindTexture(GL_TEXTURE_2D, 0);
-  
+
   // End Chargement des textures
   // bind vao
 
@@ -124,15 +69,16 @@ int main(int argc, char** argv) {
   float time = 0.0f;
   while(!done) {
     // Event loop:
+    
     SDL_Event e;
     while(windowManager.pollEvent(e)) {
       if(e.type == SDL_QUIT) {
         done = true; // Leave the loop after this iteration
       }
-        /* Traitement d'evenements : */
+        // Traitement d'evenements : 
         switch(e.type) {
-          /* Touche clavier */
-          case SDL_KEYDOWN:
+          // Touche clavier 
+          /*case SDL_KEYDOWN:
             if (e.key.keysym.sym == SDLK_DOWN)
               camera.moveFront(-5.f);
             if (e.key.keysym.sym == SDLK_UP)
@@ -147,7 +93,7 @@ int main(int argc, char** argv) {
               camera.rotateLeft( float(e.motion.xrel) * -0.1f);
             if (e.motion.yrel != 0)
               camera.rotateUp( float(e.motion.yrel) * -0.1f);
-            break;
+            break;*/
           default:
             break;
         }
@@ -157,36 +103,39 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE RENDERING CODE
      *********************************/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glBindVertexArray(coin.getVao());
-
     /* Calcul de la caméra */
-    globalMVMatrix = camera.getViewMatrix();
+    globalMVMatrix = renderController.getMVMatrix();
 
-    /* 9_ Envoi des matrices au GPU */
-    /* DESSIN DU WORLD */
-    coinProgram.m_Program.use();
-    
-    glUniform1i(coinProgram.uTextureWorld, 0);
+    /* COIN */
+    renderController.bindModelVAO(0);
+    renderController.useProgram(COIN);
+    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); 
+    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/4, glm::vec3(0, 1, 0)); 
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(5, 1, 1)); 
+    renderController.applyTransformations(COIN,MVMatrix);
+    renderController.drawModel(0);
 
-    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); // Translation
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(10, 10, 10)); // Translation * Rotation * Translation * Scale
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 2, -5));
+    renderController.applyTransformations(COIN,MVMatrix);
+    renderController.drawModel(0);
+    renderController.debindVAO();
 
+    /* MOTO */
+    renderController.bindModelVAO(1);
+    renderController.useProgram(COIN);
+    MVMatrix = globalMVMatrix*glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); 
+    MVMatrix = glm::rotate(MVMatrix, windowManager.getTime()/4, glm::vec3(0, 1, 0)); 
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(1, 1, 1)); 
     glUniformMatrix4fv(coinProgram.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
     glUniformMatrix4fv(coinProgram.uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     glUniformMatrix4fv(coinProgram.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
+    renderController.drawModel(1);
+    renderController.debindVAO();
 
-    /* 10_ Dessin du World */
-    // Erreur de seg au drawArray
-    glDrawElements(GL_TRIANGLES, coin.getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0);
-
-    glBindVertexArray(0);
     // Update the display
     windowManager.swapBuffers();
   }
 
   // Liberation des ressources
-  // glDeleteBuffers(1, &vbo);
-  // glDeleteVertexArrays(1, &vao);
-  glDeleteTextures(0, &textureWorld);
   return EXIT_SUCCESS;
 }
