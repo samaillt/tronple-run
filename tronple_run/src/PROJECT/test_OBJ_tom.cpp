@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
    * HERE SHOULD COME THE INITIALIZATION CODE
    *********************************/
   /* 1_ Construction de la sphère et de la caméra*/
-  RenderController renderController = RenderController(&programList);
+  RenderController renderController = RenderController(&windowManager, &programList);
   renderController.VModel(0);
   renderController.VModel(1);
 
@@ -109,22 +109,12 @@ int main(int argc, char** argv) {
     /* COIN */
     renderController.bindModelVAO(0);
     renderController.useProgram(COIN);
-    MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin();
-    renderController.applyTransformations(COIN,MVMatrix);
-    renderController.drawModel(0);
+    // Boucle qui affiche les pièces
+    for (int i = 0; i < 5; i++){
+      // METTRE UN IF EN FONCTION DU TYPE DE PIECE
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(i); // COIN AU SOL
+      //MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(i) * renderController.useMatrixUp(); // COIN EN HAUTEUR
 
-    for (int i = 0; i < 4; i++){
-      MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -7));
-      renderController.applyTransformations(COIN,MVMatrix);
-      renderController.drawModel(0);
-    }
-
-    MVMatrix = MVMatrix * renderController.useMatrixUp();
-
-    renderController.drawModel(0);
-
-    for (int i = 0; i < 4; i++){
-      MVMatrix = glm::translate(MVMatrix, glm::vec3(0, 0, -5));
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(0);
     }

@@ -2,9 +2,9 @@
 
 
 //**** CONTROLLER ****
-RenderController::RenderController(ProgramList* programList)
-: _programList(programList){
- 	
+RenderController::RenderController(SDLWindowManager* windowManager, ProgramList* programList)
+: _windowManager(windowManager), _programList(programList){
+
  	// A modifier
  	TrackballCamera camera;
   	camera.moveFront(-10.f);
@@ -79,14 +79,12 @@ void RenderController::bindModelVAO(int i){
 }
 
 
-glm::mat4 RenderController::useMatrixCoin(){
-
+glm::mat4 RenderController::useMatrixCoin(int i){
     glm::mat4 MVMatrix;
 
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5)); 
-    MVMatrix = glm::rotate(MVMatrix, (float)0 * glm::pi<float>()/180, glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.4, 0.4, 0.4)); 
-
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, (-5 * i))); 
+    MVMatrix = glm::rotate(MVMatrix, _windowManager->getTime(), glm::vec3(0, 1, 0)); 
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.4, 0.4, 0.4));  
     return MVMatrix;
 }
 

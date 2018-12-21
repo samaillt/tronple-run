@@ -8,33 +8,37 @@
 #include <glimac/glm.hpp> 
 #include <glimac/Image.hpp>
 #include <glimac/Geometry.hpp>
+#include <glimac/SDLWindowManager.hpp>
+
 #include "project_classes/Model.hpp"
 #include "project_classes/Program.hpp"
 #include <project_classes/TrackballCamera.hpp> 
 
-/// \class RenderController
-/// \brief Class that defines the RenderController
+
 class RenderController{
 
 private:
-    Model _model[2]; /*!<  */ 
+    //Program    
+    ProgramList* _programList;
 
-    glm::mat4 _ProjMatrix; /*!<  */ 
-    glm::mat4 _MVMatrix; /*!<  */ 
-    glm::mat4 _NormalMatrix; /*!<  */ 
-    glm::mat4 _GlobalMVMatrix; /*!<  */ 
- 
-    ProgramList* _programList;  /*!< All programs list */ 
+    //WindowManager
+    SDLWindowManager* _windowManager;
+
+    // Model
+    Model _model[2];
+
+    //Matrix
+    glm::mat4 _ProjMatrix;
+    glm::mat4 _MVMatrix;
+    glm::mat4 _NormalMatrix;
+    glm::mat4 _GlobalMVMatrix;
 
 public:
-
-    //// \brief Constructor
-    /// \param programList : all programs
-    RenderController(ProgramList* programList);
+    // constructor
+    RenderController(SDLWindowManager* windowManager, ProgramList* programList);
 
     // **** MATRIX ****
-    /// \brief Get projection matrix
-    /// \return Matrix 4D
+    //Getter
     glm::mat4 getProjMatrix() const;
     glm::mat4 getMVMatrix() const;
     glm::mat4 getNormalMatrix() const;
@@ -62,7 +66,7 @@ public:
     void drawModel(int i);
     void debindVAO();
 
-    glm::mat4 useMatrixCoin();
+    glm::mat4 useMatrixCoin(int i);
     glm::mat4 useMatrixBike();
 
     glm::mat4 useMatrixUp();
