@@ -13,13 +13,11 @@
 #include "project_classes/Level.hpp"
 #include "project_classes/GameController.hpp"
 #include "project_classes/Cell.hpp"
+#include "project_classes/AudioController.hpp"
 #include <SDL/SDL_mixer.h>
+#include <unistd.h>
 
 using namespace glimac;
-
-int Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize){
-	
-}
 
 int main(int argc, char** argv) {
 
@@ -31,6 +29,7 @@ int main(int argc, char** argv) {
   const int WINDOW_WIDTH = 800;
   const int WINDOW_HEIGTH = 800;
   SDLWindowManager windowManager(WINDOW_WIDTH, WINDOW_HEIGTH, "GLImac");
+
 
   // Initialize glew for OpenGL3+ support
   GLenum glewInitError = glewInit();
@@ -74,13 +73,10 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF AUDIO
    *********************************/
 
-   Mix_Music *music;
-	music = Mix_LoadMUS("../src/assets/audio/derezzed.mp3");
-if(!music) {
-    printf("Mix_LoadMUS(\"../src/assets/audio/derezzed.mp3\"): %s\n", Mix_GetError());
-    // this might be a critical error...
-}
-   
+  AudioController audioController = AudioController();
+  audioController.addMusic(audioController.createMusic("../src/assets/audio/derezzed.mp3"));
+  audioController.playMusic(0);
+  //Mix_RewindMusic();
 
   /*********************************
    * MENU 
@@ -151,9 +147,7 @@ if(!music) {
     }
 
   }
-  // Mix_FreeMusic(musique);
-  // Mix_CloseAudio();
-  // SDL_Quit();
+
   return EXIT_SUCCESS;
 }
 
