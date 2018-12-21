@@ -3,26 +3,34 @@
 #include <vector>
 #include <iostream>
 
+/// \class AudioController
+/// \brief Class to set music
 class AudioController {
 
+private:
+    std::vector<Mix_Music*> _music; /*!< Vectors of musics */
+
 public:
-    // Constructor
+    /// \brief Constructor
     AudioController();
-    // Destructor
-    ~AudioController();
 
-    // Initializer, called in constructor
-    void initAudio();
-    // Close audio, called in destructor
-    void closeAudio();
-
-    // Music Functions
+    /// \brief Create music
+    /// \param Takes a filename music
+    /// \return Music data
     Mix_Music* createMusic(const char* filename);
+
+    /// \brief Add music to the playlist
+    /// \param Takes a filename music
     void addMusic(Mix_Music* music);
-    //void playMusic(Mix_Music* music);
+
+    /// \brief Play music
+    /// \param Takes music index
     void playMusic(unsigned int i);
+
+    /// \brief Free music
+    /// \param Music data
     void freeMusic(Mix_Music* music);
 
-private:
-    std::vector<Mix_Music*> m_music;
+    /// \brief Destructor
+    ~AudioController();
 };

@@ -16,7 +16,7 @@ public:
     GameController(Level* level);
 
     /// \brief Load a level
-    /// \return A level number
+    /// \return Level number
     int loadLevel();
 
 };

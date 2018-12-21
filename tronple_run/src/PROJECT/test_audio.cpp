@@ -15,7 +15,6 @@
 #include "project_classes/Cell.hpp"
 #include "project_classes/AudioController.hpp"
 #include <SDL/SDL_mixer.h>
-#include <unistd.h>
 
 using namespace glimac;
 
@@ -76,7 +75,7 @@ int main(int argc, char** argv) {
   AudioController audioController = AudioController();
   audioController.addMusic(audioController.createMusic("../src/assets/audio/derezzed.mp3"));
   audioController.playMusic(0);
-  //Mix_RewindMusic();
+  //Mix_RewindMusic(); // pour rejouer la musique du début
 
   /*********************************
    * MENU 
