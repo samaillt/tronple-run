@@ -31,6 +31,9 @@ Player Level::getPlayer() const {
 std::vector<Cell*> Level::getCells() const {
 	return _cells;
 }
+std::vector<Coin*> Level::getCoins() const {
+	return _coins;
+}
 std::string Level::getSourceFile() const {
 	return _sourceFile;
 }
@@ -49,6 +52,9 @@ void Level::setPlayer(Player &player) {
 }
 void Level::setCells(std::vector<Cell*> &cells) {
 	_cells = cells;
+}
+void Level::setCoins(std::vector<Coin*> &coins) {
+	_coins = coins;
 }
 void Level::setSourceFile(std::string &sourceFile) {
 	_sourceFile = "../src/assets/levels/"+sourceFile;

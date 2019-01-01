@@ -7,13 +7,15 @@ RenderController::RenderController(SDLWindowManager* windowManager, ProgramList*
 
  	// A modifier
  	TrackballCamera camera;
-  	camera.moveFront(-10.f);
+  	camera.moveFront(-20.f);
 
 	//Model
 	Model coin("coin", "coin");
 	Model bike("bike", "bike");
+	Model cube("cube", "cube");
 	_model[0] = coin;
 	_model[1] = bike;
+	_model[2] = cube;
 
 	//Matrix
 	_GlobalMVMatrix = camera.getViewMatrix()*glm::translate(glm::mat4(1), glm::vec3(-3, -5, -5));
@@ -79,12 +81,12 @@ void RenderController::bindModelVAO(int i){
 }
 
 
-glm::mat4 RenderController::useMatrixCoin(int i){
+glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
     glm::mat4 MVMatrix;
 
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, (-5 * i))); 
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
     MVMatrix = glm::rotate(MVMatrix, _windowManager->getTime(), glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.4, 0.4, 0.4));  
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2, 0.2, 0.2));  
     return MVMatrix;
 }
 
@@ -92,11 +94,17 @@ glm::mat4 RenderController::useMatrixBike(){
 	glm::mat4 MVMatrix;
 
     MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); 
-    MVMatrix = glm::rotate(MVMatrix, (float)0 * glm::pi<float>()/180, glm::vec3(0, 1, 0)); 
     MVMatrix = glm::scale(MVMatrix, glm::vec3(1, 1, 1)); 
 
     return MVMatrix;
+}
 
+glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
+    glm::mat4 MVMatrix;
+
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2, 0.2, 0.2));  
+    return MVMatrix;
 }
 
 glm::mat4 RenderController::useMatrixUp(){
@@ -115,8 +123,6 @@ glm::mat4 RenderController::useMatrixDown(){
     return MVMatrix;
 }
 
-
-
 void RenderController::applyTransformations(FS shader, glm::mat4 MVMatrix){
     switch (shader){
     	case COIN :   
@@ -134,13 +140,9 @@ void RenderController::drawModel(int i){
 	glDrawElements(GL_TRIANGLES, _model[i].getGeometry().getIndexCount(), GL_UNSIGNED_INT, 0);
 }
 
-
 void RenderController::debindVAO(){
 	glBindVertexArray(0);
 }
-
-
-
 
 RenderController::~RenderController(){
 }

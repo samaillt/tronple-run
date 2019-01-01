@@ -14,7 +14,6 @@
 #include <project_classes/RenderController.hpp>
 #include <project_classes/Program.hpp>
 
-
 using namespace glimac;
 
 int main(int argc, char** argv) {  
@@ -47,7 +46,9 @@ int main(int argc, char** argv) {
    * HERE SHOULD COME THE INITIALIZATION CODE
    *********************************/
   /* 1_ Construction de la sphère et de la caméra*/
-  RenderController renderController = RenderController(&windowManager, &programList);
+
+  RenderController renderController(&windowManager, &programList);
+
   renderController.VModel(0);
   renderController.VModel(1);
 
@@ -78,22 +79,22 @@ int main(int argc, char** argv) {
         // Traitement d'evenements : 
         switch(e.type) {
           // Touche clavier 
-          /*case SDL_KEYDOWN:
-            if (e.key.keysym.sym == SDLK_DOWN)
-              camera.moveFront(-5.f);
-            if (e.key.keysym.sym == SDLK_UP)
-              camera.moveFront(5.f);   
-            if (e.key.keysym.sym == SDLK_LEFT)
-              std::cout << "keyleft" << std::endl;
-            if (e.key.keysym.sym == SDLK_RIGHT)
-              std::cout << "keyright" << std::endl;
-            break;
-          case SDL_MOUSEMOTION:
-            if (e.motion.xrel != 0)
-              camera.rotateLeft( float(e.motion.xrel) * -0.1f);
-            if (e.motion.yrel != 0)
-              camera.rotateUp( float(e.motion.yrel) * -0.1f);
-            break;*/
+          // case SDL_KEYDOWN:
+          //   if (e.key.keysym.sym == SDLK_DOWN)
+          //     camera.moveFront(-5.f);
+          //   if (e.key.keysym.sym == SDLK_UP)
+          //     camera.moveFront(5.f);   
+          //   if (e.key.keysym.sym == SDLK_LEFT)
+          //     std::cout << "keyleft" << std::endl;
+          //   if (e.key.keysym.sym == SDLK_RIGHT)
+          //     std::cout << "keyright" << std::endl;
+          //   break;
+          // case SDL_MOUSEMOTION:
+          //   if (e.motion.xrel != 0)
+          //     camera.rotateLeft( float(e.motion.xrel) * -0.1f);
+          //   if (e.motion.yrel != 0)
+          //     camera.rotateUp( float(e.motion.yrel) * -0.1f);
+          //   break;
           default:
             break;
         }
@@ -112,7 +113,7 @@ int main(int argc, char** argv) {
     // Boucle qui affiche les pièces
     for (int i = 0; i < 5; i++){
       // METTRE UN IF EN FONCTION DU TYPE DE PIECE
-      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(i); // COIN AU SOL
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(i, 0, 0); // COIN AU SOL
       //MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(i) * renderController.useMatrixUp(); // COIN EN HAUTEUR
 
       renderController.applyTransformations(COIN,MVMatrix);

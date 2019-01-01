@@ -17,7 +17,8 @@ private:
     int _sizeZ;  /*!<  */
 
     Player _mainCharacter; /*!< Main character of the level */
-    std::vector<Cell*> _cells; /*!< Vortors of cells */
+    std::vector<Cell*> _cells; /*!< Vertor of cells */
+    std::vector<Coin*> _coins; /*!< Vertor of coins */
     std::string _sourceFile; /*!< Source of the file level */
 
 public:
@@ -51,6 +52,10 @@ public:
     /// \return Vectors of cells
     std::vector<Cell*> getCells() const;
 
+    /// \brief Get coin
+    /// \return Vectors of coin
+    std::vector<Coin*> getCoins() const;
+
     /// \brief Get file source of a level
     /// \return Source string of the file level
     std::string getSourceFile() const;
@@ -74,6 +79,10 @@ public:
     /// \brief Set cells
     /// \param Vectors of cells
     void setCells(std::vector<Cell*> &cells);
+
+     /// \brief Set coins
+    /// \param Vectors of coins
+    void setCoins(std::vector<Coin*> &coins);
 
     /// \brief Set file source of the level
     /// \param Source string of the file level

@@ -25,7 +25,7 @@ private:
     SDLWindowManager* _windowManager;
 
     // Model
-    Model _model[2];
+    Model _model[3];
 
     //Matrix
     glm::mat4 _ProjMatrix;
@@ -66,8 +66,9 @@ public:
     void drawModel(int i);
     void debindVAO();
 
-    glm::mat4 useMatrixCoin(int i);
+    glm::mat4 useMatrixCoin(float x, float y, float z);
     glm::mat4 useMatrixBike();
+    glm::mat4 useMatrixCell(float x, float y, float z);
 
     glm::mat4 useMatrixUp();
     glm::mat4 useMatrixDown();

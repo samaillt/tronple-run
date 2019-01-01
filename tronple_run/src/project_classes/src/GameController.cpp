@@ -65,7 +65,8 @@ int GameController::loadLevel(){
 	exit(0);
 	sscanf(line, "%d", &color_max);
 
-	std::vector<Cell*> cells; // Vector of all map elements 
+	std::vector<Cell*> cells; // Vector of all map elements
+	std::vector<Coin*> coins; // Vector of coins
 
 	for (unsigned int i = 0; i < height; ++i) {
 		for (unsigned int j = 0; j < width; ++j) {
@@ -100,15 +101,13 @@ int GameController::loadLevel(){
 		    	if (r == 255 && g == 150 && b == 0) {
 		      		/* Ground + coin 1 - Light Yellow */
 		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		      		cell = new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10);
+		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10));
 		    	}
 
 		    	if (r == 255 && g == 255 && b == 0) {
 		      		/* Ground + coin 2 - Yellow */
 		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		      		cell = new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10);
+		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		    	}
 
 		    	if (r == 150 && g == 50 && b == 0) {
@@ -129,8 +128,7 @@ int GameController::loadLevel(){
 		    	if (r == 0 && g == 0 && b == 0) {
 		      		/* Hole + coin 2 - Black */
 		      		cell = new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		      		cell = new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10);
+		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		   		}
 
 		  	// ------ BLOCK -----
@@ -139,8 +137,7 @@ int GameController::loadLevel(){
 		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
 		      		cells.push_back(cell);
 		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 1.f);
-		      		cells.push_back(cell);
-		      		cell = new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10);
+		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		    	}
 
 		    	if (r == 0 && g == 0 && b == 255) {
@@ -162,9 +159,8 @@ int GameController::loadLevel(){
 		      		/* Arche + coin 1- Dark green */
 		    		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
 		      		cells.push_back(cell);
-		    		cell = new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10);
-		      		cells.push_back(cell);
 		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 2.f);
+		    		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10));
 		    	}
 		  	}
 		  	cells.push_back(cell);
@@ -172,4 +168,5 @@ int GameController::loadLevel(){
 	}
 	fclose (level_file);
 	_level->setCells(cells);
+	_level->setCoins(coins);
 }
