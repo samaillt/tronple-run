@@ -1,15 +1,16 @@
 #pragma once
 
-#include "project_classes/Character.hpp"
+#include "project_classes/Object.hpp"
 
 /// \class Player
 /// \brief Class that defines the player
-class Player : public Character {
+class Player : public Object {
 
 private:
 	std::string _pseudo; /*!< Player pseudo */
 	uint _score; /*!< Player score */
 	bool _isAlive; /*!< Player, are you alive ? */
+    float _speed; /*!< movement speed of the player */
 
 public:
 
@@ -20,14 +21,11 @@ public:
     /// \param posX : X position of the player
     /// \param posY : Y position of the player
     /// \param posZ : Z position of the player
-    /// \param initX : initialisation of the X position of the player
-    /// \param initY : initialisation of the Y position of the player
     /// \param speed : movement speed of the player
     /// \param pseudo : pseudo of the player
     /// \param score : score of the player
     /// \param isAlive : true or false
-    Player(char type, float width, float height, float posX, float posY, float posZ, char initX, float initY, float speed, 
-        std::string pseudo, uint score, bool isAlive);
+    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive);
     
     //// \brief Default constructor
     Player();
@@ -44,6 +42,10 @@ public:
     /// \return String pseudo
     std::string getPseudo() const;
 
+    /// \brief Get player speed
+    /// \return String speed
+    float getSpeed() const;
+
     /// \brief Set player score
     /// \param Actual player score
     void setScore(const uint score);
@@ -55,6 +57,10 @@ public:
     /// \brief Set player pseudo
     /// \param String player pseudo
     void setPseudo(const std::string &pseudo);
+
+    /// \brief Set player speed
+    /// \param String player speed
+    void setSpeed(const float speed);
 
     /// \brief Increment player score
     /// \param Number of points

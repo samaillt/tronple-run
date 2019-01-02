@@ -13,6 +13,7 @@
 
 #include "project_classes/TrackballCamera.hpp"
 #include "project_classes/FreeflyCamera.hpp"
+#include "project_classes/Camera.hpp"
 
 #include "project_classes/Level.hpp"
 #include "project_classes/GameController.hpp"
@@ -73,15 +74,22 @@ int main(int argc, char** argv) {
     game_controller.loadLevel();
     std::cout << level.getCells().size() << std::endl;
 
+    Player player = level.getPlayer();
+
     std::vector<Cell*> levelCells = level.getCells();
     std::vector<Coin*> levelCoins = level.getCoins();
+
+    // Loading level test
+    // for_each(levelCells.begin(), levelCells.end(), printInfos);
 
   /*********************************
    * INITIALIZATION OF CAMERAS
    *********************************/
 
-    TrackballCamera trackball_cam;
+    TrackballCamera trackball_cam(5.f,2.f,0.f,0.f);
     FreeflyCamera freefly_cam;
+    trackball_cam.rotateLeft(180);
+    Camera *camera = &trackball_cam;
 
   /*********************************
    * INITIALIZATION OF RENDERING
@@ -151,10 +159,6 @@ int main(int argc, char** argv) {
        * CAMERA MANAGEMENT
        *********************************/
 
-      /*********************************
-       * GAME MANAGEMENT
-       *********************************/
-
        /*********************************
        * GAME MANAGEMENT
        *********************************/
@@ -174,13 +178,14 @@ int main(int argc, char** argv) {
        // Pause menu if game is paused
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
       /* Calcul de la caméra */
-      //GlobalMVMatrix in the constructor : TO CHANGE !!!!
+      renderController.setGlobalMVMatrix(camera->getViewMatrix());
 
       /* BIKE */
       renderController.bindModelVAO(1);
       renderController.useProgram(COIN);
-      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike();
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ());
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(1);
       renderController.debindVAO();
@@ -201,17 +206,17 @@ int main(int argc, char** argv) {
       renderController.useProgram(COIN);
       // Cells display
       std::for_each(levelCells.begin(), levelCells.end(), [&](const Cell *cell){
-        MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCell(cell->getPosX(), cell->getPosY(), cell->getPosZ());
-        renderController.applyTransformations(COIN,MVMatrix);
-        renderController.drawModel(0);
+        if (cell->getType() != 'h'){
+          MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCell(cell->getPosX(), cell->getPosY(), cell->getPosZ());
+          renderController.applyTransformations(COIN,MVMatrix);
+          renderController.drawModel(0);
+        }
       });
       renderController.debindVAO();
 
       // Update the display
       windowManager.swapBuffers();
     }
-
   }
-
   return EXIT_SUCCESS;
 }

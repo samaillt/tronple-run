@@ -67,11 +67,8 @@ public:
     void debindVAO();
 
     glm::mat4 useMatrixCoin(float x, float y, float z);
-    glm::mat4 useMatrixBike();
+    glm::mat4 useMatrixBike(float x, float y, float z);
     glm::mat4 useMatrixCell(float x, float y, float z);
-
-    glm::mat4 useMatrixUp();
-    glm::mat4 useMatrixDown();
 
     //destructor
     ~RenderController();

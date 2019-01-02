@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 #include <project_classes/Object.hpp>
-#include <project_classes/Character.hpp>
 #include <project_classes/Player.hpp>
 #include <project_classes/Enemy.hpp>
 #include <project_classes/Cell.hpp>
@@ -45,43 +44,9 @@ void testObject(){
 	//Collision (à faire)
 }
 
-void testCharacter(){
-	// Constructeur
-	Character character('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f);
-	float f1 = 100.f;
-
-	// Get
-	std::cout << "------ 1 -----" << std::endl;
-	std::cout << "Type : " << character.getType() << std::endl; 
-	std::cout << "Width : " << character.getWidth() << std::endl; 
-	std::cout << "Height : " << character.getHeight() << std::endl; 
-	std::cout << "PosX : " << character.getPosX() << std::endl; 
-	std::cout << "PosY : " << character.getPosY() << std::endl; 
-	std::cout << "Speed : " << character.getSpeed() << std::endl; 
-	std::cout << "InitX : " << character.getInitX() << std::endl; 
-	std::cout << "InitY : " << character.getInitY() << std::endl; 
-
-	//Set
-	character.setType('N');
-	character.setSpeed(f1);
-	character.setInitX(f1); 
-	character.setInitY(f1);
-
-	//Get
-	std::cout << "------ 2 -----" << std::endl;
-	std::cout << "Type : " << character.getType() << std::endl; 
-	std::cout << "Width : " << character.getWidth() << std::endl; 
-	std::cout << "Height : " << character.getHeight() << std::endl; 
-	std::cout << "PosX : " << character.getPosX() << std::endl; 
-	std::cout << "PosY : " << character.getPosY() << std::endl; 
-	std::cout << "Speed : " << character.getSpeed() << std::endl; 
-	std::cout << "InitX : " << character.getInitX() << std::endl; 
-	std::cout << "InitY : " << character.getInitY() << std::endl; 
-}
-
 void testPlayer(){
 	// Constructeur
-	Player player('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f, "Noelie", 3020, true);
+	Player player('p',1.f, 1.f, 2.f, 3.f, 4.f, 3.f, "Noelie", 3020, true);
 	float f1 = 100.f;
 
 	// Get
@@ -91,9 +56,7 @@ void testPlayer(){
 	std::cout << "Height : " << player.getHeight() << std::endl; 
 	std::cout << "PosX : " << player.getPosX() << std::endl; 
 	std::cout << "PosY : " << player.getPosY() << std::endl; 
-	std::cout << "Speed : " << player.getSpeed() << std::endl; 
-	std::cout << "InitX : " << player.getInitX() << std::endl; 
-	std::cout << "InitY : " << player.getInitY() << std::endl; 
+	std::cout << "Speed : " << player.getSpeed() << std::endl;
 	std::cout << "Pseudo : " << player.getPseudo() << std::endl; 
 	std::cout << "Score : " << player.getScore() << std::endl; 
 	std::cout << "Alive : " << player.getIsAlive() << std::endl;
@@ -101,8 +64,6 @@ void testPlayer(){
 	//Set
 	player.setType('N');
 	player.setSpeed(f1);
-	player.setInitX(f1); 
-	player.setInitY(f1);
 	player.setPseudo("Hedi");
 	player.setScore(39089);
 	player.setIsAlive(false);
@@ -116,9 +77,7 @@ void testPlayer(){
 	std::cout << "Height : " << player.getHeight() << std::endl; 
 	std::cout << "PosX : " << player.getPosX() << std::endl; 
 	std::cout << "PosY : " << player.getPosY() << std::endl; 
-	std::cout << "Speed : " << player.getSpeed() << std::endl; 
-	std::cout << "InitX : " << player.getInitX() << std::endl; 
-	std::cout << "InitY : " << player.getInitY() << std::endl; 
+	std::cout << "Speed : " << player.getSpeed() << std::endl;
 	std::cout << "Pseudo : " << player.getPseudo() << std::endl; 
 	std::cout << "Score : " << player.getScore() << std::endl; 
 	std::cout << "Alive : " << player.getIsAlive() << std::endl;
@@ -130,7 +89,7 @@ void testPlayer(){
 
 void testEnemy(){
 	// Constructeur
-	Enemy player('p',1.f, 1.f, 2.f, 3.f, 4.f, 0.f, 0.f, 3.f);
+	Enemy player('p',1.f, 1.f, 2.f, 3.f, 4.f);
 	float f1 = 100.f;
 
 	// Get
@@ -139,16 +98,10 @@ void testEnemy(){
 	std::cout << "Width : " << player.getWidth() << std::endl; 
 	std::cout << "Height : " << player.getHeight() << std::endl; 
 	std::cout << "PosX : " << player.getPosX() << std::endl; 
-	std::cout << "PosY : " << player.getPosY() << std::endl; 
-	std::cout << "Speed : " << player.getSpeed() << std::endl; 
-	std::cout << "InitX : " << player.getInitX() << std::endl; 
-	std::cout << "InitY : " << player.getInitY() << std::endl; 
+	std::cout << "PosY : " << player.getPosY() << std::endl;
 
 	//Set
 	player.setType('N');
-	player.setSpeed(f1);
-	player.setInitX(f1); 
-	player.setInitY(f1);
 
 	//Get
 	std::cout << "------ 2 -----" << std::endl;
@@ -156,10 +109,7 @@ void testEnemy(){
 	std::cout << "Width : " << player.getWidth() << std::endl; 
 	std::cout << "Height : " << player.getHeight() << std::endl; 
 	std::cout << "PosX : " << player.getPosX() << std::endl; 
-	std::cout << "PosY : " << player.getPosY() << std::endl; 
-	std::cout << "Speed : " << player.getSpeed() << std::endl; 
-	std::cout << "InitX : " << player.getInitX() << std::endl; 
-	std::cout << "InitY : " << player.getInitY() << std::endl; 
+	std::cout << "PosY : " << player.getPosY() << std::endl;
 }
 
 void testCell(){

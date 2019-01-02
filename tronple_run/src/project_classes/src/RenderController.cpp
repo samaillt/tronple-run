@@ -5,10 +5,6 @@
 RenderController::RenderController(SDLWindowManager* windowManager, ProgramList* programList)
 : _windowManager(windowManager), _programList(programList){
 
- 	// A modifier
- 	TrackballCamera camera;
-  	camera.moveFront(-20.f);
-
 	//Model
 	Model coin("coin", "coin");
 	Model bike("bike", "bike");
@@ -16,9 +12,6 @@ RenderController::RenderController(SDLWindowManager* windowManager, ProgramList*
 	_model[0] = coin;
 	_model[1] = bike;
 	_model[2] = cube;
-
-	//Matrix
-	_GlobalMVMatrix = camera.getViewMatrix()*glm::translate(glm::mat4(1), glm::vec3(-3, -5, -5));
 }
 
 // **** MATRIX ****
@@ -86,40 +79,20 @@ glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
 
     MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
     MVMatrix = glm::rotate(MVMatrix, _windowManager->getTime(), glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2, 0.2, 0.2));  
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5, 0.5, 0.5));  
     return MVMatrix;
 }
 
-glm::mat4 RenderController::useMatrixBike(){
+glm::mat4 RenderController::useMatrixBike(float x, float y, float z){
 	glm::mat4 MVMatrix;
-
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(1, 1, 1)); 
-
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.3, y));
     return MVMatrix;
 }
 
 glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
     glm::mat4 MVMatrix;
 
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2, 0.2, 0.2));  
-    return MVMatrix;
-}
-
-glm::mat4 RenderController::useMatrixUp(){
-    glm::mat4 MVMatrix;
-
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 7, 0)); 
-
-    return MVMatrix;
-}
-
-glm::mat4 RenderController::useMatrixDown(){
-	glm::mat4 MVMatrix;
-
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, -7, 0)); 
-
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y));
     return MVMatrix;
 }
 

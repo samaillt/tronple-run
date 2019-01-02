@@ -2,18 +2,25 @@
 #include <string>
 #include <string.h>
 #include <iostream>
+#include <algorithm>
 #include "project_classes/GameController.hpp"
 #include "project_classes/Arrival.hpp"
 #include "project_classes/Ground.hpp"
 #include "project_classes/Coin.hpp"
 #include "project_classes/Hole.hpp"
 #include "project_classes/Block.hpp"
+#include "project_classes/Player.hpp"
 
 GameController::GameController(Level* level){
 	_level = level;
 }
 
 int GameController::loadLevel(){
+
+	Player player('p', 1, 1, 1, 0, 1, 1, "Toto", 0, 1);
+
+	_level->setPlayer(player);
+
 	FILE *level_file;
 
 	/* Ouverture du fichier de niveau pour la lecture */

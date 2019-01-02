@@ -1,10 +1,9 @@
 #pragma once
-#include "project_classes/Character.hpp"
+#include "project_classes/Object.hpp"
 
 // \class Coin
 /// \brief Class that defines an Enemy
-class Enemy : public Character {
-
+class Enemy : public Object {
 public:
     //// \brief Constructor
     /// \param type : type to define the enemy -> e
@@ -16,7 +15,7 @@ public:
     /// \param initX : initialisation of the X position of the enemy
     /// \param initY : initialisation of the Y position of the enemy
     /// \param speed : movement speed of the enemy
-    Enemy(char type, float width, float height, float posX, float posY, float posZ, char initX, float initY, float speed);
+    Enemy(char type, float width, float height, float posX, float posY, float posZ);
     
     /// \brief Default constructor
     Enemy();
@@ -24,4 +23,3 @@ public:
     /// \brief Destructor
     ~Enemy();
 };
-
