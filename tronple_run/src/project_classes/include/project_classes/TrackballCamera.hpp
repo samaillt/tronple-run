@@ -17,9 +17,9 @@ public:
 	TrackballCamera(float distance = 15.f, float height = 5.f, float angleX = 0.f, float angleY = 0.f)
 	: m_fDistance(distance), m_fHeight(height), m_fAngleX(angleX), m_fAngleY(angleY) {}
 	~TrackballCamera() {}
-	void moveFront(float delta);
-	void rotateLeft(float degrees);
-	void rotateUp(float degrees);
+	void moveFront(const float &delta);
+	void rotateLeft(const float &degrees);
+	void rotateUp(const float &degrees);
 	glm::mat4 getViewMatrix() const;
 	glm::mat4 getViewMatrix(Player &player) const;
 };

@@ -53,9 +53,6 @@ int main(int argc, char** argv) {
     Level level("test.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
-    auto printInfos = [](const Cell *cell){
-      std::cout << "Type : " << cell->getType() << std::endl;
-    };
     std::cout << level.getCells().size() << std::endl;
     /* Erreur de seg à regler : mauvaise gestion du vector */
     // std::for_each(level.getCells().begin(), level.getCells().end(), printInfos);

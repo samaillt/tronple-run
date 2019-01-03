@@ -18,5 +18,8 @@ Compiler :
 Lancer le main :
 `./PROJECT/PROJECT_main`
 
-Possibilité ensuite de générer la documentation. Toujours dans le répertoire build : 
+Ensuite, possibilité de générer la documentation. Toujours dans le répertoire build : 
 `make html`
+
+Tester les fuites mémoires avec valgrind : 
+`valgrind --leak-check=yes ./PROJECT/PROJECT_main`

@@ -90,7 +90,7 @@ void testPlayer(){
 void testEnemy(){
 	// Constructeur
 	Enemy player('p',1.f, 1.f, 2.f, 3.f, 4.f);
-	float f1 = 100.f;
+	//float f1 = 100.f;
 
 	// Get
 	std::cout << "------ 1 -----" << std::endl;

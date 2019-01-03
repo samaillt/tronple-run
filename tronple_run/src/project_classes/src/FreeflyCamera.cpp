@@ -4,15 +4,29 @@
 using namespace glm;
 
 void FreeflyCamera::computeDirectionVectors(){
-	m_FrontVector = vec3(cos(m_fTheta)*sin(m_fPhi), sin(m_fTheta), cos(m_fTheta)*cos(m_fPhi));
-	m_LeftVector = vec3(sin(m_fPhi+M_PI/2), 0, cos(m_fPhi+M_PI/2));
-	m_UpVector = m_FrontVector * m_LeftVector;
+	//F⃗ =(cos(θ)sin(ϕ), sin(θ), cos(θ)cos(ϕ));
+	m_FrontVector = glm::vec3( glm::cos(m_fTheta)*glm::sin(m_fPhi), glm::sin(m_fTheta), glm::cos(m_fTheta)*glm::cos(m_fPhi) );
+
+	//L⃗ =(sin(ϕ+π/2), 0, cos(ϕ+π2))
+	m_LeftVector = glm::vec3( glm::sin(m_fPhi + glm::pi<float>()/2), 0, glm::cos(m_fPhi + glm::pi<float>()/2) );
+
+	//U⃗ =F⃗ × L⃗ 
+	m_UpVector = glm::cross(m_FrontVector, m_LeftVector);
 }
 
 FreeflyCamera::FreeflyCamera()
-:m_fPhi(M_PI), m_fTheta(0)
 {
-	m_Position = vec3(0,0,0);
+	m_Position = glm::vec3(0,0,0);
+	m_fPhi = glm::pi<float>();
+	m_fTheta = 0.f;
+	computeDirectionVectors();
+}
+
+FreeflyCamera::FreeflyCamera(const glm::vec3 position = glm::vec3(0), const float phi = glm::pi<float>(), const float theta = 0.f)
+{
+	m_Position = position;
+	m_fPhi = phi;
+	m_fTheta = theta;
 	computeDirectionVectors();
 }
 
@@ -25,17 +39,24 @@ void FreeflyCamera::moveFront(const float &t){
 }
 
 void FreeflyCamera::rotateLeft(const float &degrees){
-	m_fPhi += radians(degrees);
-    m_FrontVector = vec3(cos(m_fTheta) * sin(m_fPhi), sin(m_fTheta), cos(m_fTheta) * cos(m_fPhi));
-    m_LeftVector = vec3(sin(m_fPhi + M_PI / 2), 0, cos(m_fPhi + M_PI / 2));
-}
+	m_fPhi += glm::radians(degrees);
+	computeDirectionVectors();}
 
 void FreeflyCamera::rotateUp(const float &degrees){
-	m_fTheta += radians(degrees);
-    m_FrontVector = vec3(cos(m_fTheta) * sin(m_fPhi), sin(m_fTheta), cos(m_fTheta) * cos(m_fPhi));
-    m_UpVector = m_FrontVector * m_LeftVector;
+	m_fTheta += glm::radians(degrees);
+	computeDirectionVectors();
 }
 
 glm::mat4 FreeflyCamera::getViewMatrix() const {
     return glm::lookAt(m_Position, m_Position + m_FrontVector, m_UpVector);
+}
+
+glm::mat4 FreeflyCamera::getViewMatrix(Player &player) const {
+    return glm::lookAt(m_Position, m_Position + m_FrontVector, m_UpVector);
+}
+
+void FreeflyCamera::setCameraOnPlayer(Player &player)
+{
+	m_Position = glm::vec3(player.getPosX(), player.getPosZ(), player.getPosY() + 0.5);
+	computeDirectionVectors();
 }

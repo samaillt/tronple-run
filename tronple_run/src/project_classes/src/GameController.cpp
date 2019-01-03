@@ -9,6 +9,7 @@
 #include "project_classes/Coin.hpp"
 #include "project_classes/Hole.hpp"
 #include "project_classes/Block.hpp"
+#include "project_classes/Arch.hpp"
 #include "project_classes/Player.hpp"
 
 GameController::GameController(Level* level){
@@ -16,10 +17,6 @@ GameController::GameController(Level* level){
 }
 
 int GameController::loadLevel(){
-
-	Player player('p', 1, 1, 1, 0, 1, 1, "Toto", 0, 1);
-
-	_level->setPlayer(player);
 
 	FILE *level_file;
 
@@ -72,7 +69,11 @@ int GameController::loadLevel(){
 	exit(0);
 	sscanf(line, "%d", &color_max);
 
-	std::vector<Cell*> cells; // Vector of all map elements
+	std::vector<Cell*> cells; // Vector of all blocks, arches, arrivals (any cube to display)
+	std::vector<Block*> blocks; // Vector of blocks
+	std::vector<Arch*> arches; // Vector of arches
+	std::vector<Arrival*> arrivals; // Vector of arrivals
+	std::vector<Hole*> holes; // Vector of holes
 	std::vector<Coin*> coins; // Vector of coins
 
 	for (unsigned int i = 0; i < height; ++i) {
@@ -86,94 +87,93 @@ int GameController::loadLevel(){
 		  	if (fgets(line, sizeof line, level_file) == NULL)
 		  		return 0;
 		  	sscanf(line, "%d", &b);
-
-		  	Cell* cell;
 		  
 		  	if (r != 255 || g != 255 || b != 255) {
 		  	// ------ DEPARTURE & ARRIVAL -----
 		    	if (r == 255 && g == 50 && b == 255) {
 		    	   	/* Arrival - Magenta */
-		      		cell = new Arrival('f',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		arrivals.push_back(new Arrival('f',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 		    	if (r == 100 && g == 50 && b == 200) {
 		      		/* Departure - Purple*/
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		Player player('p', 1, 1, (float)i, (float)j, 1, 1, "Toto", 0, 1);
+		      		_level->setPlayer(player);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 
 		  	// ------ GROUND -----
 	    		if (r == 100 && g == 0 && b == 0) {
 	      			/* Ground - Dark brown */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 		    	if (r == 255 && g == 150 && b == 0) {
 		      		/* Ground + coin 1 - Light Yellow */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10));
 		    	}
 
 		    	if (r == 255 && g == 255 && b == 0) {
 		      		/* Ground + coin 2 - Yellow */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		    	}
 
 		    	if (r == 150 && g == 50 && b == 0) {
 		      		/* TurnLeft - Brown */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 
 		    	if (r == 150 && g == 150 && b == 0) {
 		      		/* TurnRight - Light Brown */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 
 		  	// ------ HOLE -----
 		    	if (r == 100 && g == 100 && b == 100) {
 		      		/* Hole - Grey */
-		      		cell = new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 		    	if (r == 0 && g == 0 && b == 0) {
 		      		/* Hole + coin 2 - Black */
-		      		cell = new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		   		}
 
 		  	// ------ BLOCK -----
 		    	if (r == 50 && g == 200 && b == 255) {
 		      		/* Block + coin 2 - Light blue */
-		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 1.f);
+		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		    		blocks.push_back(new Block('b',1.f, 1.f, (float)i, (float)j, 1.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		    	}
 
 		    	if (r == 0 && g == 0 && b == 255) {
 		      		/* Block - Blue */
-		    		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 1.f);
+		    		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		    		blocks.push_back(new Block('b',1.f, 1.f, (float)i, (float)j, 1.f));
 		    	}
 
 		  	// ------ ARCHE -----
 		    	if (r == 0 && g == 255 && b == 0) {
 		      		/* Arche - Green */
-		    		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 2.f);
+		    		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		    		arches.push_back(new Arch('b',1.f, 1.f, (float)i, (float)j, 2.f));
 		    	}
 
 		    	if (r == 50 && g == 150 && b == 0) {
 		      		/* Arche + coin 1- Dark green */
-		    		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
-		      		cells.push_back(cell);
-		    		cell = new Block('b',1.f, 1.f, (float)i, (float)j, 2.f);
+		    		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		    		arches.push_back(new Arch('b',1.f, 1.f, (float)i, (float)j, 2.f));
 		    		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 1.f, 10));
 		    	}
 		  	}
-		  	cells.push_back(cell);
 		}
 	}
 	fclose (level_file);
 	_level->setCells(cells);
 	_level->setCoins(coins);
+	_level->setBlocks(blocks);
+	_level->setArches(arches);
+	_level->setArrivals(arrivals);
+	_level->setHoles(holes);
 }

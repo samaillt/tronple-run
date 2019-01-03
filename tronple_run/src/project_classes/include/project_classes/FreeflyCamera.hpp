@@ -1,11 +1,14 @@
 #ifndef __FREEFLYCAMERA__HPP
 #define __FREEFLYCAMERA__HPP
+
 #pragma once
+
 #include "glimac/glm.hpp"
+#include "project_classes/Camera.hpp"
 
 // \class FreeflyCamera
 /// \brief Class that defines the FreeflyCamera
-class FreeflyCamera {
+class FreeflyCamera : public Camera {
 
 private:
 	glm::vec3 m_Position; /*!< vector 3D : position x, y, z */
@@ -23,25 +26,34 @@ public:
 	/// \brief Default constructor
 	FreeflyCamera();
 
-	//// \brief Move camera on the left/right
-    /// \param translation
-	void moveLeft(const float &t);
+	/// \brief Default constructor
+	FreeflyCamera(const glm::vec3 position, const float phi, const float theta);
 
-	//// \brief Move camera on the front/back
+	//// \brief Lateral movement
     /// \param translation
-	void moveFront(const float &t);
+	void moveLeft(const float &delta);
 
-	//// \brief Rotate camera on the left/right
+	//// \brief Move forward / Backward 
+    /// \param translation
+	void moveFront(const float &delta);
+
+	//// \brief Lateral rotation around view point
     /// \param degrees
 	void rotateLeft(const float &degrees);
 
-	//// \brief Rotate camera on the up/down
+	//// \brief Vertical rotation around view point
     /// \param degrees
 	void rotateUp(const float &degrees);
 
 	//// \brief computes and returns the View matrix associated with the camera
     /// \return Matrix 4D
 	glm::mat4 getViewMatrix() const;
+
+	//// \brief computes and returns the View matrix associated with the camera with player set
+    /// \return Matrix 4D
+	glm::mat4 getViewMatrix(Player &player) const;
+
+	void setCameraOnPlayer(Player &player);
 };
 
 #endif

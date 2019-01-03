@@ -1,14 +1,14 @@
 #include "project_classes/TrackballCamera.hpp"
 
-void TrackballCamera::moveFront(float delta){
+void TrackballCamera::moveFront(const float &delta){
 	m_fDistance += delta;
 }
 
-void TrackballCamera::rotateLeft(float degrees){
+void TrackballCamera::rotateLeft(const float &degrees){
 	m_fAngleY += degrees;
 }
 
-void TrackballCamera::rotateUp(float degrees){
+void TrackballCamera::rotateUp(const float &degrees){
 	m_fAngleX += degrees;
 }
 

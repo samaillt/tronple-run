@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
    *********************************/
 
   // Initialize SDL and open a window
-  const int WINDOW_WIDTH = 800;
-  const int WINDOW_HEIGTH = 800;
+  const int WINDOW_WIDTH = 1000;
+  const int WINDOW_HEIGTH = 1000;
   SDLWindowManager windowManager(WINDOW_WIDTH, WINDOW_HEIGTH, "GLImac");
 
   // Initialize glew for OpenGL3+ support
@@ -69,15 +69,18 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF LEVEL & GAME
    *********************************/
 
-    Level level("test.ppm");
+    Level level("1.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
-    std::cout << level.getCells().size() << std::endl;
 
     Player player = level.getPlayer();
 
     std::vector<Cell*> levelCells = level.getCells();
     std::vector<Coin*> levelCoins = level.getCoins();
+    std::vector<Block*> levelBlocks = level.getBlocks();
+    std::vector<Arch*> levelArches = level.getArches();
+    std::vector<Arrival*> levelArrivals = level.getArrivals();
+    std::vector<Hole*> levelHoles = level.getHoles();
 
     // Loading level test
     // for_each(levelCells.begin(), levelCells.end(), printInfos);
@@ -89,7 +92,8 @@ int main(int argc, char** argv) {
     TrackballCamera trackball_cam(5.f,2.f,0.f,0.f);
     FreeflyCamera freefly_cam;
     trackball_cam.rotateLeft(180);
-    Camera *camera = &trackball_cam;
+    freefly_cam.rotateLeft(180);
+    Camera *camera = &freefly_cam;
 
   /*********************************
    * INITIALIZATION OF RENDERING
@@ -125,6 +129,7 @@ int main(int argc, char** argv) {
 
   bool done = false;
   bool game = true;
+  bool lock_camera = false;
   while(!done) {
 
     // Event loop:
@@ -150,6 +155,36 @@ int main(int argc, char** argv) {
       while(windowManager.pollEvent(e)) {
         if(e.type == SDL_QUIT) {
           game = false; // Leave the loop after this iteration
+          done = true;
+        }
+        /* Traitement d'evenements liés à la caméra : */
+        if (!lock_camera){
+          switch(e.type) {
+            /* Touche clavier */
+            case SDL_KEYDOWN:{
+              float zoom = 1.f;
+              if (e.key.keysym.sym == SDLK_DOWN)
+                camera->moveFront(-zoom);
+              if (e.key.keysym.sym == SDLK_UP)
+                camera->moveFront(zoom);
+              if (e.key.keysym.sym == SDLK_ESCAPE)
+                done = true;
+              break;
+            }
+            case SDL_MOUSEMOTION:{
+              float rotation_angle = 0.02f;
+              if ( e.motion.xrel != 0 )
+                camera->rotateLeft(float(-e.motion.xrel) * rotation_angle);
+              if ( e.motion.yrel != 0 )
+                camera->rotateUp(float(-e.motion.yrel) * rotation_angle);
+              break;
+            }
+            default:
+              break;
+          }
+        }
+        else {
+
         }
       }
 
@@ -158,6 +193,8 @@ int main(int argc, char** argv) {
       /*********************************
        * CAMERA MANAGEMENT
        *********************************/
+
+      freefly_cam.setCameraOnPlayer(player);
 
        /*********************************
        * GAME MANAGEMENT
@@ -180,7 +217,10 @@ int main(int argc, char** argv) {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Calcul de la caméra */
-      renderController.setGlobalMVMatrix(camera->getViewMatrix());
+      if (camera == &trackball_cam)
+        renderController.setGlobalMVMatrix(glm::translate(camera->getViewMatrix(), glm::vec3(-(player.getPosX()), 0, -(player.getPosY()))));
+      else
+        renderController.setGlobalMVMatrix(camera->getViewMatrix());
 
       /* BIKE */
       renderController.bindModelVAO(1);
@@ -190,28 +230,35 @@ int main(int argc, char** argv) {
       renderController.drawModel(1);
       renderController.debindVAO();
 
+      auto displayElement = [&](const Cell *cell){
+        switch (cell->getType()) {
+          case 'c' :
+            MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(cell->getPosX(), cell->getPosY(), cell->getPosZ());
+            renderController.applyTransformations(COIN,MVMatrix);
+            break;
+          default :
+            MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCell(cell->getPosX(), cell->getPosY(), cell->getPosZ());
+            renderController.applyTransformations(COIN,MVMatrix);
+            break;
+        }
+        renderController.drawModel(0);
+      };
+
       /* COIN */
       renderController.bindModelVAO(0);
       renderController.useProgram(COIN);
       // Coins display
-      std::for_each(levelCoins.begin(), levelCoins.end(), [&](const Coin *coin){
-        MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(coin->getPosX(), coin->getPosY(), coin->getPosZ());
-        renderController.applyTransformations(COIN,MVMatrix);
-        renderController.drawModel(0);
-      });
+      std::for_each(levelCoins.begin(), levelCoins.end(), displayElement);
       renderController.debindVAO();
 
       /* CUBES */
       renderController.bindModelVAO(2);
       renderController.useProgram(COIN);
       // Cells display
-      std::for_each(levelCells.begin(), levelCells.end(), [&](const Cell *cell){
-        if (cell->getType() != 'h'){
-          MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCell(cell->getPosX(), cell->getPosY(), cell->getPosZ());
-          renderController.applyTransformations(COIN,MVMatrix);
-          renderController.drawModel(0);
-        }
-      });
+      std::for_each(levelCells.begin(), levelCells.end(), displayElement);
+      std::for_each(levelBlocks.begin(), levelBlocks.end(), displayElement);
+      std::for_each(levelArches.begin(), levelArches.end(), displayElement);
+      std::for_each(levelArrivals.begin(), levelArrivals.end(), displayElement);
       renderController.debindVAO();
 
       // Update the display

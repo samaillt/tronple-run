@@ -34,6 +34,18 @@ std::vector<Cell*> Level::getCells() const {
 std::vector<Coin*> Level::getCoins() const {
 	return _coins;
 }
+std::vector<Block*> Level::getBlocks() const {
+	return _blocks;
+}
+std::vector<Arch*> Level::getArches() const {
+	return _arches;
+}
+std::vector<Arrival*> Level::getArrivals() const {
+	return _arrivals;
+}
+std::vector<Hole*> Level::getHoles() const {
+	return _holes;
+}
 std::string Level::getSourceFile() const {
 	return _sourceFile;
 }
@@ -55,6 +67,18 @@ void Level::setCells(std::vector<Cell*> &cells) {
 }
 void Level::setCoins(std::vector<Coin*> &coins) {
 	_coins = coins;
+}
+void Level::setBlocks(std::vector<Block*> &blocks) {
+	_blocks = blocks;
+}
+void Level::setArches(std::vector<Arch*> &arches) {
+	_arches = arches;
+}
+void Level::setArrivals(std::vector<Arrival*> &arrivals) {
+	_arrivals = arrivals;
+}
+void Level::setHoles(std::vector<Hole*> &holes) {
+	_holes = holes;
 }
 void Level::setSourceFile(std::string &sourceFile) {
 	_sourceFile = "../src/assets/levels/"+sourceFile;

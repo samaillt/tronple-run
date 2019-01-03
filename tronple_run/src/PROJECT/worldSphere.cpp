@@ -152,7 +152,7 @@ int main(int argc, char** argv) {
 
   // Application loop:
   bool done = false;
-  float time = 0.0f;
+  //float time = 0.0f;
   while(!done) {
     // Event loop:
     SDL_Event e;
