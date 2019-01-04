@@ -2,6 +2,7 @@
 
 #include "project_classes/Level.hpp"
 #include "project_classes/Player.hpp"
+#include "project_classes/Object.hpp"
 
 /// \class GameController
 /// \brief Class that defines the GameController
@@ -18,5 +19,10 @@ public:
     /// \brief Load a level
     /// \return Level number
     int loadLevel();
+
+    /// \brief Check collision with AABB method between the player and a cell
+    /// \return true if objects collided or false if not
+    /// \param Player and Cell
+    bool checkAABBCollision(Player &a, Object &b);
 
 };

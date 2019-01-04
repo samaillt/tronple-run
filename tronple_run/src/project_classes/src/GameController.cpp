@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 #include <algorithm>
+#include <math.h>
 #include "project_classes/GameController.hpp"
 #include "project_classes/Arrival.hpp"
 #include "project_classes/Ground.hpp"
@@ -177,3 +178,21 @@ int GameController::loadLevel(){
 	_level->setArrivals(arrivals);
 	_level->setHoles(holes);
 }
+
+bool GameController::checkAABBCollision(Player &a, Object &b){
+   //check the X axis
+   if(abs(a.getPosX() - b.getPosX()) < 1)
+   {
+      //check the Y axis
+      if(abs(a.getPosY() - b.getPosY()) < 1)
+      {
+          //check the Z axis
+          if(abs(a.getPosZ() - b.getPosZ()) < 1)
+          {
+             return true;
+          }
+      }
+   }
+
+   return false;
+} 

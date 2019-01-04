@@ -278,8 +278,20 @@ int main(int argc, char** argv) {
 
       // COINS
 
-      // OBSTACLES (ARCHES AND BLOCKS)
+      for (auto it = levelCoins.begin(); it != levelCoins.end();) {
+        if (game_controller.checkAABBCollision(player,**it)) {
+          player.inscrementScore(10);
+          std::cout << player.getScore() << std::endl;
+          it = levelCoins.erase(it);
+        }
+        else
+          ++it;
+      }
 
+      // OBSTACLES (ARCHES AND BLOCKS);
+
+      
+      
       // HOLES AND ARRIVALS
 
       // Updtate player score
