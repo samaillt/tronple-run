@@ -2,9 +2,8 @@
 
 
 //constructor
-Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, 
-	std::string pseudo, uint score, bool isAlive)
-: Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive){}
+Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos)
+: Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive), _height(1.f), _verticalPos(verticalPos), _horizontalPos(horizontalPos){}
 
 Player::Player(){};
 
@@ -21,6 +20,15 @@ std::string Player::getPseudo() const{
 float Player::getSpeed() const{
 	return _speed;
 }
+float Player::getHeight() const{
+	return _height;
+}
+float Player::getVerticalPos() const{
+	return _verticalPos;
+}
+float Player::getHorizontalPos() const{
+	return _horizontalPos;
+}
 
 //setter
 void Player::setScore(const uint score){
@@ -35,10 +43,51 @@ void Player::setPseudo(const std::string &pseudo){
 void Player::setSpeed(const float speed){
 	_speed = speed;
 }
+void Player::setHeight(const uint height){
+	_height = height;
+}
+void Player::setVerticalPos(const uint verticalPos){
+	_verticalPos = verticalPos;
+}
+void Player::setHorizontalPos(const uint horizontalPos){
+	_horizontalPos = horizontalPos;
+}
 
 //method
 void Player::inscrementScore(const uint point){
 	_score += point;
+}
+
+void Player::moveForward(const float distance){
+	_posY += distance;
+}
+
+void Player::jump() {
+	_posZ = _verticalPos + 1;
+}
+
+void Player::scaleDown() {
+	
+}
+
+void Player::resetVerticalPosition() {
+	_posZ = _verticalPos;
+}
+
+void Player::moveRight() {
+	_posX = _horizontalPos - 1;
+}
+
+void Player::resetHorizontalPosition() {
+	_posX = _horizontalPos;
+}
+
+void Player::resetScale() {
+
+}
+
+void Player::moveLeft() {
+	_posX = _horizontalPos + 1;
 }
 
 //destructor

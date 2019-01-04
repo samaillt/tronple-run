@@ -27,6 +27,9 @@
 
 using namespace glimac;
 
+/* FPS */
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+
 void printInfos(const Cell *cell){
       std::cout << "Type : " << cell->getType() << std::endl;
       std::cout << "xCoord : " << cell->getPosX() << std::endl;    
@@ -93,7 +96,7 @@ int main(int argc, char** argv) {
     FreeflyCamera freefly_cam;
     trackball_cam.rotateLeft(180);
     freefly_cam.rotateLeft(180);
-    Camera *camera = &freefly_cam;
+    Camera *camera = &trackball_cam;
 
   /*********************************
    * INITIALIZATION OF RENDERING
@@ -130,16 +133,11 @@ int main(int argc, char** argv) {
   bool done = false;
   bool game = true;
   bool lock_camera = false;
+  bool jump = false;
+  bool down = false;
+  bool right = false;
+  bool left = false;
   while(!done) {
-
-    // Event loop:
-
-    SDL_Event e;
-    while(windowManager.pollEvent(e)) {
-      if(e.type == SDL_QUIT) {
-        done = true; // Leave the loop after this iteration
-      }
-    }
 
     // Menu display
 
@@ -149,13 +147,19 @@ int main(int argc, char** argv) {
 
     while(game) {
 
+      Uint32 startTime = SDL_GetTicks();
+
       // Event loop:
 
       SDL_Event e;
       while(windowManager.pollEvent(e)) {
-        if(e.type == SDL_QUIT) {
-          game = false; // Leave the loop after this iteration
-          done = true;
+        switch (e.type) {
+          case SDL_QUIT:
+            game = false; // Leave the loop after this iteration
+            done = true; // Leave the main loop after this iteration
+            break;
+          default:
+            break;
         }
         /* Traitement d'evenements liés à la caméra : */
         if (!lock_camera){
@@ -163,19 +167,23 @@ int main(int argc, char** argv) {
             /* Touche clavier */
             case SDL_KEYDOWN:{
               float zoom = 1.f;
-              if (e.key.keysym.sym == SDLK_DOWN)
-                camera->moveFront(-zoom);
-              if (e.key.keysym.sym == SDLK_UP)
-                camera->moveFront(zoom);
-              if (e.key.keysym.sym == SDLK_ESCAPE)
-                done = true;
+              switch (e.key.keysym.sym){
+                case SDLK_PAGEDOWN:
+                  camera->moveFront(-zoom);
+                  break;
+                case SDLK_PAGEUP:
+                  camera->moveFront(zoom);
+                  break;
+                default:
+                  break;
+              }
               break;
             }
             case SDL_MOUSEMOTION:{
               float rotation_angle = 0.02f;
-              if ( e.motion.xrel != 0 )
+              if (e.motion.xrel != 0 )
                 camera->rotateLeft(float(-e.motion.xrel) * rotation_angle);
-              if ( e.motion.yrel != 0 )
+              if (e.motion.yrel != 0 )
                 camera->rotateUp(float(-e.motion.yrel) * rotation_angle);
               break;
             }
@@ -184,7 +192,7 @@ int main(int argc, char** argv) {
           }
         }
         else {
-
+          // Possibility to unlock camera
         }
       }
 
@@ -196,29 +204,99 @@ int main(int argc, char** argv) {
 
       freefly_cam.setCameraOnPlayer(player);
 
-       /*********************************
-       * GAME MANAGEMENT
-       *********************************/
+      /*********************************
+      * GAME MANAGEMENT
+      *********************************/
 
-       // Player movement
+      // Player movement
 
-       // Collision check
+      /* Traitement d'evenements liés au personnage : */
+      switch(e.type) {
+        /* Touche clavier */
+        case SDL_KEYDOWN:{
+          switch (e.key.keysym.sym){
+            case SDLK_z:
+              jump = true;
+              break;
+            case SDLK_q:
+              left = true;
+              break;
+            case SDLK_s:
+              down = true;
+              break;
+            case SDLK_d:
+              right = true;
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+        case SDL_KEYUP:{
+          switch (e.key.keysym.sym){
+            case SDLK_z:
+              jump = false;
+              break;
+            case SDLK_q:
+              left = false;
+              break;
+            case SDLK_s:
+              down = false;
+              break;
+            case SDLK_d:
+              right = false;
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+        default:
+          break;
+      }
 
-       // Updtate player informations
+      // Player automatic forward movement
+      player.moveForward(player.getSpeed());
 
-       /*********************************
-       * GAME RENDERING
-       *********************************/
+      // Specific movement actions
+      if (jump)
+        player.jump();
+      else 
+        player.resetVerticalPosition();
+      if (right)
+        player.moveRight();
+      if (left)
+        player.moveLeft();
+      if (!right && !left)
+        player.resetHorizontalPosition();
+      if (down)
+        player.scaleDown();
+      else 
+        player.resetScale();
 
-       // ViewMatrix / Map / User Interface
+      // Collision check
 
-       // Pause menu if game is paused
+      // COINS
+
+      // OBSTACLES (ARCHES AND BLOCKS)
+
+      // HOLES AND ARRIVALS
+
+      // Updtate player score
+
+      /*********************************
+      * GAME RENDERING
+      *********************************/
+
+      // ViewMatrix / Map / User Interface
+
+      // Pause menu if game is paused
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Calcul de la caméra */
       if (camera == &trackball_cam)
-        renderController.setGlobalMVMatrix(glm::translate(camera->getViewMatrix(), glm::vec3(-(player.getPosX()), 0, -(player.getPosY()))));
+        renderController.setGlobalMVMatrix(glm::translate(camera->getViewMatrix(), glm::vec3(-(player.getPosX()), -(player.getPosZ()), -(player.getPosY()))));
       else
         renderController.setGlobalMVMatrix(camera->getViewMatrix());
 
@@ -263,6 +341,14 @@ int main(int argc, char** argv) {
 
       // Update the display
       windowManager.swapBuffers();
+
+      /* Computes time spent during iteration */
+      Uint32 elapsedTime = SDL_GetTicks() - startTime;
+
+      /* If too few, pause program */
+      if(elapsedTime < FRAMERATE_MILLISECONDS) {
+        SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+      }
     }
   }
   return EXIT_SUCCESS;

@@ -96,7 +96,7 @@ int GameController::loadLevel(){
 		    	}
 		    	if (r == 100 && g == 50 && b == 200) {
 		      		/* Departure - Purple*/
-		      		Player player('p', 1, 1, (float)i, (float)j, 1, 1, "Toto", 0, 1);
+		      		Player player('p', 1, 1, (float)i, (float)j, 1, 0.2, "Toto", 0, 1, 1, float(i));
 		      		_level->setPlayer(player);
 		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}

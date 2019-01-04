@@ -11,6 +11,9 @@ private:
 	uint _score; /*!< Player score */
 	bool _isAlive; /*!< Player, are you alive ? */
     float _speed; /*!< movement speed of the player */
+    float _height; /*!< Height of the player */
+    float _verticalPos; /*!< Z position Saved */
+    float _horizontalPos; /*!<  X or Y position saved */
 
 public:
 
@@ -25,7 +28,7 @@ public:
     /// \param pseudo : pseudo of the player
     /// \param score : score of the player
     /// \param isAlive : true or false
-    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive);
+    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos);
     
     //// \brief Default constructor
     Player();
@@ -46,6 +49,18 @@ public:
     /// \return String speed
     float getSpeed() const;
 
+    /// \brief Get player Height
+    /// \return String Height
+    float getHeight() const;
+
+    /// \brief Get player VerticalPos
+    /// \return String VerticalPos
+    float getVerticalPos() const;
+
+    /// \brief Get player HorizontalPos
+    /// \return String HorizontalPos
+    float getHorizontalPos() const;
+
     /// \brief Set player score
     /// \param Actual player score
     void setScore(const uint score);
@@ -62,9 +77,45 @@ public:
     /// \param String player speed
     void setSpeed(const float speed);
 
+    /// \brief Set player Height
+    /// \param Actual player Height
+    void setHeight(const uint height);
+
+    /// \brief Set player VerticalPos
+    /// \param Actual player VerticalPos
+    void setVerticalPos(const uint verticalPos);
+
+    /// \brief Set player HorizontalPos
+    /// \param Actual player HorizontalPos
+    void setHorizontalPos(const uint horizontalPos);
+
     /// \brief Increment player score
     /// \param Number of points
 	void inscrementScore(const uint point);
+
+    /// \brief Increment player X or Y position 
+    /// \param Distance
+    void moveForward(const float distance);
+
+    /// \brief Increment player Z position
+    void jump();
+
+    /// \brief Decrement player height
+    void scaleDown();
+
+    /// \brief Restore player Z position
+    void resetVerticalPosition();
+
+    /// \brief Decrement player X OR Y position
+    void moveRight(); 
+
+    /// \brief Restore player X or Y position
+    void resetHorizontalPosition();
+
+    void resetScale();
+
+    /// \brief Increment player X OR Y position
+    void moveLeft();
     
     /// \brief Destructor
     ~Player();

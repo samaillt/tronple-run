@@ -85,7 +85,7 @@ glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
 
 glm::mat4 RenderController::useMatrixBike(float x, float y, float z){
 	glm::mat4 MVMatrix;
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.3, y));
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.35, y));
     return MVMatrix;
 }
 

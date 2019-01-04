@@ -5,7 +5,7 @@
 /// \brief Class that defines an Object
 class Object {
 
-private:
+protected:
     char _type; /*!<  type that defines the object
     /// \li 'p' : player
     /// \li 'e' : enemy

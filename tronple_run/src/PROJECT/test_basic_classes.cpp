@@ -46,7 +46,7 @@ void testObject(){
 
 void testPlayer(){
 	// Constructeur
-	Player player('p',1.f, 1.f, 2.f, 3.f, 4.f, 3.f, "Noelie", 3020, true);
+	Player player('p',1.f, 1.f, 2.f, 3.f, 4.f, 3.f, "Noelie", 3020, true, 1, 1);
 	float f1 = 100.f;
 
 	// Get
