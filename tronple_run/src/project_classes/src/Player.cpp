@@ -62,6 +62,10 @@ void Player::moveForward(const float distance){
 	_posY += distance;
 }
 
+void Player::moveDown(const float distance){
+	_posZ -= distance;
+}
+
 void Player::jump() {
 	_posZ = _verticalPos + 1;
 }

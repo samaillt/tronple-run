@@ -29,6 +29,8 @@ private:
     std::vector<Arch*> _arches; /*!< Vector of arches */
     std::vector<Arrival*> _arrivals; /*!< Vector of arrivals */
     std::vector<Hole*> _holes; /*!< Vector of holes */
+    std::vector<Cell*> _leftTurns; /*!< Vector of leftTurns */
+    std::vector<Cell*> _rightTurns; /*!< Vector of rightTurns */
     std::string _sourceFile; /*!< Source of the file level */
 
 public:
@@ -82,6 +84,14 @@ public:
     /// \return Vectors of holes
     std::vector<Hole*> getHoles() const;
 
+    /// \brief Get leftTurns
+    /// \return Vectors of leftTurns
+    std::vector<Cell*> getLeftTurns() const;
+
+    /// \brief Get rightTurns
+    /// \return Vectors of rightTurns
+    std::vector<Cell*> getRightTurns() const;
+
     /// \brief Get file source of a level
     /// \return Source string of the file level
     std::string getSourceFile() const;
@@ -125,6 +135,14 @@ public:
     /// \brief Set holes
     /// \param Vectors of holes
     void setHoles(std::vector<Hole*> &holes);
+
+    /// \brief Set leftTurns
+    /// \return Vectors of leftTurns
+    void setLeftTurns(std::vector<Cell*> &leftTurns);
+
+    /// \brief Set rightTurns
+    /// \return Vectors of rightTurns
+    void setRightTurns(std::vector<Cell*> &rightTurns);
 
     /// \brief Set file source of the level
     /// \param Source string of the file level

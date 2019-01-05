@@ -76,6 +76,8 @@ int GameController::loadLevel(){
 	std::vector<Arrival*> arrivals; // Vector of arrivals
 	std::vector<Hole*> holes; // Vector of holes
 	std::vector<Coin*> coins; // Vector of coins
+	std::vector<Cell*> leftTurns; // Vector of leftTurns
+	std::vector<Cell*> rightTurns; // Vector of rightTurns
 
 	for (unsigned int i = 0; i < height; ++i) {
 		for (unsigned int j = 0; j < width; ++j) {
@@ -121,12 +123,13 @@ int GameController::loadLevel(){
 
 		    	if (r == 150 && g == 50 && b == 0) {
 		      		/* TurnLeft - Brown */
-		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		      		leftTurns.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		    		
 		    	}
 
 		    	if (r == 150 && g == 150 && b == 0) {
 		      		/* TurnRight - Light Brown */
-		      		cells.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		      		rightTurns.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 
 		  	// ------ HOLE -----
@@ -177,18 +180,17 @@ int GameController::loadLevel(){
 	_level->setArches(arches);
 	_level->setArrivals(arrivals);
 	_level->setHoles(holes);
+	_level->setLeftTurns(leftTurns);
+	_level->setRightTurns(rightTurns);
 }
 
-bool GameController::checkAABBCollision(Player &a, Object &b){
+bool GameController::checkAABBCollision(const Player &a, const Object &b){
    //check the X axis
-   if(abs(a.getPosX() - b.getPosX()) < 1)
-   {
+   if(abs(a.getPosX() - b.getPosX()) < 1) {
       //check the Y axis
-      if(abs(a.getPosY() - b.getPosY()) < 1)
-      {
+      if(abs(a.getPosY() - b.getPosY()) < 1) {
           //check the Z axis
-          if(abs(a.getPosZ() - b.getPosZ()) < 1)
-          {
+          if(abs(a.getPosZ() - b.getPosZ()) < 1) {
              return true;
           }
       }
@@ -196,15 +198,13 @@ bool GameController::checkAABBCollision(Player &a, Object &b){
    return false;
 }
 
-bool GameController::checkArrivalsAABBCollision(Player &a, Object &b){
+bool GameController::check2DAABBCollision(const Player &a, const Object &b){
    //check the X axis
-   if(abs(a.getPosX() - b.getPosX()) < 1)
-   {
+   if(abs(a.getPosX() - b.getPosX()) <= 1) {
       //check the Y axis
-      if(abs(a.getPosY() - b.getPosY()) < 1)
-      {
+      if(abs(a.getPosY() - b.getPosY()) <= 1) {
       	return true;
       }
    }
    return false;
-} 
+}

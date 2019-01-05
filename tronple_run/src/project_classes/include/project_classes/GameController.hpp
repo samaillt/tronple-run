@@ -3,6 +3,7 @@
 #include "project_classes/Level.hpp"
 #include "project_classes/Player.hpp"
 #include "project_classes/Object.hpp"
+#include "project_classes/Ground.hpp"
 
 /// \class GameController
 /// \brief Class that defines the GameController
@@ -23,11 +24,10 @@ public:
     /// \brief Check 3D (x,y,z) collision with AABB method between the player and a cell
     /// \return true if objects collided or false if not
     /// \param Player and Cell
-    bool checkAABBCollision(Player &a, Object &b);
+    bool checkAABBCollision(const Player &a, const Object &b);
 
     /// \brief Check 2D collision (x,y) with AABB method between the player and a cell
     /// \return true if objects collided or false if not
     /// \param Player and Cell
-    bool checkArrivalsAABBCollision(Player &a, Object &b);
-
+    bool check2DAABBCollision(const Player &a, const Object &b);
 };

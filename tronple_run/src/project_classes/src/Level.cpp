@@ -46,6 +46,12 @@ std::vector<Arrival*> Level::getArrivals() const {
 std::vector<Hole*> Level::getHoles() const {
 	return _holes;
 }
+std::vector<Cell*> Level::getLeftTurns() const {
+	return _leftTurns;
+}
+std::vector<Cell*> Level::getRightTurns() const {
+	return _rightTurns;
+}
 std::string Level::getSourceFile() const {
 	return _sourceFile;
 }
@@ -79,6 +85,12 @@ void Level::setArrivals(std::vector<Arrival*> &arrivals) {
 }
 void Level::setHoles(std::vector<Hole*> &holes) {
 	_holes = holes;
+}
+void Level::setLeftTurns(std::vector<Cell*> &leftTurns) {
+	_leftTurns = leftTurns;
+}
+void Level::setRightTurns(std::vector<Cell*> &rightTurns) {
+	_rightTurns = rightTurns;
 }
 void Level::setSourceFile(std::string &sourceFile) {
 	_sourceFile = "../src/assets/levels/"+sourceFile;

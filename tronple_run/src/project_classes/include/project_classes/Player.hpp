@@ -97,6 +97,10 @@ public:
     /// \param Distance
     void moveForward(const float distance);
 
+    /// \brief Decrement player z position 
+    /// \param Distance
+    void moveDown(const float distance);
+
     /// \brief Increment player Z position
     void jump();
 

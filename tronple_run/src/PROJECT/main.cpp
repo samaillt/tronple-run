@@ -84,6 +84,8 @@ int main(int argc, char** argv) {
     std::vector<Arch*> levelArches = level.getArches();
     std::vector<Arrival*> levelArrivals = level.getArrivals();
     std::vector<Hole*> levelHoles = level.getHoles();
+    std::vector<Cell*> leftTurns = level.getLeftTurns();
+    std::vector<Cell*> rightTurns = level.getRightTurns();
 
     // Loading level test
     // for_each(levelCells.begin(), levelCells.end(), printInfos);
@@ -138,6 +140,7 @@ int main(int argc, char** argv) {
   bool down = false;
   bool right = false;
   bool left = false;
+  bool fall = true;
   while(!done) {
 
     // Menu display
@@ -226,9 +229,6 @@ int main(int argc, char** argv) {
               break;
           }
         }
-        else {
-          // Possibility to unlock camera
-        }
       }
 
       // Pause menu
@@ -254,6 +254,7 @@ int main(int argc, char** argv) {
               jump = true;
               break;
             case SDLK_q:
+
               left = true;
               break;
             case SDLK_s:
@@ -293,6 +294,9 @@ int main(int argc, char** argv) {
       // Player automatic forward movement
       player.moveForward(player.getSpeed());
 
+      // Player gravity movement
+      // Check first if on a ground then if not get down a little
+
       // Specific movement actions
       if (jump)
         player.jump();
@@ -315,7 +319,7 @@ int main(int argc, char** argv) {
 
       for (auto it = levelCoins.begin(); it != levelCoins.end();) {
         if (game_controller.checkAABBCollision(player,**it)) {
-          player.inscrementScore(10);
+          player.inscrementScore(50);
           std::cout << player.getScore() << std::endl;
           it = levelCoins.erase(it);
         }
@@ -343,15 +347,40 @@ int main(int argc, char** argv) {
 
       // HOLES AND ARRIVALS
 
+      // Check collisions with blocks and also if z pos under the map (0)
+
+      // SOIT AVEC GRAVITE PUIS 3D COLLISION CHECK AVEC GROUNDS + TURNS;
+      // SOIT 2D COLLISION CHECK AVEC TOUS LES GROUNDS + TURNS ET SI Y'A PLUS COLLISION : OUT;
+
+      // Holes (basical test : without gravity)
+      for (auto it = levelCells.begin(); it != levelCells.end(); ++it) {
+        if (game_controller.check2DAABBCollision(player,**it)){
+          if (fall){
+            fall = false;
+          }
+        }
+      }
+      if (fall && player.getPosZ() <= 1){
+        std::cout << "Oh l'erreur, vous avez foncé dans le vide :o" << std::endl;
+        game = false; // Leave the loop after this iteration
+        done = true; // Leave the main loop after this iteration
+      } else {
+        fall = true;
+      }
+
+      // Arrivals
       for (auto it = levelArrivals.begin(); it != levelArrivals.end(); ++it) {
-        if (game_controller.checkArrivalsAABBCollision(player,**it)) {
+        if (game_controller.check2DAABBCollision(player,**it)) {
           std::cout << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl;
           game = false; // Leave the loop after this iteration
           done = true; // Leave the main loop after this iteration
+          break;
         }
       }
 
-      // Updtate player score
+      // Updtate player score with traveled distance.
+
+      player.inscrementScore(10 * player.getSpeed());
 
       /*********************************
       * GAME RENDERING
@@ -406,6 +435,8 @@ int main(int argc, char** argv) {
       std::for_each(levelBlocks.begin(), levelBlocks.end(), displayElement);
       std::for_each(levelArches.begin(), levelArches.end(), displayElement);
       std::for_each(levelArrivals.begin(), levelArrivals.end(), displayElement);
+      std::for_each(leftTurns.begin(), leftTurns.end(), displayElement);
+      std::for_each(rightTurns.begin(), rightTurns.end(), displayElement);
       renderController.debindVAO();
 
       // Update the display
