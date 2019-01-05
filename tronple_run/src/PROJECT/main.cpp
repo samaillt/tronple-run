@@ -133,6 +133,7 @@ int main(int argc, char** argv) {
   bool done = false;
   bool game = true;
   bool lock_camera = false;
+  bool switch_camera = false;
   bool jump = false;
   bool down = false;
   bool right = false;
@@ -162,6 +163,40 @@ int main(int argc, char** argv) {
             break;
         }
         /* Traitement d'evenements liés à la caméra : */
+        switch(e.type){
+          case SDL_KEYDOWN:{
+            switch (e.key.keysym.sym){
+              case SDLK_l:
+                if (lock_camera == true){
+                  lock_camera = false;
+                } else
+                  lock_camera = true;
+                break;
+              case SDLK_c:
+                switch_camera = true;
+                break;
+              default:
+                break;
+            }
+            break;
+          }
+          case SDL_KEYUP:{
+            switch (e.key.keysym.sym){
+              case SDLK_c:
+                if (switch_camera == true){
+                  if (camera == &trackball_cam){
+                    camera = &freefly_cam;
+                  } else
+                    camera = &trackball_cam;
+                  switch_camera = false;
+                }
+                break;
+              default:
+                break;
+            }
+            break;
+          }
+        }
         if (!lock_camera){
           switch(e.type) {
             /* Touche clavier */
