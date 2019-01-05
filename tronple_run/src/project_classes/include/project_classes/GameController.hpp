@@ -20,9 +20,14 @@ public:
     /// \return Level number
     int loadLevel();
 
-    /// \brief Check collision with AABB method between the player and a cell
+    /// \brief Check 3D (x,y,z) collision with AABB method between the player and a cell
     /// \return true if objects collided or false if not
     /// \param Player and Cell
     bool checkAABBCollision(Player &a, Object &b);
+
+    /// \brief Check 2D collision (x,y) with AABB method between the player and a cell
+    /// \return true if objects collided or false if not
+    /// \param Player and Cell
+    bool checkArrivalsAABBCollision(Player &a, Object &b);
 
 };

@@ -290,9 +290,31 @@ int main(int argc, char** argv) {
 
       // OBSTACLES (ARCHES AND BLOCKS);
 
-      
-      
+      for (auto it = levelArches.begin(); it != levelArches.end(); ++it) {
+        if (game_controller.checkAABBCollision(player,**it)) {
+          std::cout << "Oh l'erreur, vous avez foncé dans une arche :o" << std::endl;
+          game = false; // Leave the loop after this iteration
+          done = true; // Leave the main loop after this iteration
+        }
+      }
+
+      for (auto it = levelBlocks.begin(); it != levelBlocks.end(); ++it) {
+        if (game_controller.checkAABBCollision(player,**it)) {
+          std::cout << "Oh l'erreur, vous avez foncé dans un obstacle :o" << std::endl;
+          game = false; // Leave the loop after this iteration
+          done = true; // Leave the main loop after this iteration
+        }
+      }
+
       // HOLES AND ARRIVALS
+
+      for (auto it = levelArrivals.begin(); it != levelArrivals.end(); ++it) {
+        if (game_controller.checkArrivalsAABBCollision(player,**it)) {
+          std::cout << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl;
+          game = false; // Leave the loop after this iteration
+          done = true; // Leave the main loop after this iteration
+        }
+      }
 
       // Updtate player score
 

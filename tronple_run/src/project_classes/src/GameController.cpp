@@ -130,11 +130,11 @@ int GameController::loadLevel(){
 		    	}
 
 		  	// ------ HOLE -----
-		    	if (r == 100 && g == 100 && b == 100) {
+		    	if (r == 0 && g == 0 && b == 0) {
 		      		/* Hole - Grey */
 		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
-		    	if (r == 0 && g == 0 && b == 0) {
+		    	if (r == 100 && g == 100 && b == 100) {
 		      		/* Hole + coin 2 - Black */
 		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
@@ -193,6 +193,18 @@ bool GameController::checkAABBCollision(Player &a, Object &b){
           }
       }
    }
+   return false;
+}
 
+bool GameController::checkArrivalsAABBCollision(Player &a, Object &b){
+   //check the X axis
+   if(abs(a.getPosX() - b.getPosX()) < 1)
+   {
+      //check the Y axis
+      if(abs(a.getPosY() - b.getPosY()) < 1)
+      {
+      	return true;
+      }
+   }
    return false;
 } 
