@@ -6,6 +6,9 @@
 /// \brief Class that defines the player
 class Player : public Object {
 
+public:
+    enum Orientation {LEFT = 270, RIGHT = 90, FRONT = 180, BACK = 0};
+
 private:
 	std::string _pseudo; /*!< Player pseudo */
 	uint _score; /*!< Player score */
@@ -14,6 +17,7 @@ private:
     float _height; /*!< Height of the player */
     float _verticalPos; /*!< Z position Saved */
     float _horizontalPos; /*!<  X or Y position saved */
+    Orientation _orientation; /*!<  Orientation of the player */
 
 public:
 
@@ -28,7 +32,7 @@ public:
     /// \param pseudo : pseudo of the player
     /// \param score : score of the player
     /// \param isAlive : true or false
-    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos);
+    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos, Orientation orientation = FRONT);
     
     //// \brief Default constructor
     Player();
@@ -61,6 +65,10 @@ public:
     /// \return String HorizontalPos
     float getHorizontalPos() const;
 
+    /// \brief Get player Orientation
+    /// \return Orientation
+    float getOrientation() const;
+
     /// \brief Set player score
     /// \param Actual player score
     void setScore(const uint score);
@@ -88,6 +96,10 @@ public:
     /// \brief Set player HorizontalPos
     /// \param Actual player HorizontalPos
     void setHorizontalPos(const uint horizontalPos);
+
+    /// \brief Set player Orientation
+    /// \param Orientation
+    void setOrientation(const Orientation orientation);
 
     /// \brief Increment player score
     /// \param Number of points

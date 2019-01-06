@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
     /* MOTO */
     renderController.bindModelVAO(1);
     renderController.useProgram(COIN);
-    MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(0,0,0);
+    MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(0,0,0,0);
     renderController.applyTransformations(COIN,MVMatrix);
     renderController.drawModel(1);
     renderController.debindVAO();

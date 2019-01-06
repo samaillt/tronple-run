@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF LEVEL & GAME
    *********************************/
 
-    Level level("1.ppm");
+    Level level("2.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
 
@@ -84,8 +84,8 @@ int main(int argc, char** argv) {
     std::vector<Arch*> levelArches = level.getArches();
     std::vector<Arrival*> levelArrivals = level.getArrivals();
     std::vector<Hole*> levelHoles = level.getHoles();
-    std::vector<Cell*> leftTurns = level.getLeftTurns();
-    std::vector<Cell*> rightTurns = level.getRightTurns();
+    std::vector<Cell*> levelLeftTurns = level.getLeftTurns();
+    std::vector<Cell*> levelRightTurns = level.getRightTurns();
 
     // Loading level test
     // for_each(levelCells.begin(), levelCells.end(), printInfos);
@@ -96,8 +96,8 @@ int main(int argc, char** argv) {
 
     TrackballCamera trackball_cam(5.f,2.f,0.f,0.f);
     FreeflyCamera freefly_cam;
-    trackball_cam.rotateLeft(180);
-    freefly_cam.rotateLeft(180);
+    trackball_cam.rotateLeft(player.getOrientation());
+    freefly_cam.rotateLeft(player.getOrientation());
     Camera *camera = &trackball_cam;
 
   /*********************************
@@ -139,7 +139,9 @@ int main(int argc, char** argv) {
   bool jump = false;
   bool down = false;
   bool right = false;
+  bool orientationRight = false;
   bool left = false;
+  bool orientationLeft = false;
   bool fall = true;
   while(!done) {
 
@@ -297,15 +299,83 @@ int main(int argc, char** argv) {
       // Player gravity movement
       // Check first if on a ground then if not get down a little
 
+      // Check if on right or left turn
+      for (auto it = levelLeftTurns.begin(); it != levelLeftTurns.end(); ++it) {
+        if (game_controller.check2DAABBCollision(player,**it)) {
+          orientationLeft = true;
+          if (player.getOrientation() == Player::FRONT) {
+            player.setOrientation(Player::LEFT);
+            float newPosX = (**it).getPosX();
+            player.setPosX(newPosX);
+          }
+          if (player.getOrientation() == Player::LEFT) {
+            player.setOrientation(Player::BACK);
+            float newPosY = (**it).getPosY();
+            player.setPosY(newPosY);
+          }
+          if (player.getOrientation() == Player::BACK) {
+            player.setOrientation(Player::RIGHT);
+            float newPosX = (**it).getPosX();
+            player.setPosX(newPosX);
+          }
+          if (player.getOrientation() == Player::RIGHT) {
+            player.setOrientation(Player::FRONT);
+            float newPosY = (**it).getPosY();
+            player.setPosY(newPosY);
+          }
+          break;
+        }
+      }
+      for (auto it = levelRightTurns.begin(); it != levelRightTurns.end(); ++it) {
+        if (game_controller.check2DAABBCollision(player,**it)) {
+          orientationRight = true;
+          if (player.getOrientation() == Player::FRONT) {
+            player.setOrientation(Player::RIGHT);
+            float newPosX = (**it).getPosX();
+            player.setPosX(newPosX);
+          }
+          if (player.getOrientation() == Player::LEFT) {
+            player.setOrientation(Player::FRONT);
+            float newPosY = (**it).getPosY();
+            player.setPosY(newPosY);
+          }
+          if (player.getOrientation() == Player::BACK) {
+            player.setOrientation(Player::LEFT);
+            float newPosX = (**it).getPosX();
+            player.setPosX(newPosX);
+          }
+          if (player.getOrientation() == Player::RIGHT) {
+            player.setOrientation(Player::BACK);
+            float newPosY = (**it).getPosY();
+            player.setPosY(newPosY);
+          }
+          break;
+        }
+      }
+
       // Specific movement actions
       if (jump)
         player.jump();
       else 
         player.resetVerticalPosition();
-      if (right)
-        player.moveRight();
-      if (left)
-        player.moveLeft();
+      if (right){
+        // Simple case -> No orientation change
+        if (!orientationRight)
+          player.moveRight();
+        else {
+          std::cout << "Right turn" << std::endl;
+          orientationRight = false;
+        }
+      }
+      if (left){
+        // Simple case -> No orientation change
+        if (!orientationLeft)
+          player.moveLeft();
+        else {
+          std::cout << "Left turn" << std::endl;
+          orientationLeft = false;
+        }
+      }
       if (!right && !left)
         player.resetHorizontalPosition();
       if (down)
@@ -347,12 +417,11 @@ int main(int argc, char** argv) {
 
       // HOLES AND ARRIVALS
 
-      // Check collisions with blocks and also if z pos under the map (0)
+      // 1 - Check collisions with blocks and also if z pos under the map (0)
 
-      // SOIT AVEC GRAVITE PUIS 3D COLLISION CHECK AVEC GROUNDS + TURNS;
-      // SOIT 2D COLLISION CHECK AVEC TOUS LES GROUNDS + TURNS ET SI Y'A PLUS COLLISION : OUT;
+      // 2 - OR 2D COLLISION WITH GROUNDS + TURNS -> OUT IF NOT AND IF PLAYER POSZ <= 1;
 
-      // Holes (basical test : without gravity)
+      // Holes (basical test : 2 - without gravity)
       for (auto it = levelCells.begin(); it != levelCells.end(); ++it) {
         if (game_controller.check2DAABBCollision(player,**it)){
           if (fall){
@@ -401,7 +470,7 @@ int main(int argc, char** argv) {
       /* BIKE */
       renderController.bindModelVAO(1);
       renderController.useProgram(COIN);
-      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ());
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ(), player.getOrientation());
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(1);
       renderController.debindVAO();
@@ -435,8 +504,6 @@ int main(int argc, char** argv) {
       std::for_each(levelBlocks.begin(), levelBlocks.end(), displayElement);
       std::for_each(levelArches.begin(), levelArches.end(), displayElement);
       std::for_each(levelArrivals.begin(), levelArrivals.end(), displayElement);
-      std::for_each(leftTurns.begin(), leftTurns.end(), displayElement);
-      std::for_each(rightTurns.begin(), rightTurns.end(), displayElement);
       renderController.debindVAO();
 
       // Update the display

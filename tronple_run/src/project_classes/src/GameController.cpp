@@ -79,6 +79,8 @@ int GameController::loadLevel(){
 	std::vector<Cell*> leftTurns; // Vector of leftTurns
 	std::vector<Cell*> rightTurns; // Vector of rightTurns
 
+	Cell * cell; // Temporary cell
+
 	for (unsigned int i = 0; i < height; ++i) {
 		for (unsigned int j = 0; j < width; ++j) {
 		  	if (fgets(line, sizeof line, level_file) == NULL)
@@ -121,15 +123,18 @@ int GameController::loadLevel(){
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		    	}
 
-		    	if (r == 150 && g == 50 && b == 0) {
+		    	if (r == 150 && g == 150 && b == 0) {
 		      		/* TurnLeft - Brown */
-		      		leftTurns.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
-		    		
+		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		leftTurns.push_back(cell);
+		      		cells.push_back(cell);	
 		    	}
 
-		    	if (r == 150 && g == 150 && b == 0) {
+		    	if (r == 150 && g == 50 && b == 0) {
 		      		/* TurnRight - Light Brown */
-		      		rightTurns.push_back(new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f));
+		      		cell = new Ground('g',1.f, 1.f, (float)i, (float)j, 0.f);
+		      		rightTurns.push_back(cell);
+		      		cells.push_back(cell);
 		    	}
 
 		  	// ------ HOLE -----

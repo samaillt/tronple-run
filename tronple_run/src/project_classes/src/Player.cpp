@@ -2,8 +2,8 @@
 
 
 //constructor
-Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos)
-: Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive), _height(1.f), _verticalPos(verticalPos), _horizontalPos(horizontalPos){}
+Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos, Orientation orientation)
+: Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive), _height(1.f), _verticalPos(verticalPos), _horizontalPos(horizontalPos), _orientation(orientation){}
 
 Player::Player(){};
 
@@ -29,6 +29,9 @@ float Player::getVerticalPos() const{
 float Player::getHorizontalPos() const{
 	return _horizontalPos;
 }
+float Player::getOrientation() const{
+	return	_orientation;
+}
 
 //setter
 void Player::setScore(const uint score){
@@ -52,6 +55,9 @@ void Player::setVerticalPos(const uint verticalPos){
 void Player::setHorizontalPos(const uint horizontalPos){
 	_horizontalPos = horizontalPos;
 }
+void Player::setOrientation(const Orientation orientation){
+	_orientation = orientation;
+}
 
 //method
 void Player::inscrementScore(const uint point){
@@ -59,7 +65,14 @@ void Player::inscrementScore(const uint point){
 }
 
 void Player::moveForward(const float distance){
-	_posY += distance;
+	if (_orientation == Player::FRONT)
+		_posY += distance;
+	if (_orientation == Player::LEFT)
+		_posY += distance;
+	if (_orientation == Player::BACK)
+		_posY -= distance;
+	if (_orientation == Player::RIGHT)
+		_posX -= distance;
 }
 
 void Player::moveDown(const float distance){

@@ -185,7 +185,7 @@ int main(int argc, char** argv) {
       /* BIKE */
       renderController.bindModelVAO(1);
       renderController.useProgram(COIN);
-      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ());
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ(), player.getOrientation());
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(1);
       renderController.debindVAO();

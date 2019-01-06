@@ -83,15 +83,15 @@ glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
     return MVMatrix;
 }
 
-glm::mat4 RenderController::useMatrixBike(float x, float y, float z){
+glm::mat4 RenderController::useMatrixBike(float x, float y, float z, float orientation){
 	glm::mat4 MVMatrix;
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.35, y));
-    return MVMatrix;
+	MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.35, y));
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(float(orientation)), glm::vec3(0, 1, 0)); 
+	return MVMatrix;
 }
 
 glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
     glm::mat4 MVMatrix;
-
     MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y));
     return MVMatrix;
 }
