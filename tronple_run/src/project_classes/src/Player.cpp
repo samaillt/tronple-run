@@ -68,7 +68,7 @@ void Player::moveForward(const float distance){
 	if (_orientation == Player::FRONT)
 		_posY += distance;
 	if (_orientation == Player::LEFT)
-		_posY += distance;
+		_posX += distance;
 	if (_orientation == Player::BACK)
 		_posY -= distance;
 	if (_orientation == Player::RIGHT)
@@ -92,11 +92,21 @@ void Player::resetVerticalPosition() {
 }
 
 void Player::moveRight() {
-	_posX = _horizontalPos - 1;
+	if (_orientation == Player::FRONT)
+		_posX = _horizontalPos - 1;
+	if (_orientation == Player::LEFT)
+		_posY = _horizontalPos + 1;
+	if (_orientation == Player::BACK)
+		_posX = _horizontalPos + 1;
+	if (_orientation == Player::RIGHT)
+		_posY = _horizontalPos - 1;
 }
 
 void Player::resetHorizontalPosition() {
-	_posX = _horizontalPos;
+	if (_orientation == Player::FRONT || _orientation == Player::BACK)
+		_posX = _horizontalPos;
+	if (_orientation == Player::LEFT || _orientation == Player::RIGHT)
+		_posY = _horizontalPos;
 }
 
 void Player::resetScale() {
@@ -104,7 +114,14 @@ void Player::resetScale() {
 }
 
 void Player::moveLeft() {
-	_posX = _horizontalPos + 1;
+	if (_orientation == Player::FRONT)
+		_posX = _horizontalPos + 1;
+	if (_orientation == Player::LEFT)
+		_posY = _horizontalPos - 1;
+	if (_orientation == Player::BACK)
+		_posX = _horizontalPos - 1;
+	if (_orientation == Player::RIGHT)
+		_posY = _horizontalPos + 1;
 }
 
 //destructor

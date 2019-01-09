@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF LEVEL & GAME
    *********************************/
 
-    Level level("2.ppm");
+    Level level("5.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
 
@@ -139,9 +139,9 @@ int main(int argc, char** argv) {
   bool jump = false;
   bool down = false;
   bool right = false;
-  bool orientationRight = false;
+  bool orientateRight = false;
   bool left = false;
-  bool orientationLeft = false;
+  bool orientateLeft = false;
   bool fall = true;
   while(!done) {
 
@@ -152,8 +152,6 @@ int main(int argc, char** argv) {
      *********************************/
 
     while(game) {
-
-      Uint32 startTime = SDL_GetTicks();
 
       // Event loop:
 
@@ -179,6 +177,12 @@ int main(int argc, char** argv) {
                 break;
               case SDLK_c:
                 switch_camera = true;
+                break;
+              // case SDLK_p:
+              //     if (game){
+              //       game = false;
+              //     } else
+              //       game = true;
                 break;
               default:
                 break;
@@ -256,7 +260,6 @@ int main(int argc, char** argv) {
               jump = true;
               break;
             case SDLK_q:
-
               left = true;
               break;
             case SDLK_s:
@@ -293,65 +296,8 @@ int main(int argc, char** argv) {
           break;
       }
 
-      // Player automatic forward movement
-      player.moveForward(player.getSpeed());
-
       // Player gravity movement
       // Check first if on a ground then if not get down a little
-
-      // Check if on right or left turn
-      for (auto it = levelLeftTurns.begin(); it != levelLeftTurns.end(); ++it) {
-        if (game_controller.check2DAABBCollision(player,**it)) {
-          orientationLeft = true;
-          if (player.getOrientation() == Player::FRONT) {
-            player.setOrientation(Player::LEFT);
-            float newPosX = (**it).getPosX();
-            player.setPosX(newPosX);
-          }
-          if (player.getOrientation() == Player::LEFT) {
-            player.setOrientation(Player::BACK);
-            float newPosY = (**it).getPosY();
-            player.setPosY(newPosY);
-          }
-          if (player.getOrientation() == Player::BACK) {
-            player.setOrientation(Player::RIGHT);
-            float newPosX = (**it).getPosX();
-            player.setPosX(newPosX);
-          }
-          if (player.getOrientation() == Player::RIGHT) {
-            player.setOrientation(Player::FRONT);
-            float newPosY = (**it).getPosY();
-            player.setPosY(newPosY);
-          }
-          break;
-        }
-      }
-      for (auto it = levelRightTurns.begin(); it != levelRightTurns.end(); ++it) {
-        if (game_controller.check2DAABBCollision(player,**it)) {
-          orientationRight = true;
-          if (player.getOrientation() == Player::FRONT) {
-            player.setOrientation(Player::RIGHT);
-            float newPosX = (**it).getPosX();
-            player.setPosX(newPosX);
-          }
-          if (player.getOrientation() == Player::LEFT) {
-            player.setOrientation(Player::FRONT);
-            float newPosY = (**it).getPosY();
-            player.setPosY(newPosY);
-          }
-          if (player.getOrientation() == Player::BACK) {
-            player.setOrientation(Player::LEFT);
-            float newPosX = (**it).getPosX();
-            player.setPosX(newPosX);
-          }
-          if (player.getOrientation() == Player::RIGHT) {
-            player.setOrientation(Player::BACK);
-            float newPosY = (**it).getPosY();
-            player.setPosY(newPosY);
-          }
-          break;
-        }
-      }
 
       // Specific movement actions
       if (jump)
@@ -359,29 +305,104 @@ int main(int argc, char** argv) {
       else 
         player.resetVerticalPosition();
       if (right){
-        // Simple case -> No orientation change
-        if (!orientationRight)
+        if (!orientateRight){
           player.moveRight();
-        else {
-          std::cout << "Right turn" << std::endl;
-          orientationRight = false;
+          // Check if on right turn
+          for (auto it = levelRightTurns.begin(); it != levelRightTurns.end();) {
+            if (game_controller.check2DAABBCollision(player,**it)) {
+              if ((player.getOrientation() == Player::FRONT || player.getOrientation() == Player::BACK) && !orientateRight) {
+                player.setHorizontalPos((**it).getPosY());
+              }
+              if ((player.getOrientation() == Player::LEFT || player.getOrientation() == Player::RIGHT) && !orientateRight) {
+                player.setHorizontalPos((**it).getPosX());
+              }
+              std::cout << "Right turn" << std::endl;
+              orientateRight = true;
+              it = levelRightTurns.erase(it);
+              break;
+            } else {
+              it++;
+            }
+          }
+        } else {
+          trackball_cam.rotateLeft(-player.getOrientation());
+          freefly_cam.rotateLeft(-player.getOrientation());
+          switch ((int)player.getOrientation()){
+            case (int)Player::FRONT :
+              player.setOrientation(Player::RIGHT);
+              break;
+            case (int)Player::LEFT :
+              player.setOrientation(Player::FRONT);
+              break;
+            case (int)Player::BACK :
+              player.setOrientation(Player::LEFT);
+              break;
+            case (int)Player::RIGHT :
+              player.setOrientation(Player::BACK);
+              break;
+            default:
+              break;
+          }
+          trackball_cam.rotateLeft(player.getOrientation());
+          freefly_cam.rotateLeft(-player.getOrientation());
+          orientateRight = false;
         }
       }
       if (left){
-        // Simple case -> No orientation change
-        if (!orientationLeft)
+        if (!orientateLeft){
           player.moveLeft();
-        else {
-          std::cout << "Left turn" << std::endl;
-          orientationLeft = false;
+          // Check if on left turn
+          for (auto it = levelLeftTurns.begin(); it != levelLeftTurns.end();) {
+            if (game_controller.check2DAABBCollision(player,**it)) {
+              if ((player.getOrientation() == Player::FRONT || player.getOrientation() == Player::BACK) && !orientateRight) {
+                player.setHorizontalPos((**it).getPosY());
+              }
+              if ((player.getOrientation() == Player::LEFT || player.getOrientation() == Player::RIGHT) && !orientateRight) {
+                player.setHorizontalPos((**it).getPosX());
+              }
+              std::cout << "Left turn" << std::endl;
+              orientateLeft = true;
+              it = levelLeftTurns.erase(it);
+              break;
+            } else {
+              it++;
+            }
+          }
+        } else {
+          trackball_cam.rotateLeft(-player.getOrientation());
+          freefly_cam.rotateLeft(player.getOrientation());
+          switch ((int)player.getOrientation()){
+            case (int)Player::FRONT :
+              player.setOrientation(Player::LEFT);
+              break;
+            case (int)Player::LEFT :
+              player.setOrientation(Player::BACK);
+              break;
+            case (int)Player::BACK :
+              player.setOrientation(Player::RIGHT);
+              break;
+            case (int)Player::RIGHT :
+              player.setOrientation(Player::FRONT);
+              break;
+            default:
+              break;
+          }
+          trackball_cam.rotateLeft(player.getOrientation());
+          freefly_cam.rotateLeft(player.getOrientation());
+          orientateLeft = false;
         }
       }
-      if (!right && !left)
+      if (!right && !left && !orientateLeft && !orientateRight)
         player.resetHorizontalPosition();
       if (down)
         player.scaleDown();
       else 
         player.resetScale();
+          
+      // std::cout << "pos x : "<< player.getPosX()<< "pos y : "<< player.getPosY()<< "horizontal pos: "<< player.getHorizontalPos() << std::endl;
+
+      // Player automatic forward movement
+      player.moveForward(player.getSpeed());
 
       // Collision check
 
@@ -508,14 +529,6 @@ int main(int argc, char** argv) {
 
       // Update the display
       windowManager.swapBuffers();
-
-      /* Computes time spent during iteration */
-      Uint32 elapsedTime = SDL_GetTicks() - startTime;
-
-      /* If too few, pause program */
-      if(elapsedTime < FRAMERATE_MILLISECONDS) {
-        SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
-      }
     }
   }
   return EXIT_SUCCESS;

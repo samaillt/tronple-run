@@ -205,9 +205,9 @@ bool GameController::checkAABBCollision(const Player &a, const Object &b){
 
 bool GameController::check2DAABBCollision(const Player &a, const Object &b){
    //check the X axis
-   if(abs(a.getPosX() - b.getPosX()) <= 1) {
+   if(abs(a.getPosX() - b.getPosX()) < 1) {
       //check the Y axis
-      if(abs(a.getPosY() - b.getPosY()) <= 1) {
+      if(abs(a.getPosY() - b.getPosY()) < 1) {
       	return true;
       }
    }

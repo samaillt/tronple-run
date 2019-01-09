@@ -7,7 +7,7 @@
 class Player : public Object {
 
 public:
-    enum Orientation {LEFT = 270, RIGHT = 90, FRONT = 180, BACK = 0};
+    enum Orientation {LEFT = 90, RIGHT = 270, FRONT = 180, BACK = 0};
 
 private:
 	std::string _pseudo; /*!< Player pseudo */
