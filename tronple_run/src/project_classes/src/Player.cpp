@@ -1,13 +1,11 @@
 #include "project_classes/Player.hpp"
 
 
-//constructor
 Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos, Orientation orientation)
 : Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive), _height(1.f), _verticalPos(verticalPos), _horizontalPos(horizontalPos), _orientation(orientation){}
 
 Player::Player(){};
 
-//getter
 uint Player::getScore() const {
 	return _score;
 }
@@ -33,7 +31,6 @@ float Player::getOrientation() const{
 	return	_orientation;
 }
 
-//setter
 void Player::setScore(const uint score){
 	_score = score;
 }
@@ -59,7 +56,6 @@ void Player::setOrientation(const Orientation orientation){
 	_orientation = orientation;
 }
 
-//method
 void Player::inscrementScore(const uint point){
 	_score += point;
 }

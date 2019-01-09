@@ -48,7 +48,59 @@ struct WorldProgram{
     }
 };
 
+struct TextureProgram {
+    glimac::Program _program;
+
+    GLint uMVPMatrix;
+    GLint uMVMatrix;
+    GLint uNormalMatrix;
+    GLint uTexture;
+    GLint uTime;
+
+    TextureProgram(const FilePath& applicationPath)
+        :_program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+                             applicationPath.dirPath() + "shaders/tex3D.fs.glsl"))
+    {
+        std::cout << "Loading texture program" << std::endl;
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
+        uTime = glGetUniformLocation(_program.getGLId(), "uTime");
+    }
+};
+
+struct MultiLightProgram{
+    glimac::Program _program;
+
+    GLint uMVPMatrix;
+    GLint uMVMatrix;
+    GLint uNormalMatrix;
+    GLint uTexture;
+
+    GLint uLights;
+    GLint uNbLights;
+    GLint uAmbientLight;
+
+    MultiLightProgram(const FilePath& applicationPath)
+        :_program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+                              applicationPath.dirPath() + "shaders/multiLight.fs.glsl"))
+    {
+        std::cout << "Loading MultiLight program" << std::endl;
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
+
+        uLights = glGetUniformLocation(_program.getGLId(), "uLights");
+        uNbLights = glGetUniformLocation(_program.getGLId(), "uNbLights");
+        uAmbientLight = glGetUniformLocation(_program.getGLId(), "uAmbientLight");
+    }
+};
+
 struct ProgramList {
     CoinProgram* coinProgram;
     WorldProgram* worldProgram;
+    TextureProgram* textureProgram;
+    MultiLightProgram* multiLightProgram;
 };
