@@ -8,6 +8,7 @@
 #include "glimac/glm.hpp"
 #include "glimac/Image.hpp"
 #include <glimac/FilePath.hpp>
+#include "project_classes/Exception.hpp"
 
 
 /// \class Texture

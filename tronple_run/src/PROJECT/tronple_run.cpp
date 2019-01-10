@@ -64,7 +64,6 @@ int main(int argc, char** argv) {
   std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
   
   CoinProgram coinProgram(applicationPath);
-
   ProgramList programList;
   programList.coinProgram = &coinProgram;
 
@@ -550,7 +549,7 @@ int main(int argc, char** argv) {
       // ViewMatrix / Map / User Interface
 
       // Pause menu if game is paused
-
+      std::cout << "OK" << std::endl;
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Calcul de la caméra */
@@ -560,35 +559,42 @@ int main(int argc, char** argv) {
         renderController.setGlobalMVMatrix(camera->getViewMatrix());
 
       /* BIKE */
+      renderController.enableBikeTexture();
       renderController.bindModelVAO(1);
       renderController.useProgram(COIN);
       MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ(), player.getOrientation());
+      // Erreur de seg applyTransformations
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(1);
       renderController.debindVAO();
+      renderController.disableTexture();
 
       auto displayElement = [&](const Cell *cell){
         switch (cell->getType()) {
           case 'c' :
             MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCoin(cell->getPosX(), cell->getPosY(), cell->getPosZ());
             renderController.applyTransformations(COIN,MVMatrix);
+            renderController.drawModel(0);
             break;
           default :
             MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixCell(cell->getPosX(), cell->getPosY(), cell->getPosZ());
             renderController.applyTransformations(COIN,MVMatrix);
+            renderController.drawModel(2);
             break;
         }
-        renderController.drawModel(0);
       };
 
       /* COIN */
+      renderController.enableCoinTexture();
       renderController.bindModelVAO(0);
       renderController.useProgram(COIN);
       // Coins display
       std::for_each(levelCoins.begin(), levelCoins.end(), displayElement);
       renderController.debindVAO();
+      renderController.disableTexture();
 
       /* CUBES */
+      renderController.enableCubeTexture();
       renderController.bindModelVAO(2);
       renderController.useProgram(COIN);
       // Cells display
@@ -597,6 +603,7 @@ int main(int argc, char** argv) {
       std::for_each(levelArches.begin(), levelArches.end(), displayElement);
       std::for_each(levelArrivals.begin(), levelArrivals.end(), displayElement);
       renderController.debindVAO();
+      renderController.disableTexture();
 
       // Update the display
       windowManager.swapBuffers();

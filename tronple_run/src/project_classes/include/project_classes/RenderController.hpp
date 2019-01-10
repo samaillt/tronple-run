@@ -120,6 +120,18 @@ public:
     /// \return matrix4
     glm::mat4 useMatrixCell(float x, float y, float z);
 
+    /// \brief Activate and bind coin texture
+    void enableCoinTexture();
+
+    /// \brief Activate and bind cube texture
+    void enableCubeTexture();
+
+    /// \brief Activate and bind bike texture
+    void enableBikeTexture();
+    
+    /// \brief Dectivate and debind texture
+    void disableTexture();
+
     /// \brief Destructor
     ~RenderController();
 };

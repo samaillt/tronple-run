@@ -94,7 +94,7 @@ glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
 glm::mat4 RenderController::useMatrixBike(float x, float y, float z, float orientation){
 	glm::mat4 MVMatrix;
 	MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z - 0.35, y));
-    MVMatrix = glm::rotate(MVMatrix, glm::radians(float(orientation)), glm::vec3(0, 1, 0)); 
+    MVMatrix = glm::rotate(MVMatrix, glm::radians(- float(orientation)), glm::vec3(0, 1, 0)); 
 	return MVMatrix;
 }
 
@@ -115,14 +115,14 @@ void RenderController::applyTransformations(FS shader, glm::mat4 MVMatrix){
     glDisable(GL_BLEND);
 
     switch (shader){
-    	case COIN :   
+    	case COIN :
+			glUniform1i(_programList->textureProgram->uTexture, 0);
     		glUniformMatrix4fv(_programList->coinProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix*MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));
 		break;
 		case TEXTURE :
 			glUniform1i(_programList->textureProgram->uTexture, 0);
-			glUniform1f(_programList->textureProgram->uTime, 0);
 			glUniformMatrix4fv(_programList->textureProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix * _MVMatrix));
 			glUniformMatrix4fv(_programList->textureProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(_MVMatrix));
 			glUniformMatrix4fv(_programList->textureProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));
@@ -142,7 +142,7 @@ void RenderController::applyTransformations(FS shader, glm::mat4 MVMatrix){
 		// 	glUniform1i(_programList->multiLightProgram->uTexture, 0);
 		// 	break;
 		default : 
-		break;
+			break;
 	}
 }
 
@@ -157,4 +157,26 @@ void RenderController::debindVAO(){
 RenderController::~RenderController(){
 	_lights.clear();
 	_lightsCount = 0;
+}
+
+void RenderController::enableCoinTexture(){
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _model[0].getTextureID());
+}
+
+/// \brief Activate and bind cube texture
+void RenderController::enableCubeTexture(){
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _model[2].getTextureID());
+}
+
+/// \brief Activate and bind bike texture
+void RenderController::enableBikeTexture(){
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _model[1].getTextureID());
+}
+
+void RenderController::disableTexture(){
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glActiveTexture(GL_TEXTURE0);
 }

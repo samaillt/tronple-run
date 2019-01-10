@@ -22,4 +22,4 @@ Ensuite, possibilité de générer la documentation. Toujours dans le répertoir
 `make html`
 
 Tester les fuites mémoires avec valgrind : 
-`valgrind --leak-check=yes ./PROJECT/PROJECT_main`
+`valgrind --leak-check=yes ./PROJECT/tronple_run`

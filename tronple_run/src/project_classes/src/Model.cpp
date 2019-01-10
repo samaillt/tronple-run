@@ -10,8 +10,6 @@ Model::Model(const std::string &obj, const FilePath &applicationPath)
 		FilePath objPath(modelPath.addExt(".obj")); 
 		FilePath mtlPath(modelPath.addExt(".mtl")); 
 		bool ret = geometry.loadOBJ(objPath, mtlPath, true);
-		// if (!ret)
-		// 	exit(1); 
 
 		try {
 	    if (!ret){
@@ -23,9 +21,13 @@ Model::Model(const std::string &obj, const FilePath &applicationPath)
 		}
 
 		_geometry = geometry;
+
 		setVbo();
 		setIbo();
 		setVao();
+		
+		_texture = new Texture("../src/assets/textures/" + obj + ".jpg");
+		_textureID = _texture->getTextureID();
 }
 
 Model::Model(){}
@@ -97,6 +99,10 @@ GLuint Model::getVbo(){
 
 std::string Model::getObj(){
     return _obj;
+}
+
+GLuint Model::getTextureID(){
+	return _textureID;
 }
 
 //destructor

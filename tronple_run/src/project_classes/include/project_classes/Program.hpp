@@ -20,13 +20,16 @@ struct CoinProgram{
     GLint uMVPMatrix;
     GLint uMVMatrix;
     GLint uNormalMatrix;
+    GLint uTexture;
 
     CoinProgram(const FilePath& applicationPath):
+        
         _program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
-                              applicationPath.dirPath() + "shaders/normals.fs.glsl")) {
+                              applicationPath.dirPath() + "shaders/tex3D.fs.glsl")) {
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTexture = glGetUniformLocation(_program.getGLId(), "uTexture");
     }
 };
 

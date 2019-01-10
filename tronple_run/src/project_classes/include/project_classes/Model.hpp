@@ -21,6 +21,9 @@ private:
     Geometry _geometry; /*!< Geometry */ 
     std::string _obj; /*!< File */
 
+    GLuint _textureID; /*!< Id of model texture */
+    Texture *_texture; /*!< model Texture */
+
 public:
     /// \brief Constructor
     /// \param obj : string of an obj file
@@ -53,6 +56,10 @@ public:
     /// \brief Get the obj
     /// \return Obj string
     std::string getObj();
+
+    /// \brief Get the texture ID
+    /// \return GLuint textID
+    GLuint getTextureID();
 
     /// \brief set vertex buffer object
     void setVbo();
