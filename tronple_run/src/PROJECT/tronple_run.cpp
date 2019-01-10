@@ -115,15 +115,74 @@ int main(int argc, char** argv) {
   bool orientateLeft = false;
   bool fall = true;
   bool pause = false;
+  SDL_Event e;
+
+  std::cout << "WELCOME IN TRONPLE RUN" << std::endl << std::endl;
+
   while(!done) {
 
     // Menu display
+      std::cout << "MAIN MENU" << std::endl << std::endl;
+      std::cout << "ESC : Quit" << std::endl;
+      std::cout << "SPACE : Level choice" << std::endl;
 
-    std::cout << "Please choose a level" << std::endl;
+      while(!game){
+        while(windowManager.pollEvent(e)) {
+          switch (e.type) {
+            case SDL_QUIT:
+              return EXIT_SUCCESS;
+              break;
+            case SDL_KEYDOWN:
+              switch (e.key.keysym.sym){
+                case SDLK_ESCAPE:
+                  return EXIT_SUCCESS;
+                  break;
+                case SDLK_SPACE:
+                  game = true;
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      }
 
-    while (chosen_level == 0) {
-      std::cin >> chosen_level;
-    }
+      std::cout << "Please choose a level (between 1 & 5)" << std::endl;
+      while(chosen_level == 0){
+        while(windowManager.pollEvent(e)) {
+          switch (e.type) {
+            case SDL_QUIT:
+              return EXIT_SUCCESS;
+              break;
+            case SDL_KEYDOWN:
+              switch (e.key.keysym.sym){
+                case SDLK_F1:
+                    chosen_level = 1;
+                  break;
+                case SDLK_F2:
+                    chosen_level = 1;
+                  break;
+                case SDLK_F3:
+                    chosen_level = 1;
+                  break;
+                case SDLK_F4:
+                    chosen_level = 1;
+                  break;
+                case SDLK_F5:
+                    chosen_level = 1;
+                  break;
+                default:
+                  break;
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      }
 
     /*********************************
      * INITIALIZATION OF LEVEL & GAME
@@ -160,7 +219,6 @@ int main(int argc, char** argv) {
 
       // Event loop:
 
-      SDL_Event e;
       while(windowManager.pollEvent(e)) {
         switch (e.type) {
           case SDL_QUIT:
@@ -184,10 +242,17 @@ int main(int argc, char** argv) {
                 switch_camera = true;
                 break;
               case SDLK_ESCAPE:
-                if (pause == true)
+                if (pause == true){
+                  game = false;
+                  chosen_level = 0;
                   pause = false;
+                }
                 else
                   pause = true;
+                break;
+              case SDLK_SPACE:
+                if (pause == true)
+                  pause = false;
                 break;
               default:
                 break;
@@ -320,7 +385,7 @@ int main(int argc, char** argv) {
                 if ((player.getOrientation() == Player::LEFT || player.getOrientation() == Player::RIGHT) && !orientateRight) {
                   player.setHorizontalPos((**it).getPosX());
                 }
-                std::cout << "Right turn" << std::endl;
+                // std::cout << "Right turn" << std::endl;
                 orientateRight = true;
                 it = levelRightTurns.erase(it);
                 break;
@@ -364,7 +429,7 @@ int main(int argc, char** argv) {
                 if ((player.getOrientation() == Player::LEFT || player.getOrientation() == Player::RIGHT) && !orientateRight) {
                   player.setHorizontalPos((**it).getPosX());
                 }
-                std::cout << "Left turn" << std::endl;
+                // std::cout << "Left turn" << std::endl;
                 orientateLeft = true;
                 it = levelLeftTurns.erase(it);
                 break;
@@ -426,17 +491,17 @@ int main(int argc, char** argv) {
 
         for (auto it = levelArches.begin(); it != levelArches.end(); ++it) {
           if (game_controller.checkAABBCollision(player,**it)) {
-            std::cout << "Oh l'erreur, vous avez foncé dans une arche :o" << std::endl;
-            game = false; // Leave the loop after this iteration
-            done = true; // Leave the main loop after this iteration
+            std::cout << "Oh l'erreur, vous avez foncé dans une arche :o" << std::endl << std::endl;
+            game = false;
+            chosen_level = 0;
           }
         }
 
         for (auto it = levelBlocks.begin(); it != levelBlocks.end(); ++it) {
           if (game_controller.checkAABBCollision(player,**it)) {
-            std::cout << "Oh l'erreur, vous avez foncé dans un obstacle :o" << std::endl;
-            game = false; // Leave the loop after this iteration
-            done = true; // Leave the main loop after this iteration
+            std::cout << "Oh l'erreur, vous avez foncé dans un obstacle :o" << std::endl << std::endl;
+            game = false;
+            chosen_level = 0;
           }
         }
 
@@ -447,13 +512,14 @@ int main(int argc, char** argv) {
           if (game_controller.check2DAABBCollision(player,**it)){
             if (fall){
               fall = false;
+              chosen_level = 0;
             }
           }
         }
         if (fall && player.getPosZ() <= 1){
-          std::cout << "Oh l'erreur, vous avez foncé dans le vide :o" << std::endl;
-          game = false; // Leave the loop after this iteration
-          done = true; // Leave the main loop after this iteration
+          std::cout << "Oh l'erreur, vous avez foncé dans le vide :o" << std::endl << std::endl;
+          game = false;
+          chosen_level = 0;
         } else {
           fall = true;
         }
@@ -461,9 +527,9 @@ int main(int argc, char** argv) {
         // Arrivals
         for (auto it = levelArrivals.begin(); it != levelArrivals.end(); ++it) {
           if (game_controller.check2DAABBCollision(player,**it)) {
-            std::cout << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl;
-            game = false; // Leave the loop after this iteration
-            done = true; // Leave the main loop after this iteration
+            std::cout << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl << std::endl;
+            game = false;
+            chosen_level = 0;
             break;
           }
         }
@@ -471,9 +537,11 @@ int main(int argc, char** argv) {
         // Updtate player score with traveled distance.
 
         player.inscrementScore(10 * player.getSpeed());
-      } else 
-        std::cout << "pause" << std::endl;
+      } else {
 
+        // Pause 
+        // std::cout << "Your score : " << player.getScore() << std::endl;
+      }
 
       /*********************************
       * GAME RENDERING
@@ -542,6 +610,6 @@ int main(int argc, char** argv) {
     levelHoles.clear();
     levelLeftTurns.clear();
     levelRightTurns.clear();
-    return EXIT_SUCCESS;
   }
+  return EXIT_SUCCESS;
 }

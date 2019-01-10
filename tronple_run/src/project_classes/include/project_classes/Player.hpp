@@ -43,7 +43,7 @@ public:
 
     /// \brief Get if the payer is alive
     /// \return Boolean true or false
-    bool getIsAlive() const;
+    bool isAlive() const;
 
     /// \brief Get player pseudo
     /// \return String pseudo

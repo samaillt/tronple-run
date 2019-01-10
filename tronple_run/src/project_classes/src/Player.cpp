@@ -9,7 +9,7 @@ Player::Player(){};
 uint Player::getScore() const {
 	return _score;
 }
-bool Player::getIsAlive() const{
+bool Player::isAlive() const{
 	return _isAlive; // If true = Player alive
 }
 std::string Player::getPseudo() const{

@@ -59,7 +59,7 @@ void testPlayer(){
 	std::cout << "Speed : " << player.getSpeed() << std::endl;
 	std::cout << "Pseudo : " << player.getPseudo() << std::endl; 
 	std::cout << "Score : " << player.getScore() << std::endl; 
-	std::cout << "Alive : " << player.getIsAlive() << std::endl;
+	std::cout << "Alive : " << player.isAlive() << std::endl;
 
 	//Set
 	player.setType('N');
@@ -80,7 +80,7 @@ void testPlayer(){
 	std::cout << "Speed : " << player.getSpeed() << std::endl;
 	std::cout << "Pseudo : " << player.getPseudo() << std::endl; 
 	std::cout << "Score : " << player.getScore() << std::endl; 
-	std::cout << "Alive : " << player.getIsAlive() << std::endl;
+	std::cout << "Alive : " << player.isAlive() << std::endl;
 
 	player.inscrementScore(1);
 
