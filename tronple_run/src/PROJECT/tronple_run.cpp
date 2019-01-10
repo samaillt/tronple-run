@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
   bool pause = false;
   SDL_Event e;
 
-  std::cout << "WELCOME IN TRONPLE RUN" << std::endl << std::endl;
+  std::cout << std::endl << "WELCOME IN TRONPLE RUN" << std::endl << std::endl;
 
   while(!done) {
 
@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
         }
       }
 
-      std::cout << "Please choose a level (between 1 & 5)" << std::endl;
+      std::cout << std::endl << "Please choose a level (F1 - F2 - F3 - F4 - F5)" << std::endl;
       while(chosen_level == 0){
         while(windowManager.pollEvent(e)) {
           switch (e.type) {
@@ -491,7 +491,7 @@ int main(int argc, char** argv) {
 
         for (auto it = levelArches.begin(); it != levelArches.end(); ++it) {
           if (game_controller.checkAABBCollision(player,**it)) {
-            std::cout << "Oh l'erreur, vous avez foncé dans une arche :o" << std::endl << std::endl;
+            std::cout << std::endl << "Oh l'erreur, vous avez foncé dans une arche :o" << std::endl << std::endl;
             game = false;
             chosen_level = 0;
           }
@@ -499,7 +499,7 @@ int main(int argc, char** argv) {
 
         for (auto it = levelBlocks.begin(); it != levelBlocks.end(); ++it) {
           if (game_controller.checkAABBCollision(player,**it)) {
-            std::cout << "Oh l'erreur, vous avez foncé dans un obstacle :o" << std::endl << std::endl;
+            std::cout << std::endl << "Oh l'erreur, vous avez foncé dans un obstacle :o" << std::endl << std::endl;
             game = false;
             chosen_level = 0;
           }
@@ -517,7 +517,7 @@ int main(int argc, char** argv) {
           }
         }
         if (fall && player.getPosZ() <= 1){
-          std::cout << "Oh l'erreur, vous avez foncé dans le vide :o" << std::endl << std::endl;
+          std::cout << std::endl << "Oh l'erreur, vous avez foncé dans le vide :o" << std::endl << std::endl;
           game = false;
           chosen_level = 0;
         } else {
@@ -527,7 +527,7 @@ int main(int argc, char** argv) {
         // Arrivals
         for (auto it = levelArrivals.begin(); it != levelArrivals.end(); ++it) {
           if (game_controller.check2DAABBCollision(player,**it)) {
-            std::cout << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl << std::endl;
+            std::cout << std::endl << "Bravo ! Vous avez réussi ce niveau. Votre score : " << player.getScore() << std::endl << std::endl;
             game = false;
             chosen_level = 0;
             break;
