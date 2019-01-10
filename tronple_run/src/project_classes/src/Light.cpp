@@ -16,10 +16,13 @@ Light::Light(const Light& light)
 	:_properties(light._properties),
 	_id(light._id)
 {
+	
 }
 
 Light::~Light()
-{}
+{
+
+}
 
 void Light::sendLightShader(const MultiLightProgram &multiLightProgram, const std::string &uniformArrayName) const 
 {

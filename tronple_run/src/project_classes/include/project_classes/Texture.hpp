@@ -2,25 +2,29 @@
 #ifndef __TEXTURE__HPP
 #define __TEXTURE__HPP
 #include <iostream>
+#include <string>
+#include <iostream>
 #include <GL/glew.h>
 #include "glimac/glm.hpp"
 #include "glimac/Image.hpp"
+#include <glimac/FilePath.hpp>
 
 class Texture {
 
 private:
-  GLuint _textId;
-  std::string _imgFile;
-  std::unique_ptr<glimac::Image> _imgTexture;
+  GLuint _textureID;
+  std::string _textureFile;
+  std::unique_ptr<glimac::Image> _textureImage;
 
 public:
 
     Texture();
-    Texture(std::string ImgFile);
+    Texture(const std::string &textureFile);
+    Texture(const Texture& texture);
 
-    GLuint getID() const;
+    ~Texture();
 
-    void setImgFile(const std::string &ImgFile);
+    GLuint getTextureID() const;
 
     bool loadTexture();
 };

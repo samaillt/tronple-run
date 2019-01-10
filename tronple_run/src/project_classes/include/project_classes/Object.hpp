@@ -21,7 +21,8 @@ protected:
     float _height; /*!< object height */ 
     float _posX; /*!< object X position */ 
     float _posY; /*!< object Y position */ 
-    float _posZ; /*!< object Z position */ 
+    float _posZ; /*!< object Z position */
+    
 
 public:
 

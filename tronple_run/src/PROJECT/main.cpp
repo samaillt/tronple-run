@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
    * INITIALIZATION OF LEVEL & GAME
    *********************************/
 
-    Level level("5.ppm");
+    Level level("4.ppm");
     GameController game_controller(&level);
     game_controller.loadLevel();
 

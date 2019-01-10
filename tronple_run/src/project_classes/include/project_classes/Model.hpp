@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <glimac/Geometry.hpp>
 #include <glimac/FilePath.hpp>
+#include <project_classes/Texture.hpp>
 
 using namespace glimac;
 
@@ -18,7 +19,7 @@ private:
     GLuint _ibo; /*!<  */ 
 
     Geometry _geometry; /*!<  */ 
-    std::string _obj; /*!<  */ 
+    std::string _obj; /*!<  */
 
 public:
     /// \brief Constructor
@@ -29,13 +30,16 @@ public:
     ///\brief Default constructor
     Model();
 
+    /// \brief Model Copy constructor
+    /// \param model : Model to copy
+    Model(const Model &model);
+
     Geometry getGeometry();
     GLuint getVao();
     GLuint getIbo();
     GLuint getVbo();
 
     std::string getObj();
-
 
     //setter
     void setVbo();

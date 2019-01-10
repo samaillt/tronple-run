@@ -14,6 +14,8 @@
 #include "project_classes/Program.hpp"
 #include <project_classes/TrackballCamera.hpp> 
 
+#include <project_classes/Light.hpp> 
+
 
 class RenderController{
 
@@ -32,6 +34,12 @@ private:
     glm::mat4 _MVMatrix;
     glm::mat4 _NormalMatrix;
     glm::mat4 _GlobalMVMatrix;
+
+    /// \brief Lights
+    std::vector<Light> _lights;
+
+    /// \brief Lights counter
+    unsigned int _lightsCount;
 
 public:
     // constructor

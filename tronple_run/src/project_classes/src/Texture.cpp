@@ -1,49 +1,48 @@
 #include "project_classes/Texture.hpp"
 
-Texture::Texture()
-: _textId(0), _imgFile("")
+using namespace glimac;
+
+Texture::Texture():
+  _textureID(0), _textureFile("")
+{};
+
+Texture::Texture(const Texture& texture):
+  _textureID(0), _textureFile(texture._textureFile) 
 {
+  loadTexture();
+};
 
-}
-
-Texture::Texture(std::string imgFile)
-: _textId(0), _imgFile(imgFile)
+Texture::Texture(const std::string &textureFile):
+  _textureID(0), 
+  _textureFile(textureFile) 
 {
-
+  loadTexture();
 }
 
-GLuint Texture::getID() const {
-  return _textId;
-}
-
-void Texture::setImgFile(const std::string &imgFile) {
-  _imgFile = imgFile;
+GLuint Texture::getTextureID() const { 
+  return _textureID; 
 }
 
 bool Texture::loadTexture() {
-  _imgTexture = glimac::loadImage(_imgFile);
+  _textureImage = loadImage(_textureFile);
 
-  if(_imgTexture == 0)
-    {
-        std::cout << "Error : cannot load texture image" << std::endl;
-        return false;
-    }
-
-  glGenTextures(1, &_textId);
-  glBindTexture(GL_TEXTURE_2D, _textId);
-
+  if (_textureImage == NULL) {
+    std::cout << "Image couldn't be loaded" << std::endl;
+    return false;
+  }
+  glGenTextures(1, &_textureID);
+  glBindTexture(GL_TEXTURE_2D, _textureID);
   glTexImage2D(GL_TEXTURE_2D,
-                    0,
-                    GL_RGBA,
-                    _imgTexture->getWidth(),
-                    _imgTexture->getHeight(),
-                    0,
-                    GL_RGBA,
-                    GL_FLOAT,
-                    _imgTexture->getPixels()
-                    );
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            0,
+            GL_RGBA,
+            _textureImage->getWidth(),
+            _textureImage->getHeight(),
+            0,
+            GL_RGBA,
+            GL_FLOAT,
+            _textureImage->getPixels());
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
   glBindTexture(GL_TEXTURE_2D, 0);
   return true;

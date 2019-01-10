@@ -50,9 +50,17 @@ void RenderController::setGlobalMVMatrix(glm::mat4 GlobalMVMatrix){
 void RenderController::useProgram(FS shader){
     switch (shader){
         case COIN :
-            _programList->coinProgram->m_Program.use();
+            _programList->coinProgram->_program.use();
 		break;
-
+		case WORLD :
+            _programList->worldProgram->_program.use();
+		break;
+		case TEXTURE :
+            _programList->textureProgram->_program.use();
+		break;
+		case MULTILIGHT :
+            _programList->multiLightProgram->_program.use();
+		break;
 	default : 
 		break;
 	}
@@ -97,13 +105,42 @@ glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
 }
 
 void RenderController::applyTransformations(FS shader, glm::mat4 MVMatrix){
+    glm::mat4 lightMatrix;
+    glm::vec4 lightVector;
+    glm::mat4 _uProjection;
+
+    const std::string refLight = "uLights";
+    glm::vec3 ambientLight;
+
+    glDisable(GL_BLEND);
+
     switch (shader){
     	case COIN :   
     		glUniformMatrix4fv(_programList->coinProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix*MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));
 		break;
+		case TEXTURE :
+			glUniform1i(_programList->textureProgram->uTexture, 0);
+			glUniform1f(_programList->textureProgram->uTime, 0);
+			glUniformMatrix4fv(_programList->textureProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix * _MVMatrix));
+			glUniformMatrix4fv(_programList->textureProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(_MVMatrix));
+			glUniformMatrix4fv(_programList->textureProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));
+			break;
+		// case MULTILIGHT :
+		// 	ambientLight = glm::vec3(.05);
 
+		// 	for (std::vector<Light>::iterator it = _lights.begin(); it != _lights.end(); ++it) {
+		// 		it->sendLightShader(_programList->multiLightProgram, refLight);
+		// 	}
+
+		// 	glUniform3f(glGetUniformLocation(_programList->multiLightProgram->_program.getGLId(), "uAmbientLight"), ambientLight.x, ambientLight.y, ambientLight.z);
+		// 	glUniform1i(glGetUniformLocation(_programList->multiLightProgram->_program.getGLId(), "uNbLights"), _lightsCount);
+		// 	glUniformMatrix4fv(_programList->multiLightProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix * _MVMatrix));
+		// 	glUniformMatrix4fv(_programList->multiLightProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(_MVMatrix));
+		// 	glUniformMatrix4fv(_programList->multiLightProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));
+		// 	glUniform1i(_programList->multiLightProgram->uTexture, 0);
+		// 	break;
 		default : 
 		break;
 	}

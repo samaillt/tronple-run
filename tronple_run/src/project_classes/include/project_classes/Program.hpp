@@ -11,27 +11,27 @@
 #include "project_classes/Model.hpp"
 
 /// \brief Enumeration of fragments chaders
-enum FS {COIN};
+enum FS {COIN, WORLD, TEXTURE, MULTILIGHT};
 
 struct CoinProgram{
-    Program m_Program;
+    Program _program;
 
     GLint uMVPMatrix;
     GLint uMVMatrix;
     GLint uNormalMatrix;
 
     CoinProgram(const FilePath& applicationPath):
-        m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+        _program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                               applicationPath.dirPath() + "shaders/normals.fs.glsl")) {
-        uMVPMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(m_Program.getGLId(), "uNormalMatrix");
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
     }
 };
 
 
 struct WorldProgram{
-    Program m_Program;
+    Program _program;
 
     GLint uMVPMatrix;
     GLint uMVMatrix;
@@ -39,12 +39,12 @@ struct WorldProgram{
     GLint uTextureWorld;
 
     WorldProgram(const FilePath& applicationPath):
-        m_Program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+        _program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                               applicationPath.dirPath() + "shaders/world.fs.glsl")) {
-        uMVPMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVPMatrix");
-        uMVMatrix = glGetUniformLocation(m_Program.getGLId(), "uMVMatrix");
-        uNormalMatrix = glGetUniformLocation(m_Program.getGLId(), "uNormalMatrix");
-        uTextureWorld = glGetUniformLocation(m_Program.getGLId(), "uTextureWorld");
+        uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
+        uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
+        uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
+        uTextureWorld = glGetUniformLocation(_program.getGLId(), "uTextureWorld");
     }
 };
 
@@ -57,11 +57,10 @@ struct TextureProgram {
     GLint uTexture;
     GLint uTime;
 
-    TextureProgram(const FilePath& applicationPath)
-        :_program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+    TextureProgram(const FilePath& applicationPath):
+        _program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                              applicationPath.dirPath() + "shaders/tex3D.fs.glsl"))
     {
-        std::cout << "Loading texture program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");
@@ -82,11 +81,10 @@ struct MultiLightProgram{
     GLint uNbLights;
     GLint uAmbientLight;
 
-    MultiLightProgram(const FilePath& applicationPath)
-        :_program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
+    MultiLightProgram(const FilePath& applicationPath):
+        _program(loadProgram(applicationPath.dirPath() + "shaders/3D.vs.glsl",
                               applicationPath.dirPath() + "shaders/multiLight.fs.glsl"))
     {
-        std::cout << "Loading MultiLight program" << std::endl;
         uMVPMatrix = glGetUniformLocation(_program.getGLId(), "uMVPMatrix");
         uMVMatrix = glGetUniformLocation(_program.getGLId(), "uMVMatrix");
         uNormalMatrix = glGetUniformLocation(_program.getGLId(), "uNormalMatrix");

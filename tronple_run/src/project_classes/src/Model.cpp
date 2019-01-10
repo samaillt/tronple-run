@@ -20,6 +20,13 @@ Model::Model(const std::string obj, const FilePath &applicationPath)
 
 Model::Model(){}
 
+Model::Model(const Model &model)
+: _geometry(model._geometry){
+	setVbo();
+	setIbo();
+	setVao();
+};
+
 void Model::setVbo(){
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
