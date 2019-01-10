@@ -1,4 +1,5 @@
 #include "project_classes/Texture.hpp"
+#include "project_classes/Exception.hpp"
 
 using namespace glimac;
 
@@ -26,10 +27,20 @@ GLuint Texture::getTextureID() const {
 bool Texture::loadTexture() {
   _textureImage = loadImage(_textureFile);
 
-  if (_textureImage == NULL) {
-    std::cout << "Image couldn't be loaded" << std::endl;
-    return false;
+  // if (_textureImage == NULL) {
+  //   std::cout << "Image couldn't be loaded" << std::endl;
+  //   return false;
+  // }
+
+  try {
+    if (_textureImage == NULL){
+      Exception err1(1,2,"Image couldn't be loaded");
+      throw err1;
+    }
+  } catch(const Exception &err){
+    std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
   }
+
   glGenTextures(1, &_textureID);
   glBindTexture(GL_TEXTURE_2D, _textureID);
   glTexImage2D(GL_TEXTURE_2D,

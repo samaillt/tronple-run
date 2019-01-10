@@ -9,6 +9,7 @@
 #include "glimac/Image.hpp"
 #include <glimac/FilePath.hpp>
 
+
 /// \class Texture
 /// \brief Class that defines a Texture
 class Texture {

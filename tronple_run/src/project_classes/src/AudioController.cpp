@@ -1,4 +1,5 @@
 #include "project_classes/AudioController.hpp"
+#include "project_classes/Exception.hpp"
 
 AudioController::AudioController()
 {
@@ -17,12 +18,23 @@ Mix_Music *AudioController::createMusic(const char *filename)
 {
     Mix_Music *music;
     FILE *f = fopen(filename, "rb");
-    if (f == NULL) { 
-        std::cout << "error filename music" << std::endl;
-    } 
-    else { 
-        fclose(f); 
+    // if (f == NULL) { 
+    //     std::cout << "error filename music" << std::endl;
+    // } 
+    // else { 
+    //     fclose(f); 
+    // }
+    try {
+        if (f == NULL){
+            Exception err1(1,2,"Error filename music");
+            throw err1;
+        }
+        else
+            fclose(f);
+    } catch(const Exception &err){
+        std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
     }
+
     music = Mix_LoadMUS(filename);
     return music;
 }

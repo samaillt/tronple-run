@@ -1,4 +1,5 @@
 #include "project_classes/Model.hpp"
+#include "project_classes/Exception.hpp"
 
 using namespace glimac;
 
@@ -9,8 +10,17 @@ Model::Model(const std::string &obj, const FilePath &applicationPath)
 		FilePath objPath(modelPath.addExt(".obj")); 
 		FilePath mtlPath(modelPath.addExt(".mtl")); 
 		bool ret = geometry.loadOBJ(objPath, mtlPath, true);
-		if (!ret)
-			exit(1); 
+		// if (!ret)
+		// 	exit(1); 
+
+		try {
+	    if (!ret){
+	      Exception err1(1,2,"Exit - model.cpp");
+	      throw err1;
+	    }
+		} catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
+		}
 
 		_geometry = geometry;
 		setVbo();

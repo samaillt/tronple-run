@@ -12,6 +12,7 @@
 #include "project_classes/Block.hpp"
 #include "project_classes/Arch.hpp"
 #include "project_classes/Player.hpp"
+#include "project_classes/Exception.hpp"
 
 GameController::GameController(Level* level){
 	_level = level;
@@ -24,9 +25,19 @@ int GameController::loadLevel(){
 	/* Ouverture du fichier de niveau pour la lecture */
 	level_file = fopen(_level->getSourceFile().c_str(), "r");
 	
-	if (level_file == NULL) {
-		std::cout << "Erreur de chargement du fichier" << std::endl;
-		return 0;
+	// if (level_file == NULL) {
+	// 	std::cout << "Erreur de chargement du fichier" << std::endl;
+	// 	return 0;
+	// }
+
+	try {
+	    if (level_file == NULL){
+	      Exception err1(1,2,"Erreur de chargement du fichier");
+	      throw err1;
+	    }
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
 	}
 
 	/* Traitement du fichier ppm */
@@ -39,24 +50,68 @@ int GameController::loadLevel(){
 	* Première ligne du fichier 
 	* <type>
 	*/
-	if (fgets(line, sizeof line, level_file) == NULL)
-	exit(0);
+	// if (fgets(line, sizeof line, level_file) == NULL)
+	// exit(0);
 
-	if (strcmp(line, "P3\n") != 0) {
-		std::cout << "Format du fichier non pris en charge" << std::endl;
-		return 0;
+	try {
+	    if (fgets(line, sizeof line, level_file) == NULL){
+	      Exception err1(1,2,"Exit - fgets");
+	      throw err1;
+	    }
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
+	}
+
+	// if (strcmp(line, "P3\n") != 0) {
+	// 	std::cout << "Format du fichier non pris en charge" << std::endl;
+	// 	return 0;
+	// }
+
+	try {
+	    if (strcmp(line, "P3\n") != 0){
+	      Exception err1(1,2,"Format du fichier non pris en charge");
+	      throw err1;
+	    }
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
 	}
 
 	/* 
 	* Deuxième ligne du fichier 
 	* <width> <height>
 	*/
-	if (fgets(line, sizeof line, level_file) == NULL)
-		return 0;
-	if (line[0] == '#') {
-		if (fgets(line, sizeof line, level_file) == NULL)
-		  	return 0;
+	// if (fgets(line, sizeof line, level_file) == NULL)
+	// 	return 0;
+
+	try {
+	    if (fgets(line, sizeof line, level_file) == NULL){
+	      Exception err1(1,2,"Exit - fgets");
+	      throw err1;
+	    }
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
 	}
+
+	// if (line[0] == '#') {
+	// 	if (fgets(line, sizeof line, level_file) == NULL)
+	// 	  	return 0;
+	// }
+
+	try {
+	    if (line[0] == '#') {
+		 	if (fgets(line, sizeof line, level_file) == NULL) {
+		      Exception err1(1,2,"Exit - fgets");
+		      throw err1;
+		    }
+		}
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
+	}
+
 	sscanf(line, "%d %d", &width, &height);
 
 	_level->setSizeX(width);
@@ -66,8 +121,20 @@ int GameController::loadLevel(){
 	* Troisième ligne du fichier 
 	* <color_max>
 	*/
-	if (fgets(line, sizeof line, level_file) == NULL)
-	exit(0);
+
+	// if (fgets(line, sizeof line, level_file) == NULL)
+	// 	exit(0);
+
+	try {
+	    if (fgets(line, sizeof line, level_file) == NULL){
+	      Exception err1(1,2,"Exit - fgets");
+	      throw err1;
+	    }
+	} 
+	catch(const Exception &err){
+		std::cerr << "Exception lancée : " << std::endl << "Niveau : " << err.getLevel() << std::endl << "Code : " << err.getCode() << std::endl << err.what() << std::endl;
+	}
+	
 	sscanf(line, "%d", &color_max);
 
 	std::vector<Cell*> cells; // Vector of all blocks, arches, arrivals (any cube to display)
