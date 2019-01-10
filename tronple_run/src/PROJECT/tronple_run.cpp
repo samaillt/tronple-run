@@ -563,7 +563,7 @@ int main(int argc, char** argv) {
       renderController.enableBikeTexture();
       renderController.bindModelVAO(3);
       renderController.useProgram(COIN);
-      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixSkybox();
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixSkybox(player.getPosX(), player.getPosY(), player.getPosZ());
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(3);
       renderController.debindVAO();

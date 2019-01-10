@@ -25,7 +25,7 @@ private:
 
     SDLWindowManager* _windowManager; /*!< WindowManager */ 
 
-    Model _model[3]; /*!< Model */ 
+    Model _model[4]; /*!< Model */ 
 
     glm::mat4 _ProjMatrix; /*!< ProjMatrix */ 
     glm::mat4 _MVMatrix; /*!< MVMatrix */ 
@@ -122,7 +122,7 @@ public:
 
     /// \brief Use skybox matrix
     /// \return matrix4
-    glm::mat4 useMatrixSkybox();
+    glm::mat4 useMatrixSkybox(float x, float y, float z);
 
     /// \brief Activate and bind coin texture
     void enableCoinTexture();

@@ -89,7 +89,7 @@ glm::mat4 RenderController::useMatrixCoin(float x, float y, float z){
 
     MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
     MVMatrix = glm::rotate(MVMatrix, _windowManager->getTime(), glm::vec3(0, 1, 0)); 
-    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5, 0.5, 0.5));  
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.4, 0.4, 0.4));  
     return MVMatrix;
 }
 
@@ -106,9 +106,11 @@ glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
     return MVMatrix;
 }
 
-glm::mat4 RenderController::useMatrixSkybox(){
+glm::mat4 RenderController::useMatrixSkybox(float x, float y, float z){
     glm::mat4 MVMatrix;
-    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(x, z, y)); 
+    MVMatrix = glm::rotate(MVMatrix, _windowManager->getTime()/10, glm::vec3(0, 1, 0)); 
+    MVMatrix = glm::scale(MVMatrix, glm::vec3(0.07, 0.07, 0.07));  
     return MVMatrix;
 }
 
