@@ -15,7 +15,7 @@ public:
     /// \param initX : initialisation of the X position of the enemy
     /// \param initY : initialisation of the Y position of the enemy
     /// \param speed : movement speed of the enemy
-    Enemy(char type, float width, float height, float posX, float posY, float posZ);
+    Enemy(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Enemy();

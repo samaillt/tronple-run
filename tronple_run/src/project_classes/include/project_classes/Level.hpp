@@ -18,9 +18,9 @@
 class Level {
 
 private:
-    int _sizeX; /*!<  */
-    int _sizeY; /*!<  */
-    int _sizeZ;  /*!<  */
+    int _sizeX; /*!< Size x */
+    int _sizeY; /*!< Size y */
+    int _sizeZ;  /*!< Size z */
 
     Player _mainCharacter; /*!< Main character of the level */
     std::vector<Cell*> _cells; /*!< Vertor of cells */
@@ -98,53 +98,53 @@ public:
 
     /// \brief Set the X size
     /// \param Takes an integer n
-    void setSizeX(int n);
+    void setSizeX(const int n);
 
     /// \brief Set the Y size
     /// \param Takes an integer n
-    void setSizeY(int n);
+    void setSizeY(const int n);
 
     /// \brief Set the Z size
     /// \param Takes an integer n
-    void setSizeZ(int n);
+    void setSizeZ(const int n);
 
     /// \brief Set a player
     /// \param Player
-    void setPlayer(Player &player);
+    void setPlayer(const Player &player);
 
     /// \brief Set cells
     /// \param Vectors of cells
-    void setCells(std::vector<Cell*> &cells);
+    void setCells(const std::vector<Cell*> &cells);
 
      /// \brief Set coins
     /// \param Vectors of coins
-    void setCoins(std::vector<Coin*> &coins);
+    void setCoins(const std::vector<Coin*> &coins);
 
     /// \brief Set blocks
     /// \param Vectors of blocks
-    void setBlocks(std::vector<Block*> &blocks);
+    void setBlocks(const std::vector<Block*> &blocks);
 
     /// \brief Set arches
     /// \param Vectors of arches
-    void setArches(std::vector<Arch*> &arches);
+    void setArches(const std::vector<Arch*> &arches);
 
     /// \brief Set arrivals
     /// \param Vectors of arrivals
-    void setArrivals(std::vector<Arrival*> &arrivals);
+    void setArrivals(const std::vector<Arrival*> &arrivals);
 
     /// \brief Set holes
     /// \param Vectors of holes
-    void setHoles(std::vector<Hole*> &holes);
+    void setHoles(const std::vector<Hole*> &holes);
 
     /// \brief Set leftTurns
     /// \return Vectors of leftTurns
-    void setLeftTurns(std::vector<Cell*> &leftTurns);
+    void setLeftTurns(const std::vector<Cell*> &leftTurns);
 
     /// \brief Set rightTurns
     /// \return Vectors of rightTurns
-    void setRightTurns(std::vector<Cell*> &rightTurns);
+    void setRightTurns(const std::vector<Cell*> &rightTurns);
 
     /// \brief Set file source of the level
     /// \param Source string of the file level
-    void setSourceFile(std::string &sourceFile);
+    void setSourceFile(const std::string &sourceFile);
 };

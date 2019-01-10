@@ -163,16 +163,16 @@ int main(int argc, char** argv) {
                     chosen_level = 1;
                   break;
                 case SDLK_F2:
-                    chosen_level = 1;
+                    chosen_level = 2;
                   break;
                 case SDLK_F3:
-                    chosen_level = 1;
+                    chosen_level = 3;
                   break;
                 case SDLK_F4:
-                    chosen_level = 1;
+                    chosen_level = 4;
                   break;
                 case SDLK_F5:
-                    chosen_level = 1;
+                    chosen_level = 5;
                   break;
                 default:
                   break;

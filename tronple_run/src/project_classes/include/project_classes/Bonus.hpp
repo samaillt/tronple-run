@@ -14,7 +14,7 @@ public:
     /// \param posX : X position of the bonus
     /// \param posY : Y position of the bonus
     /// \param posZ : Z position of the bonus
-    Bonus(char type, float width, float height, float posX, float posY, float posZ);
+    Bonus(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Bonus();

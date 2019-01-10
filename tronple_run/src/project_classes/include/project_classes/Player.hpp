@@ -32,7 +32,7 @@ public:
     /// \param pseudo : pseudo of the player
     /// \param score : score of the player
     /// \param isAlive : true or false
-    Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos, Orientation orientation = FRONT);
+    Player(const char type, const float width, const float height, const float posX, const float posY, const float posZ, const float speed, const std::string pseudo, const uint score, const bool isAlive, const float verticalPos, const float horizontalPos, const Orientation orientation = FRONT);
     
     //// \brief Default constructor
     Player();

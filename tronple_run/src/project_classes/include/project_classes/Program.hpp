@@ -13,6 +13,7 @@
 /// \brief Enumeration of fragments chaders
 enum FS {COIN, WORLD, TEXTURE, MULTILIGHT};
 
+/// \struct Coin Program
 struct CoinProgram{
     Program _program;
 
@@ -29,7 +30,7 @@ struct CoinProgram{
     }
 };
 
-
+/// \struct World Program
 struct WorldProgram{
     Program _program;
 
@@ -48,6 +49,7 @@ struct WorldProgram{
     }
 };
 
+/// \struct Texture Program
 struct TextureProgram {
     glimac::Program _program;
 
@@ -69,6 +71,7 @@ struct TextureProgram {
     }
 };
 
+/// \struct Multilight Program
 struct MultiLightProgram{
     glimac::Program _program;
 
@@ -96,6 +99,7 @@ struct MultiLightProgram{
     }
 };
 
+/// \struct Program list
 struct ProgramList {
     CoinProgram* coinProgram;
     WorldProgram* worldProgram;

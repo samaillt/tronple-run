@@ -16,68 +16,110 @@
 
 #include <project_classes/Light.hpp> 
 
-
+/// \class RenderController
+/// \brief Class that defines the RenderController
 class RenderController{
 
-private:
-    //Program    
-    ProgramList* _programList;
+private:  
+    ProgramList* _programList; /*!< Program */ 
 
-    //WindowManager
-    SDLWindowManager* _windowManager;
+    SDLWindowManager* _windowManager; /*!< WindowManager */ 
 
-    // Model
-    Model _model[3];
+    Model _model[3]; /*!< Model */ 
 
-    //Matrix
-    glm::mat4 _ProjMatrix;
-    glm::mat4 _MVMatrix;
-    glm::mat4 _NormalMatrix;
-    glm::mat4 _GlobalMVMatrix;
+    glm::mat4 _ProjMatrix; /*!< ProjMatrix */ 
+    glm::mat4 _MVMatrix; /*!< MVMatrix */ 
+    glm::mat4 _NormalMatrix; /*!< NormalMatrix */ 
+    glm::mat4 _GlobalMVMatrix; /*!< GlobalMVMatrix */ 
 
-    /// \brief Lights
-    std::vector<Light> _lights;
+    std::vector<Light> _lights; /*!< Lights */ 
 
-    /// \brief Lights counter
-    unsigned int _lightsCount;
+    unsigned int _lightsCount; /*!< Lights counter */ 
 
 public:
-    // constructor
+    /// \brief Constructor
+    /// \param windowManager
+    /// \param programList
     RenderController(SDLWindowManager* windowManager, ProgramList* programList);
 
     // **** MATRIX ****
-    //Getter
+    
+    /// \brief Get projMatrix
+    /// \return matrix4
     glm::mat4 getProjMatrix() const;
+
+    /// \brief Get MVMatrix
+    /// \return matrix4
     glm::mat4 getMVMatrix() const;
+
+    /// \brief Get NormalMatrix
+    /// \return matrix4
     glm::mat4 getNormalMatrix() const;
+
+    /// \brief Get GlobalMVMatrix
+    /// \return matrix4
     glm::mat4 getGlobalMVMatrix() const;
     
-    //Setter
-    void setProjMatrix(glm::mat4 ProjMatrix);
-    void setMVMatrix(glm::mat4 MVMatrix);
-    void setNormalMatrix(glm::mat4 NormalMatrix);
-    void setGlobalMVMatrix(glm::mat4 GlobalMVMatrix);
+    /// \brief Set projMatrix
+    /// \param matrix4 projMatrix
+    void setProjMatrix(const glm::mat4 ProjMatrix);
 
-    // **** PROGRAM **** //
-    void useProgram(FS shader);
+    /// \brief Set MVMatrix
+    /// \param matrix4 MVMatrix
+    void setMVMatrix(const glm::mat4 MVMatrix);
+
+    /// \brief Set NormalMatrix
+    /// \param matrix4 NormalMatrix
+    void setNormalMatrix(const glm::mat4 NormalMatrix);
+
+    /// \brief Set GlobalMVMatrix
+    /// \param matrix4 GlobalMVMatrix
+    void setGlobalMVMatrix(const glm::mat4 GlobalMVMatrix);
+
+    /// \brief Use program
+    /// \param Fragment shader
+    void useProgram(const FS shader);
 
     // **** MODEL ****
-    //Getter
+
+    /// \brief Get Model
+    /// \param model number (int)
+    /// \return model
     Model getModel(int i) const;
 
-    //VBO IBO VAO Model
+    /// \brief VBO IBO VAO Model
     void VModel(int i);
 
-    //Method
+    /// \brief Bind Model Vertex array object
+    /// \param model number (int)
     void bindModelVAO(int i);
+
+    /// \brief Apply transformations
+    /// \param Fragment shader and matrix4
     void applyTransformations(FS shader, glm::mat4 MVMatrix);
+
+    /// \brief Draw model
+    /// \param model number (int)
     void drawModel(int i);
+
+    /// \brief Debind Model Vertex array object
     void debindVAO();
 
+    /// \brief Use coin matrix
+    /// \param float x, y, z
+    /// \return matrix4
     glm::mat4 useMatrixCoin(float x, float y, float z);
+
+    /// \brief Use bike matrix
+    /// \param float x, y, z, orientation
+    /// \return matrix4
     glm::mat4 useMatrixBike(float x, float y, float z, float orientation);
+
+    /// \brief Use cell matrix
+    /// \param float x, y, z
+    /// \return matrix4
     glm::mat4 useMatrixCell(float x, float y, float z);
 
-    //destructor
+    /// \brief Destructor
     ~RenderController();
 };

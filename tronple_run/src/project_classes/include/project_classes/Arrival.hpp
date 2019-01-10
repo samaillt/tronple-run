@@ -14,7 +14,7 @@ public:
     /// \param posX : X position of the arrival
     /// \param posY : Y position of the arrival
     /// \param posZ : Z position of the arrival
-    Arrival(char type, float width, float height, float posX, float posY, float posZ);
+    Arrival(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Arrival();

@@ -9,24 +9,37 @@
 #include "glimac/Image.hpp"
 #include <glimac/FilePath.hpp>
 
+/// \class Texture
+/// \brief Class that defines a Texture
 class Texture {
 
 private:
-  GLuint _textureID;
-  std::string _textureFile;
-  std::unique_ptr<glimac::Image> _textureImage;
+  GLuint _textureID; /*!< Texture id */ 
+  std::string _textureFile; /*!< Texture file */ 
+  std::unique_ptr<glimac::Image> _textureImage; /*!< Texture image */ 
 
 public:
-
+	/// \brief Default contructor
     Texture();
+
+    /// \brief Constructor
+    /// \param textureFile : File of the texture
     Texture(const std::string &textureFile);
+
+    /// \brief Constructor
+    /// \param texture
     Texture(const Texture& texture);
 
-    ~Texture();
-
+    /// \brief Get the texture id
+    /// \return Unsigned binary integer
     GLuint getTextureID() const;
 
+    /// \brief Load texture
+    /// \return boolean
     bool loadTexture();
+
+    /// \brief Destructor
+    ~Texture();
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "project_classes/Hole.hpp"
 
 //constructor
-Hole::Hole(char type, float width, float height, float posX, float posY, float posZ)
+Hole::Hole(const char type, const float width, const float height, const float posX, const float posY, const float posZ)
 : Cell(type, width, height, posX, posY, posZ) {}
 
 Hole::Hole(){}

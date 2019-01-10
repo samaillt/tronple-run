@@ -72,33 +72,33 @@ void Level::setSizeY(const int n) {
 void Level::setSizeZ(const int n) {
 	_sizeZ = n;
 }
-void Level::setPlayer(Player &player) {
+void Level::setPlayer(const Player &player) {
 	_mainCharacter = player;
 }
-void Level::setCells(std::vector<Cell*> &cells) {
+void Level::setCells(const std::vector<Cell*> &cells) {
 	_cells = cells;
 }
-void Level::setCoins(std::vector<Coin*> &coins) {
+void Level::setCoins(const std::vector<Coin*> &coins) {
 	_coins = coins;
 }
-void Level::setBlocks(std::vector<Block*> &blocks) {
+void Level::setBlocks(const std::vector<Block*> &blocks) {
 	_blocks = blocks;
 }
-void Level::setArches(std::vector<Arch*> &arches) {
+void Level::setArches(const std::vector<Arch*> &arches) {
 	_arches = arches;
 }
-void Level::setArrivals(std::vector<Arrival*> &arrivals) {
+void Level::setArrivals(const std::vector<Arrival*> &arrivals) {
 	_arrivals = arrivals;
 }
-void Level::setHoles(std::vector<Hole*> &holes) {
+void Level::setHoles(const std::vector<Hole*> &holes) {
 	_holes = holes;
 }
-void Level::setLeftTurns(std::vector<Cell*> &leftTurns) {
+void Level::setLeftTurns(const std::vector<Cell*> &leftTurns) {
 	_leftTurns = leftTurns;
 }
-void Level::setRightTurns(std::vector<Cell*> &rightTurns) {
+void Level::setRightTurns(const std::vector<Cell*> &rightTurns) {
 	_rightTurns = rightTurns;
 }
-void Level::setSourceFile(std::string &sourceFile) {
+void Level::setSourceFile(const std::string &sourceFile) {
 	_sourceFile = "../src/assets/levels/"+sourceFile;
 }

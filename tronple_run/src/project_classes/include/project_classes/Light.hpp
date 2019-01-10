@@ -8,6 +8,8 @@
 #include <glimac/FilePath.hpp>
 #include <project_classes/Program.hpp>
 
+/// \struct Properties
+/// \brief List light properties
 struct Properties
 {
 	bool _isPoint;
@@ -18,6 +20,8 @@ struct Properties
 	glm::vec3 _lightIntensity;
 };
 
+/// \class Light
+/// \brief Class that defines lights
 class Light {
 
 	private	:
@@ -25,8 +29,17 @@ class Light {
 		unsigned int _id;
 
 	public:
+		/// \brief Default constructor
 		Light();
 
+		/// \brief Constructor
+		/// \param id : the light id
+		/// \param isPoint : Boolean isPoint
+		/// \param posOrDir : position or direction
+		/// \param Kd :
+		/// \param Ks :
+		/// \param shininess : chininess float
+		/// \param lightIntensity : light intensity vector
 		Light(const unsigned int id,
 			  const bool isPoint,
 			  const glm::vec3 &posOrDir,
@@ -35,8 +48,10 @@ class Light {
 			  const float &shininess, 
 			  const glm::vec3 &lightIntensity);
 
+		/// \brief Copy constructor
 		Light(const Light& light);
 
+		/// \brief Destructor
 		~Light();
 
 		void sendLightShader(const MultiLightProgram &multiLightProgram, const std::string &uniformArrayName) const;

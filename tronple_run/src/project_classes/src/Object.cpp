@@ -1,7 +1,7 @@
 #include "project_classes/Object.hpp"
 
  //constructor
-Object::Object(char type, float width, float height, float posX, float posY, float posZ)
+Object::Object(const char type, const float width, const float height, const float posX, const float posY, const float posZ)
 :_type(type), _width(width), _height(height), _posX(posX), _posY(posY), _posZ(posZ){}
 
 Object::Object(){};
@@ -27,22 +27,22 @@ float Object::getPosZ() const {
 }
 
 // setter
-void Object::setType(char type) {
+void Object::setType(const char type) {
     _type = type;
 }
-void Object::setWidth(float &width) {
+void Object::setWidth(const float &width) {
     _width = width;
 }
-void Object::setHeight(float &height){
+void Object::setHeight(const float &height){
     _height = height;
 }
-void Object::setPosX(float &posX) {
+void Object::setPosX(const float &posX) {
     _posX = posX;
 }
-void Object::setPosY(float &posY){
+void Object::setPosY(const float &posY){
     _posY = posY;
 }
-void Object::setPosZ(float &posZ){
+void Object::setPosZ(const float &posZ){
     _posZ = posZ;
 }
 

@@ -43,7 +43,7 @@ public:
     /// \param posX : X position of the object
     /// \param posY : Y position of the object
     /// \param posZ : Z position of the object
-    Object(char type, float width, float height, float posX, float posY, float posZ);
+    Object(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Object();
@@ -83,27 +83,27 @@ public:
 
     /// \brief Set object type
     /// \param Type
-    void setType(char type);
+    void setType(const char type);
     
     /// \brief Set object width
     /// \param Width
-    void setWidth(float &width);
+    void setWidth(const float &width);
 
     /// \brief Set object height
     /// \param Height
-    void setHeight(float &height);
+    void setHeight(const float &height);
 
     /// \brief Set object X position
     /// \param X position
-    void setPosX(float &posX);
+    void setPosX(const float &posX);
     
     /// \brief Set object Y position
     /// \param X position
-    void setPosY(float &posY);
+    void setPosY(const float &posY);
 
     /// \brief Set object Z position
     /// \param X position
-    void setPosZ(float &posZ);
+    void setPosZ(const float &posZ);
 
     /// \brief Destructor
     ~Object();

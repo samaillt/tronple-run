@@ -30,24 +30,24 @@ glm::mat4 RenderController::getGlobalMVMatrix() const{
 }
 
 //Setter
-void RenderController::setProjMatrix(glm::mat4 ProjMatrix){
+void RenderController::setProjMatrix(const glm::mat4 ProjMatrix){
 	_ProjMatrix = ProjMatrix;
 }
 
-void RenderController::setMVMatrix(glm::mat4 MVMatrix){
+void RenderController::setMVMatrix(const glm::mat4 MVMatrix){
 	_MVMatrix = MVMatrix;
 }
 
-void RenderController::setNormalMatrix(glm::mat4 NormalMatrix){
+void RenderController::setNormalMatrix(const glm::mat4 NormalMatrix){
 	_NormalMatrix = NormalMatrix;
-}
-void RenderController::setGlobalMVMatrix(glm::mat4 GlobalMVMatrix){
+} 
+void RenderController::setGlobalMVMatrix(const glm::mat4 GlobalMVMatrix){
 	_GlobalMVMatrix = GlobalMVMatrix;
 }
 
 
 // **** PROGRAM ****
-void RenderController::useProgram(FS shader){
+void RenderController::useProgram(const FS shader){
     switch (shader){
         case COIN :
             _programList->coinProgram->_program.use();

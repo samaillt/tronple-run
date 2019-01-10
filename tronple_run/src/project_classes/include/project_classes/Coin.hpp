@@ -18,7 +18,7 @@ public:
     /// \param posY : Y position of the coin
     /// \param posZ : Z position of the coin
     /// \param value : value of the coin
-    Coin(char type, float width, float height, float posX, float posY, float posZ, int value);
+    Coin(const char type, const float width, const float height, const float posX, const float posY, const float posZ, const int value);
     
     /// \brief Default constructor
     Coin();
@@ -29,7 +29,7 @@ public:
 
     /// \brief set the value of the coin
     /// \param value : value of the coin
-    void setValue(int value);
+    void setValue(const int value);
 
     /// \brief Destructor
     ~Coin();

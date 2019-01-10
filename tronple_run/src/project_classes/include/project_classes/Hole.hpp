@@ -14,7 +14,7 @@ public:
     /// \param posX : X position of a hole
     /// \param posY : Y position of a hole
     /// \param posZ : Z position of a hole
-    Hole(char type, float width, float height, float posX, float posY, float posZ);
+    Hole(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Hole();

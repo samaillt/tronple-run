@@ -14,7 +14,7 @@ public:
     /// \param posX : X position of the block
     /// \param posY : Y position of the block
     /// \param posZ : Z position of the block
-    Block(char type, float width, float height, float posX, float posY, float posZ);
+    Block(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
     /// \brief Default constructor
     Block();

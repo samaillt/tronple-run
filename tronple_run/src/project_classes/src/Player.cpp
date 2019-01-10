@@ -1,7 +1,7 @@
 #include "project_classes/Player.hpp"
 
 
-Player::Player(char type, float width, float height, float posX, float posY, float posZ, float speed, std::string pseudo, uint score, bool isAlive, float verticalPos, float horizontalPos, Orientation orientation)
+Player::Player(const char type, const float width, const float height, const float posX, const float posY, const float posZ, const float speed, const std::string pseudo, const uint score, const bool isAlive, const float verticalPos, const float horizontalPos, const Orientation orientation)
 : Object(type, width, height, posX, posY, posZ), _speed(speed), _pseudo(pseudo), _score(score), _isAlive(isAlive), _height(1.f), _verticalPos(verticalPos), _horizontalPos(horizontalPos), _orientation(orientation){}
 
 Player::Player(){};

@@ -14,7 +14,7 @@ public:
     /// \param posX : X position of the ground
     /// \param posY : Y position of the ground
     /// \param posZ : Z position of the ground
-    Ground(char type, float width, float height, float posX, float posY, float posZ);
+    Ground(const char type, const float width, const float height, const float posX, const float posY, const float posZ);
     
 	/// \brief Default constructor
     Ground();
