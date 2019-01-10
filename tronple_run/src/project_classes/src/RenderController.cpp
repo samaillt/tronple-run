@@ -9,9 +9,11 @@ RenderController::RenderController(SDLWindowManager* windowManager, ProgramList*
 	Model coin("coin", "coin");
 	Model bike("bike", "bike");
 	Model cube("cube", "cube");
+	Model skybox("skybox", "skybox");
 	_model[0] = coin;
 	_model[1] = bike;
 	_model[2] = cube;
+	_model[3] = skybox;
 }
 
 // **** MATRIX ****
@@ -104,19 +106,20 @@ glm::mat4 RenderController::useMatrixCell(float x, float y, float z){
     return MVMatrix;
 }
 
+glm::mat4 RenderController::useMatrixSkybox(){
+    glm::mat4 MVMatrix;
+    MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, 0));
+    return MVMatrix;
+}
+
 void RenderController::applyTransformations(FS shader, glm::mat4 MVMatrix){
     glm::mat4 lightMatrix;
     glm::vec4 lightVector;
     glm::mat4 _uProjection;
 
-    const std::string refLight = "uLights";
-    glm::vec3 ambientLight;
-
-    glDisable(GL_BLEND);
-
     switch (shader){
     	case COIN :
-			glUniform1i(_programList->textureProgram->uTexture, 0);
+			glUniform1i(_programList->coinProgram->uTexture, 0);
     		glUniformMatrix4fv(_programList->coinProgram->uMVPMatrix, 1, GL_FALSE, glm::value_ptr(_ProjMatrix*MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uMVMatrix, 1, GL_FALSE, glm::value_ptr(MVMatrix));
     		glUniformMatrix4fv(_programList->coinProgram->uNormalMatrix, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(MVMatrix))));

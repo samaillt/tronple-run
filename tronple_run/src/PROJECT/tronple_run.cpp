@@ -78,6 +78,7 @@ int main(int argc, char** argv) {
     renderController.VModel(0);
     renderController.VModel(1);
     renderController.VModel(2);
+    renderController.VModel(3);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -558,12 +559,21 @@ int main(int argc, char** argv) {
       else
         renderController.setGlobalMVMatrix(camera->getViewMatrix());
 
+      /* Skybox */
+      renderController.enableBikeTexture();
+      renderController.bindModelVAO(3);
+      renderController.useProgram(COIN);
+      MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixSkybox();
+      renderController.applyTransformations(COIN,MVMatrix);
+      renderController.drawModel(3);
+      renderController.debindVAO();
+      renderController.disableTexture();
+
       /* BIKE */
       renderController.enableBikeTexture();
       renderController.bindModelVAO(1);
       renderController.useProgram(COIN);
       MVMatrix = renderController.getGlobalMVMatrix() * renderController.useMatrixBike(player.getPosX(), player.getPosY(), player.getPosZ(), player.getOrientation());
-      // Erreur de seg applyTransformations
       renderController.applyTransformations(COIN,MVMatrix);
       renderController.drawModel(1);
       renderController.debindVAO();

@@ -120,6 +120,10 @@ public:
     /// \return matrix4
     glm::mat4 useMatrixCell(float x, float y, float z);
 
+    /// \brief Use skybox matrix
+    /// \return matrix4
+    glm::mat4 useMatrixSkybox();
+
     /// \brief Activate and bind coin texture
     void enableCoinTexture();
 
