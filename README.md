@@ -15,8 +15,8 @@ Compiler :
 `cmake ..`
 `make`
 
-Lancer le main :
-`./PROJECT/PROJECT_main`
+Lancer le jeu :
+`./PROJECT/tronple_run`
 
 Ensuite, possibilité de générer la documentation. Toujours dans le répertoire build : 
 `make html`

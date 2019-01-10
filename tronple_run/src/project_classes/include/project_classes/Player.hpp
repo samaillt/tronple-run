@@ -83,7 +83,7 @@ public:
 
     /// \brief Set player speed
     /// \param String player speed
-    void setSpeed(const float speed);
+    void setSpeed(const float &speed);
 
     /// \brief Set player Height
     /// \param Actual player Height
@@ -99,7 +99,7 @@ public:
 
     /// \brief Set player Orientation
     /// \param Orientation
-    void setOrientation(const Orientation orientation);
+    void setOrientation(const Orientation &orientation);
 
     /// \brief Increment player score
     /// \param Number of points
@@ -107,11 +107,11 @@ public:
 
     /// \brief Increment player X or Y position 
     /// \param Distance
-    void moveForward(const float distance);
+    void moveForward(const float &distance);
 
     /// \brief Decrement player z position 
     /// \param Distance
-    void moveDown(const float distance);
+    void moveDown(const float &distance);
 
     /// \brief Increment player Z position
     void jump();

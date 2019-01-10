@@ -40,7 +40,7 @@ void Player::setIsAlive(const bool isAlive){
 void Player::setPseudo(const std::string &pseudo){
 	_pseudo = pseudo;
 }
-void Player::setSpeed(const float speed){
+void Player::setSpeed(const float &speed){
 	_speed = speed;
 }
 void Player::setHeight(const uint height){
@@ -52,7 +52,7 @@ void Player::setVerticalPos(const uint verticalPos){
 void Player::setHorizontalPos(const uint horizontalPos){
 	_horizontalPos = horizontalPos;
 }
-void Player::setOrientation(const Orientation orientation){
+void Player::setOrientation(const Orientation &orientation){
 	_orientation = orientation;
 }
 
@@ -60,7 +60,7 @@ void Player::inscrementScore(const uint point){
 	_score += point;
 }
 
-void Player::moveForward(const float distance){
+void Player::moveForward(const float &distance){
 	if (_orientation == Player::FRONT)
 		_posY += distance;
 	if (_orientation == Player::LEFT)
@@ -71,7 +71,7 @@ void Player::moveForward(const float distance){
 		_posX -= distance;
 }
 
-void Player::moveDown(const float distance){
+void Player::moveDown(const float &distance){
 	_posZ -= distance;
 }
 

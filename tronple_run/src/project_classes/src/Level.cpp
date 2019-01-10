@@ -11,9 +11,16 @@ Level::Level(std::string sourceFile){
 
 Level::~Level()
 {
-    /*for(int i = 0; i < _cells.size(); ++i)
-        for (int j = 0; j < _cells[i].size(); ++j)
-            delete (_cells[i][j]);*/
+    _cells.clear();
+    _coins.clear();
+    _blocks.clear();
+    _arches.clear();
+    _arrivals.clear();
+    _holes.clear();
+    _leftTurns.clear();
+    _rightTurns.clear();
+    _sourceFile.clear();
+
 }
 
 int Level::getSizeX() const {

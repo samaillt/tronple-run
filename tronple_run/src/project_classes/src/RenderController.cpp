@@ -155,4 +155,6 @@ void RenderController::debindVAO(){
 }
 
 RenderController::~RenderController(){
+	_lights.clear();
+	_lightsCount = 0;
 }

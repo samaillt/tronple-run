@@ -2,7 +2,7 @@
 
 using namespace glimac;
 
-Model::Model(const std::string obj, const FilePath &applicationPath)
+Model::Model(const std::string &obj, const FilePath &applicationPath)
 :_obj(obj){
 		Geometry geometry;
 		FilePath modelPath = applicationPath.dirPath() + "../src/assets/models/" + obj + "/" + obj;

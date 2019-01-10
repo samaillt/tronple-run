@@ -25,7 +25,7 @@ public:
     /// \brief Constructor
     /// \param obj : string of an obj file
     /// \param applicationPath
-    Model(const std::string obj, const FilePath &applicationPath);
+    Model(const std::string &obj, const FilePath &applicationPath);
 
     ///\brief Default constructor
     Model();
