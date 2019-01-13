@@ -28,7 +28,7 @@
 using namespace glimac;
 
 /* FPS */
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 30;
 
 void printInfos(const Cell *cell){
       std::cout << "Type : " << cell->getType() << std::endl;
@@ -216,6 +216,9 @@ int main(int argc, char** argv) {
       game = true;
 
     while(game) {
+
+      /* Récupération du temps au début de la boucle */
+      Uint32 startTime = SDL_GetTicks();
 
       // Event loop:
 
@@ -468,9 +471,6 @@ int main(int argc, char** argv) {
         else 
           player.resetScale();
             
-        // Debug test
-        // std::cout << "pos x : "<< player.getPosX()<< "pos y : "<< player.getPosY()<< "horizontal pos: "<< player.getHorizontalPos() << std::endl;
-
         // Player automatic forward movement
         player.moveForward(player.getSpeed());
 
@@ -547,13 +547,9 @@ int main(int argc, char** argv) {
       * GAME RENDERING
       *********************************/
 
-      // ViewMatrix / Map / User Interface
-
-      // Pause menu if game is paused
-      std::cout << "OK" << std::endl;
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      /* Calcul de la caméra */
+      /* Calcul computing */
       if (camera == &trackball_cam)
         renderController.setGlobalMVMatrix(glm::translate(camera->getViewMatrix(), glm::vec3(-(player.getPosX()), -(player.getPosZ()), -(player.getPosY()))));
       else
@@ -598,7 +594,7 @@ int main(int argc, char** argv) {
       renderController.enableCoinTexture();
       renderController.bindModelVAO(0);
       renderController.useProgram(COIN);
-      // Coins display
+      // Coins display-*
       std::for_each(levelCoins.begin(), levelCoins.end(), displayElement);
       renderController.debindVAO();
       renderController.disableTexture();
@@ -617,6 +613,14 @@ int main(int argc, char** argv) {
 
       // Update the display
       windowManager.swapBuffers();
+
+      /* Calcul du temps écoulé */
+      Uint32 elapsedTime = SDL_GetTicks() - startTime;
+
+      /* Si trop peu de temps s'est écoulé, on met en pause le programme */
+      if(elapsedTime < FRAMERATE_MILLISECONDS) {
+        SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+      }
     }
     // Free memory
     levelCells.clear();
@@ -627,6 +631,7 @@ int main(int argc, char** argv) {
     levelHoles.clear();
     levelLeftTurns.clear();
     levelRightTurns.clear();
+
   }
   return EXIT_SUCCESS;
 }
