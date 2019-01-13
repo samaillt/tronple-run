@@ -16,7 +16,6 @@ Level::~Level()
     _blocks.clear();
     _arches.clear();
     _arrivals.clear();
-    _holes.clear();
     _leftTurns.clear();
     _rightTurns.clear();
     _sourceFile.clear();
@@ -49,9 +48,6 @@ std::vector<Arch*> Level::getArches() const {
 }
 std::vector<Arrival*> Level::getArrivals() const {
 	return _arrivals;
-}
-std::vector<Hole*> Level::getHoles() const {
-	return _holes;
 }
 std::vector<Cell*> Level::getLeftTurns() const {
 	return _leftTurns;
@@ -89,9 +85,6 @@ void Level::setArches(const std::vector<Arch*> &arches) {
 }
 void Level::setArrivals(const std::vector<Arrival*> &arrivals) {
 	_arrivals = arrivals;
-}
-void Level::setHoles(const std::vector<Hole*> &holes) {
-	_holes = holes;
 }
 void Level::setLeftTurns(const std::vector<Cell*> &leftTurns) {
 	_leftTurns = leftTurns;

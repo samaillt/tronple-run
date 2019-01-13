@@ -28,7 +28,6 @@ private:
     std::vector<Block*> _blocks; /*!< Vector of blocks */
     std::vector<Arch*> _arches; /*!< Vector of arches */
     std::vector<Arrival*> _arrivals; /*!< Vector of arrivals */
-    std::vector<Hole*> _holes; /*!< Vector of holes */
     std::vector<Cell*> _leftTurns; /*!< Vector of leftTurns */
     std::vector<Cell*> _rightTurns; /*!< Vector of rightTurns */
     std::string _sourceFile; /*!< Source of the file level */
@@ -80,10 +79,6 @@ public:
     /// \return Vectors of arrivals
     std::vector<Arrival*> getArrivals() const;
 
-    /// \brief Get holes
-    /// \return Vectors of holes
-    std::vector<Hole*> getHoles() const;
-
     /// \brief Get leftTurns
     /// \return Vectors of leftTurns
     std::vector<Cell*> getLeftTurns() const;
@@ -131,10 +126,6 @@ public:
     /// \brief Set arrivals
     /// \param Vectors of arrivals
     void setArrivals(const std::vector<Arrival*> &arrivals);
-
-    /// \brief Set holes
-    /// \param Vectors of holes
-    void setHoles(const std::vector<Hole*> &holes);
 
     /// \brief Set leftTurns
     /// \return Vectors of leftTurns

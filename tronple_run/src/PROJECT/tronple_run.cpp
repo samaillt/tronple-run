@@ -199,7 +199,6 @@ int main(int argc, char** argv) {
       std::vector<Block*> levelBlocks = level.getBlocks();
       std::vector<Arch*> levelArches = level.getArches();
       std::vector<Arrival*> levelArrivals = level.getArrivals();
-      std::vector<Hole*> levelHoles = level.getHoles();
       std::vector<Cell*> levelLeftTurns = level.getLeftTurns();
       std::vector<Cell*> levelRightTurns = level.getRightTurns();
 
@@ -628,7 +627,6 @@ int main(int argc, char** argv) {
     levelBlocks.clear();
     levelArches.clear();
     levelArrivals.clear();
-    levelHoles.clear();
     levelLeftTurns.clear();
     levelRightTurns.clear();
 

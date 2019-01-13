@@ -141,7 +141,6 @@ int GameController::loadLevel(){
 	std::vector<Block*> blocks; // Vector of blocks
 	std::vector<Arch*> arches; // Vector of arches
 	std::vector<Arrival*> arrivals; // Vector of arrivals
-	std::vector<Hole*> holes; // Vector of holes
 	std::vector<Coin*> coins; // Vector of coins
 	std::vector<Cell*> leftTurns; // Vector of leftTurns
 	std::vector<Cell*> rightTurns; // Vector of rightTurns
@@ -207,11 +206,9 @@ int GameController::loadLevel(){
 		  	// ------ HOLE -----
 		    	if (r == 0 && g == 0 && b == 0) {
 		      		/* Hole - Grey */
-		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		    	}
 		    	if (r == 100 && g == 100 && b == 100) {
 		      		/* Hole + coin 2 - Black */
-		      		holes.push_back(new Hole('h',1.f, 1.f, (float)i, (float)j, 0.f));
 		      		coins.push_back(new Coin('c',1.f, 1.f, (float)i, (float)j, 2.f, 10));
 		   		}
 
@@ -251,7 +248,6 @@ int GameController::loadLevel(){
 	_level->setBlocks(blocks);
 	_level->setArches(arches);
 	_level->setArrivals(arrivals);
-	_level->setHoles(holes);
 	_level->setLeftTurns(leftTurns);
 	_level->setRightTurns(rightTurns);
 }
