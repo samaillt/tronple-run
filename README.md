@@ -1,5 +1,5 @@
 # OpenGL_s3
-Projet C++ / OpenGL réalisé dans le cadre du s3 de l'IMAC.
+Projet C++ / OpenGL de jeu vidéo dans l'univers de Tron.
 
 ## Procédure pour lancer le jeu (Linux)
 Il faut en premier lieu s’assurer d’avoir les bibliothèques OpenGL et SDL installées sur sa machine.
